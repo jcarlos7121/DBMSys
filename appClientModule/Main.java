@@ -18,9 +18,10 @@ public class Main {
 		// TODO Auto-generated method stub
 		Splash spl = new Splash(5000);
 		spl.mostrarSplash();
-		Login in = new Login();
-		in.setVisible(true);
-		
+		spl.dispose();
+		Login ble = new Login();
+		ble.getContentPane().setVisible(true);
+		ble.setVisible(true);
 	}
 
 
@@ -54,13 +55,13 @@ class Splash extends JWindow {
 		 setVisible(true);
 		 
 		 try{
-			  Thread.sleep(duración);
-			  
+			  Thread.sleep(duración);  
 		 }catch (Exception e){
 			 
 		 }
-		 
 		 setVisible(false);
+		 
+		 
 		 
 
 	}
