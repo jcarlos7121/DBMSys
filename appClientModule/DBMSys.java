@@ -65,6 +65,13 @@ public class DBMSys extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JInternalFrame internalFrame = new JInternalFrame("Empleados");
+		internalFrame.setBounds(434, 100, 525, 345);
+		internalFrame.setClosable(true);
+		internalFrame.setResizable(true);
+		contentPane.add(internalFrame);
+		internalFrame.setVisible(true);
+		
 		JInternalFrame graficauno = new JInternalFrame("Ventas Semanal");
 		graficauno.setBounds(12, 370, 269, 345);
 		contentPane.add(graficauno);
