@@ -1,5 +1,6 @@
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -106,9 +107,9 @@ public class Sesion extends JFrame {
 				// TODO Auto-generated method stub
 				String usuarioentrante = usetxt.getText();
 				String contraentrante = passwordField.getText();
-				
+				String usernombre = "";
 				try {
-					String usernombre = bd.damenombreusuario(usuarioentrante);
+					usernombre = bd.damenombreusuario(usuarioentrante);
 					System.out.println("Te llamas " + usernombre);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -117,7 +118,12 @@ public class Sesion extends JFrame {
 				
 				try {
 					if(contraentrante.equals(bd.dameadmincontra(usuarioentrante))){
-						System.out.println("You like computers and stuff!!! :)");
+						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
+						DBMSys sistemaborazones = new DBMSys();
+						sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+						sistemaborazones.validate();
+						sistemaborazones.setLocationRelativeTo(null);
+						sistemaborazones.setVisible(true);
 					}else{
 						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Lo sentimos, la contraseña que ingreso no existe, favor de verificarla, gracias");
 					}
