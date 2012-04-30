@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,19 +14,28 @@ public class Main {
 
 	/**
 	 * @param args
+	 * Clase la cual inicia el todo, primero el Splash, seguido del login.
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Splash spl = new Splash(5000);
 		spl.mostrarSplash();
-		spl.dispose();
-		Login ble = new Login();
-		ble.getContentPane().setVisible(true);
-		ble.setVisible(true);
+		Sesion ses = null;
+		try {
+			ses = new Sesion();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Ja mensote");
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("No se pudo conectar con la base de datos");
+			e.printStackTrace();
+		}
+		ses.setVisible(true);
 	}
-
-
 }
+
 class Splash extends JWindow {
 	
 	private int duración;
@@ -49,8 +59,6 @@ class Splash extends JWindow {
 		 copyrt.setFont(new Font("Sans-Serif", Font.BOLD, 12));
 		 content.add(label, BorderLayout.CENTER);
 		 content.add(copyrt, BorderLayout.SOUTH);
-//		 Color oraRed = new Color(156, 20, 20,  255);
-//		 content.setBorder(BorderFactory.createLineBorder(oraRed, 10));
 
 		 setVisible(true);
 		 
@@ -60,10 +68,6 @@ class Splash extends JWindow {
 			 
 		 }
 		 setVisible(false);
-		 
-		 
-		 
-
 	}
 	
 	public void salidaSplash(){
