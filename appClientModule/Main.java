@@ -6,8 +6,10 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
+
 
 
 public class Main {
@@ -15,7 +17,8 @@ public class Main {
 	/**
 	 * @param args
 	 * Clase la cual inicia el todo, primero el Splash, seguido del login.
-	 */
+	 */ 
+//holo
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Splash spl = new Splash(5000);
@@ -23,6 +26,7 @@ public class Main {
 		Sesion ses = null;
 		try {
 			ses = new Sesion();
+			ses.setLocationRelativeTo(null);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Ja mensote");

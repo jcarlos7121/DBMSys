@@ -15,6 +15,9 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.JButton;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 
 public class DBMSys extends JFrame {
@@ -66,10 +69,29 @@ public class DBMSys extends JFrame {
 		contentPane.setLayout(null);
 		
 		JInternalFrame internalFrame = new JInternalFrame("Empleados");
-		internalFrame.setBounds(434, 100, 525, 345);
+		internalFrame.setBounds(293, 194, 712, 435);
 		internalFrame.setClosable(true);
 		internalFrame.setResizable(true);
+//		internalFrame.setMaximizable(true);
 		contentPane.add(internalFrame);
+		
+		JMenuBar menuBar = new JMenuBar();
+		internalFrame.setJMenuBar(menuBar);
+		
+		JButton btnConsulta = new JButton("Consulta");
+		menuBar.add(btnConsulta);
+		
+		JButton btnRegistro = new JButton("Registro");
+		menuBar.add(btnRegistro);
+		
+		JMenu mnAyuda = new JMenu("Ayuda");
+		menuBar.add(mnAyuda);
+		
+		JMenuItem mntmInstrucciones = new JMenuItem("Instrucciones");
+		mnAyuda.add(mntmInstrucciones);
+		
+		JMenuItem mntmSoporte = new JMenuItem("Soporte");
+		mnAyuda.add(mntmSoporte);
 		internalFrame.setVisible(true);
 		
 		JInternalFrame graficauno = new JInternalFrame("Ventas Semanal");
