@@ -108,6 +108,7 @@ public class Bidi {
 			blop.addRow(rowData);
 		}
 		datiness.close();
+		
 
 		return blop;
 

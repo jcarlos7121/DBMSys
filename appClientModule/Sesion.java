@@ -119,17 +119,21 @@ public class Sesion extends JFrame {
 				try {
 					if(contraentrante.equals(bd.dameadmincontra(usuarioentrante))){
 						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
-						DBMSys sistemaborazones = new DBMSys();
+						DBMSysAdmin sistemaborazones = new DBMSysAdmin();
 						sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 						sistemaborazones.validate();
 						sistemaborazones.setLocationRelativeTo(null);
 						sistemaborazones.setVisible(true);
+						dispose();
 					}else{
 						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Lo sentimos, la contraseña que ingreso no existe, favor de verificarla, gracias");
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog((Component)arg0.getSource(), "Problema de conexión");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Algo paso");
 				}
 				
 			}});
