@@ -119,7 +119,7 @@ public class Sesion extends JFrame {
 				try {
 					if(contraentrante.equals(bd.dameadmincontra(usuarioentrante))){
 						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
-						DBMSysAdmin sistemaborazones = new DBMSysAdmin();
+						DBMSysAdministrator sistemaborazones = new DBMSysAdministrator();
 						sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 						sistemaborazones.validate();
 						sistemaborazones.setLocationRelativeTo(null);
