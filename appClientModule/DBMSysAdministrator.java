@@ -42,6 +42,7 @@ import javax.swing.JLabel;
 
 public class DBMSysAdministrator extends JFrame {
 
+	//Hola!
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTable table;

@@ -3,6 +3,8 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,12 +22,12 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
 
-public class Sesion extends JFrame {
+public class Sesion extends JFrame implements KeyListener {
 
 	private JPanel contentPane;
 	private JTextField usetxt;
 	private JPasswordField passwordField;
-
+	Bidi bd;
 	/**
 	 * Launch the application.
 	 * Clase que verifica las credenciales del usuario.
@@ -141,6 +143,60 @@ public class Sesion extends JFrame {
 		
 		
 		
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		int tecla = arg0.getID();
+		if(tecla == KeyEvent.VK_ENTER){
+			System.out.println("Si entre aqui...");
+			String usuarioentrante = usetxt.getText();
+			String contraentrante = passwordField.getText();
+			String usernombre = "";
+			try {
+				usernombre = bd.damenombreusuario(usuarioentrante);
+				System.out.println("Te llamas " + usernombre);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog((Component)arg0.getSource(), "El usuario no existe");
+			}
+			
+			try {
+				if(contraentrante.equals(bd.dameadmincontra(usuarioentrante))){
+					JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
+					DBMSysAdministrator sistemaborazones = new DBMSysAdministrator();
+					sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
+					sistemaborazones.validate();
+					sistemaborazones.setLocationRelativeTo(null);
+					sistemaborazones.setVisible(true);
+					dispose();
+				}else{
+					JOptionPane.showMessageDialog((Component)arg0.getSource(), "Lo sentimos, la contraseña que ingreso no existe, favor de verificarla, gracias");
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog((Component)arg0.getSource(), "Problema de conexión");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Algo paso");
+			}
+
+			
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }
