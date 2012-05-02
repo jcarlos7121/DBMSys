@@ -57,7 +57,10 @@ public class DBMSysAdministrator extends JFrame {
 	private JTable table;
 	JTextField usuariofield = null;
 	JTextField contraseñafield = null;
-
+	 int sel;
+	 JTable tablaempleados;
+	 JInternalFrame internalFrame;
+	 Bidi bd;
 	/**
 	 * Launch the application.
 	 */
@@ -94,7 +97,7 @@ public class DBMSysAdministrator extends JFrame {
 //		}
 //		
 		
-		final Bidi bd = new Bidi("postgres", "132410jh");
+		bd = new Bidi("postgres", "132410jh");
 		final JTable tablaempleados;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +107,7 @@ public class DBMSysAdministrator extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		final JInternalFrame internalFrame = new JInternalFrame("Empleados");
+		internalFrame = new JInternalFrame("Empleados");
 		internalFrame.setBounds(293, 194, 980, 600);
 		internalFrame.setLocation(HEIGHT+150, WIDTH+100);
 		internalFrame.setClosable(true);
@@ -313,15 +316,35 @@ public class DBMSysAdministrator extends JFrame {
 			}});
 		menuBar.add(btnRegistro);
 		
+		tablaempleados.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		    public void valueChanged(ListSelectionEvent e) {
+		        sel = tablaempleados.getSelectedRow();
+		        
+		    }
+		});
+		
 		JButton borrar = new JButton("Borrar");
 		borrar.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub	
-
-				
-				
+				sel++;
+				System.out.println("escogiste: "+ sel);
+				try {
+					
+					bd.borrarempleado(sel);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("No se pudo borrar");
+				}
+				try {
+					tablaempleados.setModel(bd.regresamodelo());
+					tablaempleados.repaint();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			}});
 		menuBar.add(borrar);
@@ -334,6 +357,7 @@ public class DBMSysAdministrator extends JFrame {
 		
 		JMenuItem mntmSoporte = new JMenuItem("Soporte");
 		mnAyuda.add(mntmSoporte);
+		internalFrame.toFront();
 		internalFrame.setVisible(true);
 		
 		//Se crea la segunda grafica, y se convierte en un BufferedImage
@@ -462,6 +486,7 @@ public class DBMSysAdministrator extends JFrame {
 		graficados.setVisible(true);
 		
 	}
+	
 	
 	
 	//Metodos de graficas
