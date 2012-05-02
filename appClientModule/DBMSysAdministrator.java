@@ -452,6 +452,11 @@ public class DBMSysAdministrator extends JFrame {
 				
 			}});
 		contentPane.add(btnIniciar);
+		
+		JInternalFrame internalFrame = new JInternalFrame("New JInternalFrame");
+		internalFrame.setBounds(482, 249, 64, 31);
+		contentPane.add(internalFrame);
+		internalFrame.setVisible(true);
 
 //		graficauno.getContentPane().add(comp);
 		
