@@ -329,14 +329,15 @@ public class DBMSysAdministrator extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub	
-				sel++;
+				
 				System.out.println("escogiste: "+ sel);
 				try {
-					
-					bd.borrarempleado(sel);
+					String numero = (String) tablaempleados.getValueAt(sel, 0);
+					bd.borrarempleado(numero);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					System.out.println("No se pudo borrar");
+					e.printStackTrace();
 				}
 				try {
 					tablaempleados.setModel(bd.regresamodelo());
