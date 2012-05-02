@@ -61,46 +61,7 @@ public class DBMSysAdmin extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 * @throws SQLException 
-	 * @throws ClassNotFoundException 
-	 */
-//	public String getToolTipText(MouseEvent e,JTable bl) {
-//        String tip = null;
-//        java.awt.Point p = e.getPoint();
-//        int rowIndex = bl.rowAtPoint(p);
-//        int colIndex = bl.columnAtPoint(p);
-//        int realColumnIndex = bl.convertColumnIndexToModel(colIndex);
-//
-//        if (realColumnIndex == 2) { //Sport column
-//            tip = "This person's favorite sport to "
-//                   + "participate in is: "
-//                   + bl.getValueAt(rowIndex, colIndex);
-//
-//        } else if (realColumnIndex == 4) { //Veggie column
-//            TableModel model = bl.getModel();
-//            String firstName = (String)model.getValueAt(rowIndex,0);
-//            String lastName = (String)model.getValueAt(rowIndex,1);
-//            Boolean veggie = (Boolean)model.getValueAt(rowIndex,4);
-//            if (Boolean.TRUE.equals(veggie)) {
-//                tip = firstName + " " + lastName
-//                      + " is a vegetarian";
-//            } else {
-//                tip = firstName + " " + lastName
-//                      + " is not a vegetarian";
-//            }
-//
-//        } else { //another column
-//            //You can omit this part if you know you don't 
-//            //have any renderers that supply their own tool 
-//            //tips.
-//            tip = bl.getToolTipText(e);
-//        }
-//        return tip;
-//    }
-//	
-//	
+	
 	public DBMSysAdmin() throws ClassNotFoundException, SQLException {
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
