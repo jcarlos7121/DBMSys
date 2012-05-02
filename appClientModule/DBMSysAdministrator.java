@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 
@@ -78,6 +80,10 @@ public class DBMSysAdministrator extends JFrame {
 	}
 
 	
+	/**
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public DBMSysAdministrator() throws ClassNotFoundException, SQLException {
 //		try {
 //		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -106,6 +112,8 @@ public class DBMSysAdministrator extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		//Comienza la creaciòn del internal frame de empleado
 		
 		internalFrame = new JInternalFrame("Empleados");
 		internalFrame.setBounds(293, 194, 980, 600);
@@ -153,6 +161,7 @@ public class DBMSysAdministrator extends JFrame {
 				tablaempleados.setShowGrid(true);
 				tablaempleados.setShowVerticalLines(true);
 				tablaempleados.setGridColor(Color.black);
+				
 				//contentPane.add(tablaempleados);
 				internalFrame.getContentPane().add(tablaempleados);
 				JPanel temp = contentPane;
@@ -348,6 +357,18 @@ public class DBMSysAdministrator extends JFrame {
 				}
 				
 			}});
+		
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				String indice = (String)tablaempleados.getValueAt(sel, 0);
+				
+				
+			}});
+		menuBar.add(btnModificar);
 		menuBar.add(borrar);
 		
 		JMenu mnAyuda = new JMenu("Ayuda");
@@ -360,6 +381,8 @@ public class DBMSysAdministrator extends JFrame {
 		mnAyuda.add(mntmSoporte);
 		internalFrame.toFront();
 		internalFrame.setVisible(true);
+		
+		//Termina la creaciòn del internal frame de empleado
 		
 		//Se crea la segunda grafica, y se convierte en un BufferedImage
 		PieDataset datasetGraficados = createSampleDataset();

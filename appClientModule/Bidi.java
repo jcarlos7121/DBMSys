@@ -47,8 +47,8 @@ public class Bidi {
 		return bli;
 	};
 
-	public void borrarempleado(int b) throws SQLException{
-		PreparedStatement borrado = conect.prepareStatement("delete from empleado where noempleado ="+b+";");
+	public void borrarempleado(String numero) throws SQLException{
+		PreparedStatement borrado = conect.prepareStatement("delete from empleado where noempleado ="+numero+";");
 		borrado.execute();
 	}
 	
@@ -117,5 +117,57 @@ public class Bidi {
 		return blop;
 
 	}
+	
+	/**
+	 * @return nombredelempleado
+	 * apartir de esta parte cada metodo nos regresa cierto valor de cada empleado en particular.
+	 * @throws SQLException 
+	 */
+	public String regresanombreempleado(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select nombre from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String nombre = rss.getString("nombre");
+		return nombre;
+	}
+	
+	public String regresapellidop(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select apellidop from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String apellidop = rss.getString("apellidop");
+		return apellidop;
+	}
 
+	public String regresapellidom(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select apellidom from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String apellidom = rss.getString("apellidom");
+		return apellidom;
+	}
+	
+	public String regresacalle(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select calle from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String calle = rss.getString("calle");
+		return calle;
+	}
+	
+	public String regresaciudad(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select ciudad from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String ciudad = rss.getString("ciudad");
+		return ciudad;
+	}
+	public String regresaestado(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select estado from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String estado = rss.getString("estado");
+		return estado;
+	}
+	public String regresacp(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select cp from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		String cp = rss.getString("cp");
+		return cp;
+	}
+	
 }
