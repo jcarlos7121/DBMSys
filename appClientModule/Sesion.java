@@ -29,6 +29,7 @@ public class Sesion extends JFrame implements KeyListener {
 	private JTextField usetxt;
 	private JPasswordField passwordField;
 	Bidi bd;
+	String aproval;
 	/**
 	 * Launch the application.
 	 * Clase que verifica las credenciales del usuario.
@@ -120,7 +121,14 @@ public class Sesion extends JFrame implements KeyListener {
 				}
 				
 				try {
-					if(contraentrante.equals(bd.dameadmincontra(usuarioentrante))){
+					aproval = bd.regresaprobadoo(usuarioentrante);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("No existe el usuario quiza ");
+					e1.printStackTrace();
+				}
+				try {
+					if(contraentrante.equals(bd.dameadmincontra(usuarioentrante)) && aproval.equals("1")){
 						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
 						DBMSysAdministrator sistemaborazones = new DBMSysAdministrator();
 						sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
@@ -129,11 +137,12 @@ public class Sesion extends JFrame implements KeyListener {
 						sistemaborazones.setVisible(true);
 						dispose();
 					}else{
-						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Lo sentimos, la contraseña que ingreso no existe, favor de verificarla, gracias");
+						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Lo sentimos, no esta autorizado o la contraseña que ingreso no existe, favor de verificarla, gracias");
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					JOptionPane.showMessageDialog((Component)arg0.getSource(), "Problema de conexión");
+					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					System.out.println("Algo paso");

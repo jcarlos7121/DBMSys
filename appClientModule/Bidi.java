@@ -92,7 +92,7 @@ public class Bidi {
 
 	public DefaultTableModel regresamodelo() throws SQLException {
 		PreparedStatement datines = conect
-				.prepareStatement("select * from empleado;");
+				.prepareStatement("select * from empleado order by noempleado;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -126,6 +126,7 @@ public class Bidi {
 	public String regresanombreempleado(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select nombre from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String nombre = rss.getString("nombre");
 		return nombre;
 	}
@@ -133,6 +134,7 @@ public class Bidi {
 	public String regresapellidop(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select apellidop from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String apellidop = rss.getString("apellidop");
 		return apellidop;
 	}
@@ -140,6 +142,7 @@ public class Bidi {
 	public String regresapellidom(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select apellidom from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String apellidom = rss.getString("apellidom");
 		return apellidom;
 	}
@@ -147,6 +150,7 @@ public class Bidi {
 	public String regresacalle(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select calle from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String calle = rss.getString("calle");
 		return calle;
 	}
@@ -154,20 +158,103 @@ public class Bidi {
 	public String regresaciudad(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select ciudad from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String ciudad = rss.getString("ciudad");
 		return ciudad;
 	}
 	public String regresaestado(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select estado from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String estado = rss.getString("estado");
 		return estado;
 	}
 	public String regresacp(String aa) throws SQLException{
 		PreparedStatement bloooo = conect.prepareStatement("select cp from empleado where noempleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
+		rss.next();
 		String cp = rss.getString("cp");
 		return cp;
 	}
+	
+	public String regresapais(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select pais from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		rss.next();
+		String cp = rss.getString("pais");
+		return cp;
+	}
+	
+	public String regresaemail(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select email from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		rss.next();
+		String email = rss.getString("email");
+		return email;
+	}
+	
+	public String regresausuario(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select username from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		rss.next();
+		String username = rss.getString("username");
+		return username;
+	}
+	
+	public String regresapassword(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select password from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		rss.next();
+		String username = rss.getString("password");
+		return username;
+	}
+	public String regresaprobacion(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select aprobado from empleado where noempleado = "+aa+";");
+		ResultSet rss = bloooo.executeQuery();
+		rss.next();
+		String aprobado = rss.getString("aprobado");
+		return aprobado;
+	}
+	
+	public String regresaprobadoo(String aa) throws SQLException{
+		PreparedStatement bloooo = conect.prepareStatement("select aprobado from empleado where username = '"+aa+"';");
+		ResultSet rss = bloooo.executeQuery();
+		rss.next();
+		String aprobado = rss.getString("aprobado");
+		return aprobado;
+	}
+
+	public void modificarempleado(String indice,String text, String text2, String text3,
+			String text4, String text5, String text6, String text7,
+			String text8, String text9, String aprobado, String text10,
+			String text11) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement actualizanombre = conect.prepareStatement("update empleado set nombre = '"+text+"' where noempleado ="+indice+";");
+		actualizanombre.execute();
+		PreparedStatement actualizapellidop = conect.prepareStatement("update empleado set apellidop = '"+text2+"' where noempleado ="+indice+";");
+		actualizapellidop.execute();
+		PreparedStatement actualizapellidom = conect.prepareStatement("update empleado set apellidop = '"+text3+"' where noempleado ="+indice+";");
+		actualizapellidom.execute();
+		PreparedStatement actualizacalle = conect.prepareStatement("update empleado set calle = '"+text4+"' where noempleado ="+indice+";");
+		actualizacalle.execute();
+		PreparedStatement actualizaciudad = conect.prepareStatement("update empleado set ciudad = '"+text5+"' where noempleado ="+indice+";");
+		actualizaciudad.execute();
+		PreparedStatement actualizaestado = conect.prepareStatement("update empleado set estado = '"+text6+"' where noempleado ="+indice+";");
+		actualizaestado.execute();
+		PreparedStatement actualizacp = conect.prepareStatement("update empleado set cp = "+text7+" where noempleado ="+indice+";");
+		actualizacp.execute();
+		PreparedStatement actualizapais = conect.prepareStatement("update empleado set pais = '"+text8+"' where noempleado ="+indice+";");
+		actualizapais.execute();
+		PreparedStatement actualizaemail = conect.prepareStatement("update empleado set email = '"+text9+"' where noempleado ="+indice+";");
+		actualizaemail.execute();
+		PreparedStatement actualizaprobado = conect.prepareStatement("update empleado set aprobado = "+aprobado+" where noempleado ="+indice+";");
+		actualizaprobado.execute();
+		PreparedStatement actualizausuario = conect.prepareStatement("update empleado set username = '"+text10+"' where noempleado ="+indice+";");
+		actualizausuario.execute();
+		PreparedStatement actualizacontraseña = conect.prepareStatement("update empleado set password = '"+text11+"' where noempleado ="+indice+";");
+		actualizacontraseña.execute();
+		
+	}
+	
 	
 }

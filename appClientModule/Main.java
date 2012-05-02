@@ -31,7 +31,6 @@ public class Main {
 			ses.setLocationRelativeTo(null);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Ja mensote");
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
