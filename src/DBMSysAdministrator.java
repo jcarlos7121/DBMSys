@@ -1,5 +1,4 @@
-//Holo!!
-//Holo!!!
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -50,7 +49,14 @@ public class DBMSysAdministrator extends JFrame {
 	private JTable table;
 	JTextField usuariofield = null;
 	JTextField contraseñafield = null;
-
+	int sel;
+	 JTable tablaempleados = new JTable();
+	 JInternalFrame internalFrame;
+	 JInternalFrame graficatres;
+	 JInternalFrame graficados;
+	 JInternalFrame graficacinco;
+	 JInternalFrame graficacuatro;
+	 Bidi bd;
 	/**
 	 * Launch the application.
 	 */
@@ -88,7 +94,6 @@ public class DBMSysAdministrator extends JFrame {
 		
 		
 		final Bidi bd = new Bidi();
-		final JTable tablaempleados;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
@@ -96,246 +101,6 @@ public class DBMSysAdministrator extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-//		final JInternalFrame internalFrame = new JInternalFrame("Empleados");
-//		internalFrame.setBounds(293, 194, 980, 600);
-//		internalFrame.setLocation(HEIGHT+150, WIDTH+100);
-//		internalFrame.setClosable(true);
-//		internalFrame.setResizable(true);
-////		internalFrame.setMaximizable(true);
-//		contentPane.add(internalFrame);
-//		
-//		tablaempleados = new JTable();
-//		
-//		JMenuBar menuBar = new JMenuBar();
-//		internalFrame.setJMenuBar(menuBar);
-//		internalFrame.getContentPane().setLayout(null);
-//		
-//		
-//		JButton btnConsulta = new JButton("Consulta");
-//		btnConsulta.addActionListener(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//
-//				internalFrame.getContentPane().removeAll();
-//				
-//				textField = new JTextField();
-//				textField.setBounds(6, 6, 239, 26);
-//				internalFrame.getContentPane().add(textField);
-//				textField.setColumns(10);
-//				
-//				JButton btnBuscar = new JButton("Buscar");
-//				btnBuscar.setBounds(267, 6, 100, 26);
-//				internalFrame.getContentPane().add(btnBuscar);
-//				
-//				
-//				try {
-//					tablaempleados.setModel(bd.regresamodelo());
-//					tablaempleados.setToolTipText("mmmm");
-//					tablaempleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				tablaempleados.setBounds(12, 41, 947, 422);
-//				tablaempleados.setShowGrid(true);
-//				tablaempleados.setShowVerticalLines(true);
-//				tablaempleados.setGridColor(Color.black);
-//				//contentPane.add(tablaempleados);
-//				internalFrame.getContentPane().add(tablaempleados);
-//				JPanel temp = contentPane;
-//				SwingUtilities.updateComponentTreeUI(temp);
-//				temp.validate();
-//				
-//			}});
-//		menuBar.add(btnConsulta);
-//		
-//		JButton btnRegistro = new JButton("Registro");
-//		btnRegistro.addActionListener(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				internalFrame.getContentPane().removeAll();
-//				
-//				JLabel label = new JLabel("Registro Empleado");
-//				label.setBounds(208, 31, 140, 14);
-//				internalFrame.getContentPane().add(label);
-//				
-//				JLabel label_1 = new JLabel("Nombre");
-//				label_1.setBounds(57, 79, 70, 14);
-//				internalFrame.getContentPane().add(label_1);
-//				
-//				final JTextField nombrefield = new JTextField();
-//				nombrefield.setBounds(151, 75, 114, 18);
-//				internalFrame.getContentPane().add(nombrefield);
-//				nombrefield.setColumns(10);
-//				
-//				final JTextField apellidopfield = new JTextField();
-//				apellidopfield.setBounds(151, 111, 114, 18);
-//				internalFrame.getContentPane().add(apellidopfield);
-//				apellidopfield.setColumns(10);
-//				
-//				JLabel label_3 = new JLabel("Apellido M");
-//				label_3.setBounds(57, 145, 99, 14);
-//				internalFrame.getContentPane().add(label_3);
-//				
-//				final JTextField apellidom = new JTextField();
-//				apellidom.setBounds(151, 141, 114, 18);
-//				internalFrame.getContentPane().add(apellidom);
-//				apellidom.setColumns(10);
-//				
-//				JLabel label_4 = new JLabel("Apellido P");
-//				label_4.setBounds(57, 115, 70, 14);
-//				internalFrame.getContentPane().add(label_4);
-//				
-//				final JTextField callefield = new JTextField();
-//				callefield.setBounds(151, 183, 114, 18);
-//				internalFrame.getContentPane().add(callefield);
-//				callefield.setColumns(10);
-//				
-//				JLabel label_5 = new JLabel("Calle");
-//				label_5.setBounds(57, 185, 70, 14);
-//				internalFrame.getContentPane().add(label_5);
-//				
-//				final JTextField ciudadfield = new JTextField();
-//				ciudadfield.setBounds(151, 212, 114, 18);
-//				internalFrame.getContentPane().add(ciudadfield);
-//				ciudadfield.setColumns(10);
-//				
-//				JLabel label_6 = new JLabel("Ciudad");
-//				label_6.setBounds(57, 214, 70, 14);
-//				internalFrame.getContentPane().add(label_6);
-//				
-//				final JTextField estadofield = new JTextField();
-//				estadofield.setBounds(151, 242, 114, 18);
-//				internalFrame.getContentPane().add(estadofield);
-//				estadofield.setColumns(10);
-//				
-//				JLabel label_7 = new JLabel("Estado");
-//				label_7.setBounds(57, 246, 70, 14);
-//				internalFrame.getContentPane().add(label_7);
-//				
-//				final JTextField cpfield = new JTextField();
-//				cpfield.setBounds(357, 77, 114, 18);
-//				internalFrame.getContentPane().add(cpfield);
-//				cpfield.setColumns(10);
-//				
-//				JLabel label_8 = new JLabel("CP");
-//				label_8.setBounds(289, 81, 70, 14);
-//				internalFrame.getContentPane().add(label_8);
-//				
-//				final JTextField paisfield = new JTextField();
-//				paisfield.setBounds(357, 111, 114, 18);
-//				internalFrame.getContentPane().add(paisfield);
-//				paisfield.setColumns(10);
-//				
-//				JLabel label_9 = new JLabel("Pais");
-//				label_9.setBounds(289, 113, 70, 14);
-//				internalFrame.getContentPane().add(label_9);
-//				
-//				final JTextField emailfield = new JTextField();
-//				emailfield.setBounds(357, 143, 114, 18);
-//				internalFrame.getContentPane().add(emailfield);
-//				emailfield.setColumns(10);
-//				
-//				JLabel label_10 = new JLabel("Email");
-//				label_10.setBounds(289, 147, 70, 14);
-//				internalFrame.getContentPane().add(label_10);
-//				
-//				final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
-//				aprobacionboton.setBounds(277, 242, 244, 18);
-//				internalFrame.getContentPane().add(aprobacionboton);
-//				
-//				JButton registrarboton = new JButton("Registrar");
-//				registrarboton.setBounds(245, 287, 114, 27);
-//				
-//				
-//				registrarboton.addActionListener(new ActionListener(){
-//
-//					@Override
-//					public void actionPerformed(ActionEvent arg0) {
-//						// TODO Auto-generated method stub
-//						String aprobado;
-//						if(aprobacionboton.isSelected()== true){
-//							aprobado = "1";
-//						}else{
-//							aprobado = "0";
-//						}
-//						try {
-//							bd.insertarempleado(nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
-//							JOptionPane.showMessageDialog((Component)arg0.getSource(), "Registro Exitoso");
-//							
-//							
-//						} catch (SQLException e) {
-//							// TODO Auto-generated catch block
-//							JOptionPane.showMessageDialog((Component)arg0.getSource(), "Sin datos suficientes");
-//							
-//						}
-//						
-//					}});
-//				internalFrame.getContentPane().add(registrarboton);
-//				
-//				JLabel label_11 = new JLabel("Usuario");
-//				label_11.setBounds(289, 185, 70, 14);
-//				internalFrame.getContentPane().add(label_11);
-//				
-//				usuariofield = new JTextField();
-//				usuariofield.setBounds(357, 183, 114, 18);
-//				internalFrame.getContentPane().add(usuariofield);
-//				usuariofield.setColumns(10);
-//				
-//				contraseñafield = new JTextField();
-//				contraseñafield.setBounds(357, 212, 114, 18);
-//				internalFrame.getContentPane().add(contraseñafield);
-//				contraseñafield.setColumns(10);
-//				
-//				JLabel lblContrasea = new JLabel("Contraseña");
-//				lblContrasea.setBounds(277, 216, 87, 14);
-//				internalFrame.getContentPane().add(lblContrasea);
-//				
-//				
-//				internalFrame.setVisible(true);
-//		
-//				JPanel temp = contentPane;
-//				SwingUtilities.updateComponentTreeUI(temp);
-//				temp.validate();
-//				
-//			}});
-//		menuBar.add(btnRegistro);
-//		
-//		JButton borrar = new JButton("Borrar");
-//		borrar.addActionListener(new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				// TODO Auto-generated method stub
-//				if(tablaempleados.getCellSelectionEnabled()){
-//					tablaempleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//					int indice = tablaempleados.getSelectedRow();
-//					indice++;
-//					try {
-//						bd.borrarempleado(indice);
-//					} catch (SQLException e) {
-//						// TODO Auto-generated catch block
-//						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Hubo un error al borrar");
-//					}
-//				}
-//				
-//			}});
-//		menuBar.add(borrar);
-//		
-//		JMenu mnAyuda = new JMenu("Ayuda");
-//		menuBar.add(mnAyuda);
-//		
-//		JMenuItem mntmInstrucciones = new JMenuItem("Instrucciones");
-//		mnAyuda.add(mntmInstrucciones);
-//		
-//		JMenuItem mntmSoporte = new JMenuItem("Soporte");
-//		mnAyuda.add(mntmSoporte);
-//		internalFrame.setVisible(true);
 		
 		//Se crea la segunda grafica, y se convierte en un BufferedImage
 		PieDataset datasetGraficados = createSampleDataset();
@@ -414,14 +179,553 @@ public class DBMSysAdministrator extends JFrame {
 				final JButton btnEmpledos = new JButton("Empledos");
 				btnEmpledos.setBounds(842, 314, 117, 24);
 				btnEmpledos.setBorder(new RoundedBorder(20));
-				btnEmpledos.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						
-						
-					}});
+//				btnEmpledos.addActionListener(new ActionListener(){
+//
+//					@Override
+//					public void actionPerformed(ActionEvent arg0) {
+//						// TODO Auto-generated method stub
+//						contentPane.removeAll();
+//						JPanel temp = contentPane;
+//						SwingUtilities.updateComponentTreeUI(temp);
+//						temp.validate();
+//						
+//						internalFrame = new JInternalFrame("Empleados");
+//						internalFrame.setClosable(true);
+//						internalFrame.setResizable(true);
+//						internalFrame.setBounds(152, 101, 980, 535);
+//						contentPane.add(internalFrame);
+//						internalFrame.getContentPane().setLayout(null);
+//						
+//						//internalFrame.setLocation(HEIGHT+150, WIDTH+100);
+//					
+//						
+//						
+//						JMenuBar menuBar = new JMenuBar();
+//						internalFrame.setJMenuBar(menuBar);
+//						internalFrame.getContentPane().setLayout(null);
+//						
+//						
+//						JButton btnConsulta = new JButton("Consulta");
+//						btnConsulta.addActionListener(new ActionListener(){
+//
+//							@Override
+//							public void actionPerformed(ActionEvent arg0) {
+//								// TODO Auto-generated method stub
+//
+//								internalFrame.getContentPane().removeAll();
+//								
+//								textField = new JTextField();
+//								textField.setBounds(6, 6, 239, 26);
+//								internalFrame.getContentPane().add(textField);
+//								textField.setColumns(10);
+//								
+//								JButton btnBuscar = new JButton("Buscar");
+//								btnBuscar.addActionListener(new ActionListener(){
+//
+//									@Override
+//									public void actionPerformed(ActionEvent e) {
+//										// TODO Auto-generated method stub
+//										String busqueda = textField.getText();
+//										try {
+//											tablaempleados.setModel(bd.regresabusqueda(busqueda));
+//											tablaempleados.repaint();
+//										} catch (SQLException e1) {
+//											// TODO Auto-generated catch block
+//											System.out.println("ui que pena");
+//											e1.printStackTrace();
+//										}
+//										;
+//										
+//									}});
+//								btnBuscar.setBounds(267, 6, 100, 26);
+//								internalFrame.getContentPane().add(btnBuscar);
+//								
+//								
+//								try {
+//									tablaempleados.setModel(bd.regresamodelo());
+//									tablaempleados.setToolTipText("mmmm");
+//									tablaempleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//								} catch (SQLException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								tablaempleados.setBounds(12, 41, 947, 422);
+//								tablaempleados.setShowGrid(true);
+//								tablaempleados.setShowVerticalLines(true);
+//								tablaempleados.setGridColor(Color.black);
+//								
+//								//contentPane.add(tablaempleados);
+//								internalFrame.getContentPane().add(tablaempleados);
+//								JPanel temp = contentPane;
+//								SwingUtilities.updateComponentTreeUI(temp);
+//								temp.validate();
+//								
+//							}});
+//						menuBar.add(btnConsulta);
+//						
+//						JButton btnRegistro = new JButton("Registro");
+//						btnRegistro.addActionListener(new ActionListener(){
+//
+//							@Override
+//							public void actionPerformed(ActionEvent e) {
+//								// TODO Auto-generated method stub
+//								internalFrame.getContentPane().removeAll();
+//								
+//								JLabel label = new JLabel("Registro Empleado");
+//								label.setBounds(208, 31, 140, 14);
+//								internalFrame.getContentPane().add(label);
+//								
+//								JLabel label_1 = new JLabel("Nombre");
+//								label_1.setBounds(57, 79, 70, 14);
+//								internalFrame.getContentPane().add(label_1);
+//								
+//								final JTextField nombrefield = new JTextField();
+//								nombrefield.setBounds(151, 75, 114, 22);
+//								internalFrame.getContentPane().add(nombrefield);
+//								nombrefield.setColumns(10);
+//								
+//								final JTextField apellidopfield = new JTextField();
+//								apellidopfield.setBounds(151, 111, 114, 22);
+//								internalFrame.getContentPane().add(apellidopfield);
+//								apellidopfield.setColumns(10);
+//								
+//								JLabel label_3 = new JLabel("Apellido M");
+//								label_3.setBounds(57, 145, 99, 14);
+//								internalFrame.getContentPane().add(label_3);
+//								
+//								final JTextField apellidom = new JTextField();
+//								apellidom.setBounds(151, 141, 114, 22);
+//								internalFrame.getContentPane().add(apellidom);
+//								apellidom.setColumns(10);
+//								
+//								JLabel label_4 = new JLabel("Apellido P");
+//								label_4.setBounds(57, 115, 70, 14);
+//								internalFrame.getContentPane().add(label_4);
+//								
+//								final JTextField callefield = new JTextField();
+//								callefield.setBounds(151, 183, 114, 22);
+//								internalFrame.getContentPane().add(callefield);
+//								callefield.setColumns(10);
+//								
+//								JLabel label_5 = new JLabel("Calle");
+//								label_5.setBounds(57, 185, 70, 14);
+//								internalFrame.getContentPane().add(label_5);
+//								
+//								final JTextField ciudadfield = new JTextField();
+//								ciudadfield.setBounds(151, 212, 114, 22);
+//								internalFrame.getContentPane().add(ciudadfield);
+//								ciudadfield.setColumns(10);
+//								
+//								JLabel label_6 = new JLabel("Ciudad");
+//								label_6.setBounds(57, 214, 70, 14);
+//								internalFrame.getContentPane().add(label_6);
+//								
+//								final JTextField estadofield = new JTextField();
+//								estadofield.setBounds(151, 242, 114, 22);
+//								internalFrame.getContentPane().add(estadofield);
+//								estadofield.setColumns(10);
+//								
+//								JLabel label_7 = new JLabel("Estado");
+//								label_7.setBounds(57, 246, 70, 14);
+//								internalFrame.getContentPane().add(label_7);
+//								
+//								final JTextField cpfield = new JTextField();
+//								cpfield.setBounds(357, 77, 114, 22);
+//								internalFrame.getContentPane().add(cpfield);
+//								cpfield.setColumns(10);
+//								
+//								JLabel label_8 = new JLabel("CP");
+//								label_8.setBounds(289, 81, 70, 14);
+//								internalFrame.getContentPane().add(label_8);
+//								
+//								final JTextField paisfield = new JTextField();
+//								paisfield.setBounds(357, 111, 114, 22);
+//								internalFrame.getContentPane().add(paisfield);
+//								paisfield.setColumns(10);
+//								
+//								JLabel label_9 = new JLabel("Pais");
+//								label_9.setBounds(289, 113, 70, 14);
+//								internalFrame.getContentPane().add(label_9);
+//								
+//								final JTextField emailfield = new JTextField();
+//								emailfield.setBounds(357, 143, 114, 22);
+//								internalFrame.getContentPane().add(emailfield);
+//								emailfield.setColumns(10);
+//								
+//								JLabel label_10 = new JLabel("Email");
+//								label_10.setBounds(289, 147, 70, 14);
+//								internalFrame.getContentPane().add(label_10);
+//								
+//								final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
+//								aprobacionboton.setBounds(277, 242, 244, 22);
+//								internalFrame.getContentPane().add(aprobacionboton);
+//								
+//								JButton registrarboton = new JButton("Registrar");
+//								registrarboton.setBounds(245, 287, 114, 27);
+//								
+//								
+//								registrarboton.addActionListener(new ActionListener(){
+//
+//									@Override
+//									public void actionPerformed(ActionEvent arg0) {
+//										// TODO Auto-generated method stub
+//										String aprobado;
+//										if(aprobacionboton.isSelected()== true){
+//											aprobado = "1";
+//										}else{
+//											aprobado = "0";
+//										}
+//										try {
+//											bd.insertarempleado(nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
+//											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Registro Exitoso");
+//											
+//											
+//										} catch (SQLException e) {
+//											// TODO Auto-generated catch block
+//											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Sin datos suficientes");
+//											
+//										}
+//										
+//									}});
+//								internalFrame.getContentPane().add(registrarboton);
+//								
+//								JLabel label_11 = new JLabel("Usuario");
+//								label_11.setBounds(289, 185, 70, 14);
+//								internalFrame.getContentPane().add(label_11);
+//								
+//								usuariofield = new JTextField();
+//								usuariofield.setBounds(357, 183, 114, 22);
+//								internalFrame.getContentPane().add(usuariofield);
+//								usuariofield.setColumns(10);
+//								
+//								contraseñafield = new JTextField();
+//								contraseñafield.setBounds(364, 212, 114, 22);
+//								internalFrame.getContentPane().add(contraseñafield);
+//								contraseñafield.setColumns(10);
+//								
+//								JLabel lblContrasea = new JLabel("Contraseña");
+//								lblContrasea.setBounds(277, 216, 87, 14);
+//								internalFrame.getContentPane().add(lblContrasea);
+//								
+//								//
+//								
+//								
+//								internalFrame.toFront();
+//								internalFrame.setVisible(true);
+//						
+//								JPanel temp = contentPane;
+//								SwingUtilities.updateComponentTreeUI(temp);
+//								temp.validate();
+//								
+//							}});
+//						menuBar.add(btnRegistro);
+//						
+//						tablaempleados.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//						    public void valueChanged(ListSelectionEvent e) {
+//						        sel = tablaempleados.getSelectedRow();
+//						        
+//						    }
+//						});
+//						
+//						JButton borrar = new JButton("Borrar");
+//						borrar.addActionListener(new ActionListener(){
+//
+//							@Override
+//							public void actionPerformed(ActionEvent arg0) {
+//								// TODO Auto-generated method stub	
+//								
+//								System.out.println("escogiste: "+ sel);
+//								try {
+//									String numero = (String) tablaempleados.getValueAt(sel, 0);
+//									bd.borrarempleado(numero);
+//								} catch (SQLException e) {
+//									// TODO Auto-generated catch block
+//									System.out.println("No se pudo borrar");
+//									e.printStackTrace();
+//								}
+//								try {
+//									tablaempleados.setModel(bd.regresamodelo());
+//									tablaempleados.repaint();
+//								} catch (SQLException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								
+//							}});
+//						
+//						JButton btnModificar = new JButton("Modificar");
+//						btnModificar.addActionListener(new ActionListener(){
+//
+//							@Override
+//							public void actionPerformed(ActionEvent arg0) {
+//								// TODO Auto-generated method stub
+//								final String indice = (String)tablaempleados.getValueAt(sel, 0);
+//								
+//								internalFrame.getContentPane().removeAll();
+//								
+//								JLabel label = new JLabel("Modifica Empleado");
+//								label.setBounds(208, 31, 140, 14);
+//								internalFrame.getContentPane().add(label);
+//								
+//								JLabel label_1 = new JLabel("Nombre");
+//								label_1.setBounds(57, 79, 70, 14);
+//								internalFrame.getContentPane().add(label_1);
+//								
+//								final JTextField nombrefield = new JTextField();
+//								nombrefield.setBounds(151, 75, 114, 22);
+//								try {
+//									nombrefield.setText(bd.regresanombreempleado(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(nombrefield);
+//								nombrefield.setColumns(10);
+//								
+//								final JTextField apellidopfield = new JTextField();
+//								apellidopfield.setBounds(151, 111, 114, 22);
+//								try {
+//									apellidopfield.setText(bd.regresapellidop(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(apellidopfield);
+//								apellidopfield.setColumns(10);
+//								
+//								JLabel label_3 = new JLabel("Apellido M");
+//								label_3.setBounds(57, 145, 99, 14);
+//								internalFrame.getContentPane().add(label_3);
+//								
+//								final JTextField apellidom = new JTextField();
+//								apellidom.setBounds(151, 141, 114, 22);
+//								try {
+//									apellidom.setText(bd.regresapellidom(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(apellidom);
+//								apellidom.setColumns(10);
+//								
+//								JLabel label_4 = new JLabel("Apellido P");
+//								label_4.setBounds(57, 115, 70, 14);
+//								internalFrame.getContentPane().add(label_4);
+//								
+//								final JTextField callefield = new JTextField();
+//								callefield.setBounds(151, 183, 114, 22);
+//								try {
+//									callefield.setText(bd.regresacalle(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(callefield);
+//								callefield.setColumns(10);
+//								
+//								JLabel label_5 = new JLabel("Calle");
+//								label_5.setBounds(57, 185, 70, 14);
+//								internalFrame.getContentPane().add(label_5);
+//								
+//								final JTextField ciudadfield = new JTextField();
+//								ciudadfield.setBounds(151, 212, 114, 22);
+//								try {
+//									ciudadfield.setText(bd.regresaciudad(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(ciudadfield);
+//								ciudadfield.setColumns(10);
+//								
+//								JLabel label_6 = new JLabel("Ciudad");
+//								label_6.setBounds(57, 214, 70, 14);
+//								internalFrame.getContentPane().add(label_6);
+//								
+//								final JTextField estadofield = new JTextField();
+//								estadofield.setBounds(151, 242, 114, 22);
+//								try {
+//									estadofield.setText(bd.regresaestado(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(estadofield);
+//								estadofield.setColumns(10);
+//								
+//								JLabel label_7 = new JLabel("Estado");
+//								label_7.setBounds(57, 246, 70, 14);
+//								internalFrame.getContentPane().add(label_7);
+//								
+//								final JTextField cpfield = new JTextField();
+//								cpfield.setBounds(357, 77, 114, 22);
+//								try {
+//									cpfield.setText(bd.regresacp(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(cpfield);
+//								cpfield.setColumns(10);
+//								
+//								JLabel label_8 = new JLabel("CP");
+//								label_8.setBounds(289, 81, 70, 14);
+//								internalFrame.getContentPane().add(label_8);
+//								
+//								final JTextField paisfield = new JTextField();
+//								paisfield.setBounds(357, 111, 114, 22);
+//								try {
+//									paisfield.setText(bd.regresapais(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(paisfield);
+//								paisfield.setColumns(10);
+//								
+//								JLabel label_9 = new JLabel("Pais");
+//								label_9.setBounds(289, 113, 70, 14);
+//								internalFrame.getContentPane().add(label_9);
+//								
+//								final JTextField emailfield = new JTextField();
+//								emailfield.setBounds(357, 143, 114, 22);
+//								try {
+//									emailfield.setText(bd.regresaemail(indice));
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(emailfield);
+//								emailfield.setColumns(10);
+//								
+//								JLabel label_10 = new JLabel("Email");
+//								label_10.setBounds(289, 147, 70, 14);
+//								internalFrame.getContentPane().add(label_10);
+//								
+//								final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
+//								aprobacionboton.setBounds(277, 242, 244, 18);
+//								try {
+//									String aproba = bd.regresaprobacion(indice);
+//									if(aproba.equals("1")){
+//										aprobacionboton.setSelected(true);
+//									}else{
+//										aprobacionboton.setSelected(false);
+//									}
+//								} catch (SQLException e1) {
+//									// TODO Auto-generated catch block
+//									e1.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(aprobacionboton);
+//								
+//								
+//								
+//								JButton registrarboton = new JButton("Modificar");
+//								registrarboton.setBounds(245, 287, 114, 27);
+//								
+//								
+//								registrarboton.addActionListener(new ActionListener(){
+//
+//									@Override
+//									public void actionPerformed(ActionEvent arg0) {
+//										// TODO Auto-generated method stub
+//										String aprobado;
+//										if(aprobacionboton.isSelected()== true){
+//											aprobado = "1";
+//										}else{
+//											aprobado = "0";
+//										}
+//										try {
+//											bd.modificarempleado(indice,nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
+//											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Modificado Exitosamente");
+//											
+//										} catch (SQLException e) {
+//											// TODO Auto-generated catch block
+//											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Faltan Datos");
+//											e.printStackTrace();
+//											
+//										}
+//										
+//									}});
+//								internalFrame.getContentPane().add(registrarboton);
+//								
+//								JLabel label_11 = new JLabel("Usuario");
+//								label_11.setBounds(289, 185, 70, 14);
+//								internalFrame.getContentPane().add(label_11);
+//								
+//								usuariofield = new JTextField();
+//								usuariofield.setBounds(357, 183, 114, 22);
+//								try {
+//									usuariofield.setText(bd.regresausuario(indice));
+//								} catch (SQLException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(usuariofield);
+//								usuariofield.setColumns(10);
+//								
+//								contraseñafield = new JTextField();
+//								contraseñafield.setBounds(364, 212, 114, 22);
+//								try {
+//									contraseñafield.setText(bd.regresapassword(indice));
+//								} catch (SQLException e) {
+//									// TODO Auto-generated catch block
+//									e.printStackTrace();
+//								}
+//								internalFrame.getContentPane().add(contraseñafield);
+//								contraseñafield.setColumns(10);
+//								
+//								JLabel lblContrasea = new JLabel("Contraseña");
+//								lblContrasea.setBounds(277, 216, 87, 14);
+//								internalFrame.getContentPane().add(lblContrasea);
+//								
+//								
+//								internalFrame.setVisible(true);
+//						
+//								JPanel temp = contentPane;
+//								SwingUtilities.updateComponentTreeUI(temp);
+//								temp.validate();
+//								
+//							}});
+//						menuBar.add(btnModificar);
+//						menuBar.add(borrar);
+//						
+//						JMenu mnAyuda = new JMenu("Ayuda");
+//						menuBar.add(mnAyuda);
+//						
+//						JMenuItem mntmInstrucciones = new JMenuItem("Instrucciones");
+//						mnAyuda.add(mntmInstrucciones);
+//						
+//						JMenuItem mntmSoporte = new JMenuItem("Soporte");
+//						mnAyuda.add(mntmSoporte);
+//						
+//						try {
+//							internalFrame.setSelected(true);
+//						} catch (PropertyVetoException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+//						
+//						contentPane.add(btnIniciar);
+//						contentPane.add(btnEmpledos);
+//						contentPane.add(btnTransportistas);
+//						contentPane.add(btnProveedores);
+//						contentPane.add(btnClientes);
+//						contentPane.add(btnPedidos);
+//						contentPane.add(graficados);
+//						contentPane.add(graficatres);
+//						contentPane.add(graficacuatro);
+//						contentPane.add(graficacinco);
+//
+//						internalFrame.toFront();
+//						internalFrame.setVisible(true);
+//						
+//						JPanel temp1 = contentPane;
+//						SwingUtilities.updateComponentTreeUI(temp1);
+//						temp1.validate();
+//
+//						contentPane.repaint();
+//						
+//					}});
 				contentPane.add(btnEmpledos);
 				
 				final JButton button = new JButton("Atras");
@@ -460,7 +764,6 @@ public class DBMSysAdministrator extends JFrame {
 		contentPane.add(internalFrame);
 		internalFrame.setVisible(true);
 
-//		graficauno.getContentPane().add(comp);
 		
 		graficacuatro.setVisible(true);
 		graficacinco.setVisible(true);
@@ -568,153 +871,4 @@ class RoundedBorder implements Border {
 
 
 //Backport de codigo
-
-//Añade frame interna de registro de empleado
-//JInternalFrame RegistroEmpleado = new JInternalFrame("Empleado");
-//RegistroEmpleado.setClosable(true);
-//RegistroEmpleado.setResizable(true);
-//RegistroEmpleado.setBounds(293, 194, 980, 600);
-//contentPane.add(RegistroEmpleado);
-//RegistroEmpleado.getContentPane().setLayout(null);
-//
-//JLabel label = new JLabel("Registro Empleado");
-//label.setBounds(208, 31, 140, 14);
-//RegistroEmpleado.getContentPane().add(label);
-//
-//JLabel label_1 = new JLabel("Nombre");
-//label_1.setBounds(57, 79, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_1);
-//
-//final JTextField nombrefield = new JTextField();
-//nombrefield.setBounds(151, 75, 114, 18);
-//RegistroEmpleado.getContentPane().add(nombrefield);
-//nombrefield.setColumns(10);
-//
-//final JTextField apellidopfield = new JTextField();
-//apellidopfield.setBounds(151, 111, 114, 18);
-//RegistroEmpleado.getContentPane().add(apellidopfield);
-//apellidopfield.setColumns(10);
-//
-//JLabel label_3 = new JLabel("Apellido M");
-//label_3.setBounds(57, 145, 99, 14);
-//RegistroEmpleado.getContentPane().add(label_3);
-//
-//final JTextField apellidom = new JTextField();
-//apellidom.setBounds(151, 141, 114, 18);
-//RegistroEmpleado.getContentPane().add(apellidom);
-//apellidom.setColumns(10);
-//
-//JLabel label_4 = new JLabel("Apellido P");
-//label_4.setBounds(57, 115, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_4);
-//
-//final JTextField callefield = new JTextField();
-//callefield.setBounds(151, 183, 114, 18);
-//RegistroEmpleado.getContentPane().add(callefield);
-//callefield.setColumns(10);
-//
-//JLabel label_5 = new JLabel("Calle");
-//label_5.setBounds(57, 185, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_5);
-//
-//final JTextField ciudadfield = new JTextField();
-//ciudadfield.setBounds(151, 212, 114, 18);
-//RegistroEmpleado.getContentPane().add(ciudadfield);
-//ciudadfield.setColumns(10);
-//
-//JLabel label_6 = new JLabel("Ciudad");
-//label_6.setBounds(57, 214, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_6);
-//
-//final JTextField estadofield = new JTextField();
-//estadofield.setBounds(151, 242, 114, 18);
-//RegistroEmpleado.getContentPane().add(estadofield);
-//estadofield.setColumns(10);
-//
-//JLabel label_7 = new JLabel("Estado");
-//label_7.setBounds(57, 246, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_7);
-//
-//final JTextField cpfield = new JTextField();
-//cpfield.setBounds(357, 77, 114, 18);
-//RegistroEmpleado.getContentPane().add(cpfield);
-//cpfield.setColumns(10);
-//
-//JLabel label_8 = new JLabel("CP");
-//label_8.setBounds(289, 81, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_8);
-//
-//final JTextField paisfield = new JTextField();
-//paisfield.setBounds(357, 111, 114, 18);
-//RegistroEmpleado.getContentPane().add(paisfield);
-//paisfield.setColumns(10);
-//
-//JLabel label_9 = new JLabel("Pais");
-//label_9.setBounds(289, 113, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_9);
-//
-//final JTextField emailfield = new JTextField();
-//emailfield.setBounds(357, 143, 114, 18);
-//RegistroEmpleado.getContentPane().add(emailfield);
-//emailfield.setColumns(10);
-//
-//JLabel label_10 = new JLabel("Email");
-//label_10.setBounds(289, 147, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_10);
-//
-//final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
-//aprobacionboton.setBounds(277, 242, 244, 18);
-//RegistroEmpleado.getContentPane().add(aprobacionboton);
-//
-//JButton registrarboton = new JButton("Registrar");
-//registrarboton.setBounds(245, 287, 114, 27);
-//registrarboton.addActionListener(new ActionListener(){
-//
-//	@Override 	
-//	public void actionPerformed(ActionEvent arg0) {
-//		// TODO Auto-generated method stub
-//		String aprobado;
-//		if(aprobacionboton.isSelected()== true){
-//			aprobado = "1";
-//		}else{
-//			aprobado = "0";
-//		}
-//		try {
-//			AbstractButton usuariofield = null;
-//			AbstractButton contraseñafield = null;
-//			bd.insertarempleado(nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
-//			JOptionPane.showMessageDialog((Component)arg0.getSource(), "Registro Exitoso");
-//			
-//			
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			JOptionPane.showMessageDialog((Component)arg0.getSource(), "Sin datos suficientes");
-//			
-//		}
-//		
-//	}});
-//RegistroEmpleado.getContentPane().add(registrarboton);
-//
-//JLabel label_11 = new JLabel("Usuario");
-//label_11.setBounds(289, 185, 70, 14);
-//RegistroEmpleado.getContentPane().add(label_11);
-//
-//JTextField usuariofield = new JTextField();
-//usuariofield.setBounds(357, 183, 114, 18);
-//RegistroEmpleado.getContentPane().add(usuariofield);
-//usuariofield.setColumns(10);
-//
-//JTextField contraseñafield = new JTextField();
-//contraseñafield.setBounds(357, 212, 114, 18);
-//RegistroEmpleado.getContentPane().add(contraseñafield);
-//contraseñafield.setColumns(10);
-//
-//JLabel lblContrasea = new JLabel("Contraseña");
-//lblContrasea.setBounds(277, 216, 87, 14);
-//RegistroEmpleado.getContentPane().add(lblContrasea);
-//
-//
-//RegistroEmpleado.setVisible(true);
-//JPanel temp = contentPane;
-//SwingUtilities.updateComponentTreeUI(temp);
-//temp.validate();
+//Vacio
