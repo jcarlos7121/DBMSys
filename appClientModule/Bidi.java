@@ -46,6 +46,8 @@ public class Bidi {
 
 		return bli;
 	};
+	
+	//Metodos para empleados
 
 	public void borrarempleado(String numero) throws SQLException{
 		PreparedStatement borrado = conect.prepareStatement("delete from empleado where noempleado ="+numero+";");
@@ -256,5 +258,34 @@ public class Bidi {
 		
 	}
 	
+	//Terminan Metodos para empleados
+	
+	public DefaultTableModel regresabusqueda(String d) throws SQLException {
+		PreparedStatement datines = conect
+				.prepareStatement("select * from empleado where nombre = '"+d+"' order by noempleado;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;
+
+	}
 	
 }

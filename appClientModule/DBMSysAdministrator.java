@@ -145,6 +145,23 @@ public class DBMSysAdministrator extends JFrame {
 				textField.setColumns(10);
 				
 				JButton btnBuscar = new JButton("Buscar");
+				btnBuscar.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						String busqueda = textField.getText();
+						try {
+							tablaempleados.setModel(bd.regresabusqueda(busqueda));
+							tablaempleados.repaint();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							System.out.println("ui que pena");
+							e1.printStackTrace();
+						}
+						;
+						
+					}});
 				btnBuscar.setBounds(267, 6, 100, 26);
 				internalFrame.getContentPane().add(btnBuscar);
 				
