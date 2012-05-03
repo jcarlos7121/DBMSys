@@ -1,6 +1,7 @@
 import java.sql.*;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  * @author juancarlos
@@ -258,7 +259,7 @@ public class Bidi {
 		
 	}
 	
-	//Terminan Metodos para empleados
+	
 	
 	public DefaultTableModel regresabusqueda(String d) throws SQLException {
 		PreparedStatement datines = conect
@@ -287,5 +288,94 @@ public class Bidi {
 		return blop;
 
 	}
+	//Terminan Metodos para empleados
+	
+	//Comienzan Metodos para Proveedores...
+	
+	//Modelo de la tabla
+	public DefaultTableModel regresamodeloproveedor() throws SQLException {
+		PreparedStatement datines = conect
+				.prepareStatement("select * from proveedor;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;
+
+	}
+
+	public TableModel regresamodeloproveedortels() throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement datines = conect
+				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,telefono from proveedortels natural join proveedor;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;
+	}
+	public TableModel regresamodeloempresa() throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement datines = conect
+				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,empresapersona,cargo,compañia from proveedorempresa natural join proveedor;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;
+	}
+	//Termina la definiciòn de modelos del empleado
+	//Metodos para inserciòn a base de datos de proveedores
 	
 }
