@@ -49,6 +49,7 @@ import javax.swing.table.*;
 
 import java.util.*;
 import java.awt.*;
+import java.beans.PropertyVetoException;
 
 
 public class DBMSysAdministrator extends JFrame {
@@ -60,8 +61,12 @@ public class DBMSysAdministrator extends JFrame {
 	JTextField usuariofield = null;
 	JTextField contraseñafield = null;
 	 int sel;
-	 JTable tablaempleados;
+	 JTable tablaempleados = new JTable();
 	 JInternalFrame internalFrame;
+	 JInternalFrame graficatres;
+	 JInternalFrame graficados;
+	 JInternalFrame graficacinco;
+	 JInternalFrame graficacuatro;
 	 Bidi bd;
 	/**
 	 * Launch the application.
@@ -85,26 +90,26 @@ public class DBMSysAdministrator extends JFrame {
 	 * @throws SQLException
 	 */
 	public DBMSysAdministrator() throws ClassNotFoundException, SQLException {
-//		try {
-//		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-//		        if ("Nimbus".equals(info.getName())) {
-//		            UIManager.setLookAndFeel(info.getClassName());
-//		            break;
-//		        }
-//		    }
-//		} catch (UnsupportedLookAndFeelException e) {
-//		    // handle exception
-//		} catch (ClassNotFoundException e) {
-//		    // handle exception
-//		} catch (InstantiationException e) {
-//		    // handle exception
-//		} catch (IllegalAccessException e) {
-//		    // handle exception
-//		}
-//		
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (UnsupportedLookAndFeelException e) {
+		    // handle exception
+		} catch (ClassNotFoundException e) {
+		    // handle exception
+		} catch (InstantiationException e) {
+		    // handle exception
+		} catch (IllegalAccessException e) {
+		    // handle exception
+		}
+		
 		
 		bd = new Bidi("postgres", "132410jh");
-		final JTable tablaempleados;
+//		final JTable tablaempleados = null;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
@@ -115,512 +120,6 @@ public class DBMSysAdministrator extends JFrame {
 		
 		//Comienza la creaciòn del internal frame de empleado
 		
-		internalFrame = new JInternalFrame("Empleados");
-		internalFrame.setBounds(152, 101, 813, 454);
-		internalFrame.setLocation(HEIGHT+150, WIDTH+100);
-		internalFrame.setClosable(true);
-		internalFrame.setResizable(true);
-//		internalFrame.setMaximizable(true);
-		contentPane.add(internalFrame);
-		
-		tablaempleados = new JTable();
-		
-		JMenuBar menuBar = new JMenuBar();
-		internalFrame.setJMenuBar(menuBar);
-		internalFrame.getContentPane().setLayout(null);
-		
-		
-		JButton btnConsulta = new JButton("Consulta");
-		btnConsulta.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-
-				internalFrame.getContentPane().removeAll();
-				
-				textField = new JTextField();
-				textField.setBounds(6, 6, 239, 26);
-				internalFrame.getContentPane().add(textField);
-				textField.setColumns(10);
-				
-				JButton btnBuscar = new JButton("Buscar");
-				btnBuscar.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						String busqueda = textField.getText();
-						try {
-							tablaempleados.setModel(bd.regresabusqueda(busqueda));
-							tablaempleados.repaint();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							System.out.println("ui que pena");
-							e1.printStackTrace();
-						}
-						;
-						
-					}});
-				btnBuscar.setBounds(267, 6, 100, 26);
-				internalFrame.getContentPane().add(btnBuscar);
-				
-				
-				try {
-					tablaempleados.setModel(bd.regresamodelo());
-					tablaempleados.setToolTipText("mmmm");
-					tablaempleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				tablaempleados.setBounds(12, 41, 947, 422);
-				tablaempleados.setShowGrid(true);
-				tablaempleados.setShowVerticalLines(true);
-				tablaempleados.setGridColor(Color.black);
-				
-				//contentPane.add(tablaempleados);
-				internalFrame.getContentPane().add(tablaempleados);
-				JPanel temp = contentPane;
-				SwingUtilities.updateComponentTreeUI(temp);
-				temp.validate();
-				
-			}});
-		menuBar.add(btnConsulta);
-		
-		JButton btnRegistro = new JButton("Registro");
-		btnRegistro.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				internalFrame.getContentPane().removeAll();
-				
-				JLabel label = new JLabel("Registro Empleado");
-				label.setBounds(208, 31, 140, 14);
-				internalFrame.getContentPane().add(label);
-				
-				JLabel label_1 = new JLabel("Nombre");
-				label_1.setBounds(57, 79, 70, 14);
-				internalFrame.getContentPane().add(label_1);
-				
-				final JTextField nombrefield = new JTextField();
-				nombrefield.setBounds(151, 75, 114, 18);
-				internalFrame.getContentPane().add(nombrefield);
-				nombrefield.setColumns(10);
-				
-				final JTextField apellidopfield = new JTextField();
-				apellidopfield.setBounds(151, 111, 114, 18);
-				internalFrame.getContentPane().add(apellidopfield);
-				apellidopfield.setColumns(10);
-				
-				JLabel label_3 = new JLabel("Apellido M");
-				label_3.setBounds(57, 145, 99, 14);
-				internalFrame.getContentPane().add(label_3);
-				
-				final JTextField apellidom = new JTextField();
-				apellidom.setBounds(151, 141, 114, 18);
-				internalFrame.getContentPane().add(apellidom);
-				apellidom.setColumns(10);
-				
-				JLabel label_4 = new JLabel("Apellido P");
-				label_4.setBounds(57, 115, 70, 14);
-				internalFrame.getContentPane().add(label_4);
-				
-				final JTextField callefield = new JTextField();
-				callefield.setBounds(151, 183, 114, 18);
-				internalFrame.getContentPane().add(callefield);
-				callefield.setColumns(10);
-				
-				JLabel label_5 = new JLabel("Calle");
-				label_5.setBounds(57, 185, 70, 14);
-				internalFrame.getContentPane().add(label_5);
-				
-				final JTextField ciudadfield = new JTextField();
-				ciudadfield.setBounds(151, 212, 114, 18);
-				internalFrame.getContentPane().add(ciudadfield);
-				ciudadfield.setColumns(10);
-				
-				JLabel label_6 = new JLabel("Ciudad");
-				label_6.setBounds(57, 214, 70, 14);
-				internalFrame.getContentPane().add(label_6);
-				
-				final JTextField estadofield = new JTextField();
-				estadofield.setBounds(151, 242, 114, 18);
-				internalFrame.getContentPane().add(estadofield);
-				estadofield.setColumns(10);
-				
-				JLabel label_7 = new JLabel("Estado");
-				label_7.setBounds(57, 246, 70, 14);
-				internalFrame.getContentPane().add(label_7);
-				
-				final JTextField cpfield = new JTextField();
-				cpfield.setBounds(357, 77, 114, 18);
-				internalFrame.getContentPane().add(cpfield);
-				cpfield.setColumns(10);
-				
-				JLabel label_8 = new JLabel("CP");
-				label_8.setBounds(289, 81, 70, 14);
-				internalFrame.getContentPane().add(label_8);
-				
-				final JTextField paisfield = new JTextField();
-				paisfield.setBounds(357, 111, 114, 18);
-				internalFrame.getContentPane().add(paisfield);
-				paisfield.setColumns(10);
-				
-				JLabel label_9 = new JLabel("Pais");
-				label_9.setBounds(289, 113, 70, 14);
-				internalFrame.getContentPane().add(label_9);
-				
-				final JTextField emailfield = new JTextField();
-				emailfield.setBounds(357, 143, 114, 18);
-				internalFrame.getContentPane().add(emailfield);
-				emailfield.setColumns(10);
-				
-				JLabel label_10 = new JLabel("Email");
-				label_10.setBounds(289, 147, 70, 14);
-				internalFrame.getContentPane().add(label_10);
-				
-				final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
-				aprobacionboton.setBounds(277, 242, 244, 18);
-				internalFrame.getContentPane().add(aprobacionboton);
-				
-				JButton registrarboton = new JButton("Registrar");
-				registrarboton.setBounds(245, 287, 114, 27);
-				
-				
-				registrarboton.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						String aprobado;
-						if(aprobacionboton.isSelected()== true){
-							aprobado = "1";
-						}else{
-							aprobado = "0";
-						}
-						try {
-							bd.insertarempleado(nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
-							JOptionPane.showMessageDialog((Component)arg0.getSource(), "Registro Exitoso");
-							
-							
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog((Component)arg0.getSource(), "Sin datos suficientes");
-							
-						}
-						
-					}});
-				internalFrame.getContentPane().add(registrarboton);
-				
-				JLabel label_11 = new JLabel("Usuario");
-				label_11.setBounds(289, 185, 70, 14);
-				internalFrame.getContentPane().add(label_11);
-				
-				usuariofield = new JTextField();
-				usuariofield.setBounds(357, 183, 114, 18);
-				internalFrame.getContentPane().add(usuariofield);
-				usuariofield.setColumns(10);
-				
-				contraseñafield = new JTextField();
-				contraseñafield.setBounds(364, 212, 114, 18);
-				internalFrame.getContentPane().add(contraseñafield);
-				contraseñafield.setColumns(10);
-				
-				JLabel lblContrasea = new JLabel("Contraseña");
-				lblContrasea.setBounds(277, 216, 87, 14);
-				internalFrame.getContentPane().add(lblContrasea);
-				
-				
-				internalFrame.setVisible(true);
-		
-				JPanel temp = contentPane;
-				SwingUtilities.updateComponentTreeUI(temp);
-				temp.validate();
-				
-			}});
-		menuBar.add(btnRegistro);
-		
-		tablaempleados.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-		    public void valueChanged(ListSelectionEvent e) {
-		        sel = tablaempleados.getSelectedRow();
-		        
-		    }
-		});
-		
-		JButton borrar = new JButton("Borrar");
-		borrar.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub	
-				
-				System.out.println("escogiste: "+ sel);
-				try {
-					String numero = (String) tablaempleados.getValueAt(sel, 0);
-					bd.borrarempleado(numero);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					System.out.println("No se pudo borrar");
-					e.printStackTrace();
-				}
-				try {
-					tablaempleados.setModel(bd.regresamodelo());
-					tablaempleados.repaint();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}});
-		
-		JButton btnModificar = new JButton("Modificar");
-		btnModificar.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				final String indice = (String)tablaempleados.getValueAt(sel, 0);
-				
-				internalFrame.getContentPane().removeAll();
-				
-				JLabel label = new JLabel("Modifica Empleado");
-				label.setBounds(208, 31, 140, 14);
-				internalFrame.getContentPane().add(label);
-				
-				JLabel label_1 = new JLabel("Nombre");
-				label_1.setBounds(57, 79, 70, 14);
-				internalFrame.getContentPane().add(label_1);
-				
-				final JTextField nombrefield = new JTextField();
-				nombrefield.setBounds(151, 75, 114, 18);
-				try {
-					nombrefield.setText(bd.regresanombreempleado(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(nombrefield);
-				nombrefield.setColumns(10);
-				
-				final JTextField apellidopfield = new JTextField();
-				apellidopfield.setBounds(151, 111, 114, 18);
-				try {
-					apellidopfield.setText(bd.regresapellidop(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(apellidopfield);
-				apellidopfield.setColumns(10);
-				
-				JLabel label_3 = new JLabel("Apellido M");
-				label_3.setBounds(57, 145, 99, 14);
-				internalFrame.getContentPane().add(label_3);
-				
-				final JTextField apellidom = new JTextField();
-				apellidom.setBounds(151, 141, 114, 18);
-				try {
-					apellidom.setText(bd.regresapellidom(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(apellidom);
-				apellidom.setColumns(10);
-				
-				JLabel label_4 = new JLabel("Apellido P");
-				label_4.setBounds(57, 115, 70, 14);
-				internalFrame.getContentPane().add(label_4);
-				
-				final JTextField callefield = new JTextField();
-				callefield.setBounds(151, 183, 114, 18);
-				try {
-					callefield.setText(bd.regresacalle(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(callefield);
-				callefield.setColumns(10);
-				
-				JLabel label_5 = new JLabel("Calle");
-				label_5.setBounds(57, 185, 70, 14);
-				internalFrame.getContentPane().add(label_5);
-				
-				final JTextField ciudadfield = new JTextField();
-				ciudadfield.setBounds(151, 212, 114, 18);
-				try {
-					ciudadfield.setText(bd.regresaciudad(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(ciudadfield);
-				ciudadfield.setColumns(10);
-				
-				JLabel label_6 = new JLabel("Ciudad");
-				label_6.setBounds(57, 214, 70, 14);
-				internalFrame.getContentPane().add(label_6);
-				
-				final JTextField estadofield = new JTextField();
-				estadofield.setBounds(151, 242, 114, 18);
-				try {
-					estadofield.setText(bd.regresaestado(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(estadofield);
-				estadofield.setColumns(10);
-				
-				JLabel label_7 = new JLabel("Estado");
-				label_7.setBounds(57, 246, 70, 14);
-				internalFrame.getContentPane().add(label_7);
-				
-				final JTextField cpfield = new JTextField();
-				cpfield.setBounds(357, 77, 114, 18);
-				try {
-					cpfield.setText(bd.regresacp(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(cpfield);
-				cpfield.setColumns(10);
-				
-				JLabel label_8 = new JLabel("CP");
-				label_8.setBounds(289, 81, 70, 14);
-				internalFrame.getContentPane().add(label_8);
-				
-				final JTextField paisfield = new JTextField();
-				paisfield.setBounds(357, 111, 114, 18);
-				try {
-					paisfield.setText(bd.regresapais(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(paisfield);
-				paisfield.setColumns(10);
-				
-				JLabel label_9 = new JLabel("Pais");
-				label_9.setBounds(289, 113, 70, 14);
-				internalFrame.getContentPane().add(label_9);
-				
-				final JTextField emailfield = new JTextField();
-				emailfield.setBounds(357, 143, 114, 18);
-				try {
-					emailfield.setText(bd.regresaemail(indice));
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(emailfield);
-				emailfield.setColumns(10);
-				
-				JLabel label_10 = new JLabel("Email");
-				label_10.setBounds(289, 147, 70, 14);
-				internalFrame.getContentPane().add(label_10);
-				
-				final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
-				aprobacionboton.setBounds(277, 242, 244, 18);
-				try {
-					String aproba = bd.regresaprobacion(indice);
-					if(aproba.equals("1")){
-						aprobacionboton.setSelected(true);
-					}else{
-						aprobacionboton.setSelected(false);
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				internalFrame.getContentPane().add(aprobacionboton);
-				
-				
-				
-				JButton registrarboton = new JButton("Modificar");
-				registrarboton.setBounds(245, 287, 114, 27);
-				
-				
-				registrarboton.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						String aprobado;
-						if(aprobacionboton.isSelected()== true){
-							aprobado = "1";
-						}else{
-							aprobado = "0";
-						}
-						try {
-							bd.modificarempleado(indice,nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
-							JOptionPane.showMessageDialog((Component)arg0.getSource(), "Modificado Exitosamente");
-							
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							JOptionPane.showMessageDialog((Component)arg0.getSource(), "Faltan Datos");
-							e.printStackTrace();
-							
-						}
-						
-					}});
-				internalFrame.getContentPane().add(registrarboton);
-				
-				JLabel label_11 = new JLabel("Usuario");
-				label_11.setBounds(289, 185, 70, 14);
-				internalFrame.getContentPane().add(label_11);
-				
-				usuariofield = new JTextField();
-				usuariofield.setBounds(357, 183, 114, 18);
-				try {
-					usuariofield.setText(bd.regresausuario(indice));
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				internalFrame.getContentPane().add(usuariofield);
-				usuariofield.setColumns(10);
-				
-				contraseñafield = new JTextField();
-				contraseñafield.setBounds(364, 212, 114, 18);
-				try {
-					contraseñafield.setText(bd.regresapassword(indice));
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				internalFrame.getContentPane().add(contraseñafield);
-				contraseñafield.setColumns(10);
-				
-				JLabel lblContrasea = new JLabel("Contraseña");
-				lblContrasea.setBounds(277, 216, 87, 14);
-				internalFrame.getContentPane().add(lblContrasea);
-				
-				
-				internalFrame.setVisible(true);
-		
-				JPanel temp = contentPane;
-				SwingUtilities.updateComponentTreeUI(temp);
-				temp.validate();
-				
-			}});
-		menuBar.add(btnModificar);
-		menuBar.add(borrar);
-		
-		JMenu mnAyuda = new JMenu("Ayuda");
-		menuBar.add(mnAyuda);
-		
-		JMenuItem mntmInstrucciones = new JMenuItem("Instrucciones");
-		mnAyuda.add(mntmInstrucciones);
-		
-		JMenuItem mntmSoporte = new JMenuItem("Soporte");
-		mnAyuda.add(mntmSoporte);
-		internalFrame.toFront();
-		internalFrame.setVisible(true);
 		
 		//Termina la creaciòn del internal frame de empleado
 		
@@ -628,46 +127,18 @@ public class DBMSysAdministrator extends JFrame {
 		PieDataset datasetGraficados = createSampleDataset();
 		BufferedImage graphidos = graphdos(datasetGraficados);
 		
-		JInternalFrame graficados = new JInternalFrame("Ventas Semanal");
-		graficados.setBounds(12, 370, 322, 345);
-		contentPane.add(graficados);
-		graficados.getContentPane().setLayout(null);
-		
 		//Se pasa de bufferedImage a una imagen icono grandota y se agrega al label
 		ImageIcon imagengraficados = new ImageIcon(graphidos);
-		JLabel lblGraficados = new JLabel("Graficados");
-		lblGraficados.setIcon(imagengraficados);
-		lblGraficados.setBounds(6, 6, 298, 302);
-		graficados.getContentPane().add(lblGraficados);
 		
 		
 		BufferedImage graphuno = graphuno();
 		
-		
-		JInternalFrame graficatres = new JInternalFrame("Venta Productos");
-		graficatres.setBounds(12, 12, 322, 353);
-		contentPane.add(graficatres);
-		graficatres.getContentPane().setLayout(null);
-		
 		ImageIcon grafiiconuno = new ImageIcon(graphuno);
 		
-		JLabel lblGraphuno = new JLabel("Graphuno");
-		lblGraphuno.setBounds(6, 6, 330, 310);
-		lblGraphuno.setIcon(grafiiconuno);
-		graficatres.getContentPane().add(lblGraphuno);
-		
-		JInternalFrame graficacinco = new JInternalFrame("Lista Pedidos");
-		graficacinco.setBounds(1017, 362, 269, 353);
-		contentPane.add(graficacinco);
-		
-		JInternalFrame graficacuatro = new JInternalFrame("Lista Productos");
-		graficacuatro.setBounds(1017, 12, 269, 353);
-		contentPane.add(graficacuatro);
 		
 		
 		
-		
-		JButton btnIniciar = new JButton("Iniciar");
+		final JButton btnIniciar = new JButton("Iniciar");
 		btnIniciar.setBounds(595, 314, 117, 24);
 		btnIniciar.setBorder(new RoundedBorder(35));
 		btnIniciar.addActionListener(new ActionListener(){
@@ -699,16 +170,556 @@ public class DBMSysAdministrator extends JFrame {
 				contentPane.add(btnTransportistas);
 				
 				final JButton btnEmpledos = new JButton("Empleados");
-				btnEmpledos.setBounds(842, 314, 117, 24);
-				btnEmpledos.setBorder(new RoundedBorder(20));
 				btnEmpledos.addActionListener(new ActionListener(){
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						// TODO Auto-generated method stub
+						contentPane.removeAll();
+						JPanel temp = contentPane;
+						SwingUtilities.updateComponentTreeUI(temp);
+						temp.validate();
 						
+						internalFrame = new JInternalFrame("Empleados");
+						internalFrame.setClosable(true);
+						internalFrame.setResizable(true);
+						internalFrame.setBounds(152, 101, 980, 535);
+						contentPane.add(internalFrame);
+						internalFrame.getContentPane().setLayout(null);
+						
+						//internalFrame.setLocation(HEIGHT+150, WIDTH+100);
+					
+						
+						
+						JMenuBar menuBar = new JMenuBar();
+						internalFrame.setJMenuBar(menuBar);
+						internalFrame.getContentPane().setLayout(null);
+						
+						
+						JButton btnConsulta = new JButton("Consulta");
+						btnConsulta.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+
+								internalFrame.getContentPane().removeAll();
+								
+								textField = new JTextField();
+								textField.setBounds(6, 6, 239, 26);
+								internalFrame.getContentPane().add(textField);
+								textField.setColumns(10);
+								
+								JButton btnBuscar = new JButton("Buscar");
+								btnBuscar.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										String busqueda = textField.getText();
+										try {
+											tablaempleados.setModel(bd.regresabusqueda(busqueda));
+											tablaempleados.repaint();
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											System.out.println("ui que pena");
+											e1.printStackTrace();
+										}
+										;
+										
+									}});
+								btnBuscar.setBounds(267, 6, 100, 26);
+								internalFrame.getContentPane().add(btnBuscar);
+								
+								
+								try {
+									tablaempleados.setModel(bd.regresamodelo());
+									tablaempleados.setToolTipText("mmmm");
+									tablaempleados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								tablaempleados.setBounds(12, 41, 947, 422);
+								tablaempleados.setShowGrid(true);
+								tablaempleados.setShowVerticalLines(true);
+								tablaempleados.setGridColor(Color.black);
+								
+								//contentPane.add(tablaempleados);
+								internalFrame.getContentPane().add(tablaempleados);
+								JPanel temp = contentPane;
+								SwingUtilities.updateComponentTreeUI(temp);
+								temp.validate();
+								
+							}});
+						menuBar.add(btnConsulta);
+						
+						JButton btnRegistro = new JButton("Registro");
+						btnRegistro.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								internalFrame.getContentPane().removeAll();
+								
+								JLabel label = new JLabel("Registro Empleado");
+								label.setBounds(208, 31, 140, 14);
+								internalFrame.getContentPane().add(label);
+								
+								JLabel label_1 = new JLabel("Nombre");
+								label_1.setBounds(57, 79, 70, 14);
+								internalFrame.getContentPane().add(label_1);
+								
+								final JTextField nombrefield = new JTextField();
+								nombrefield.setBounds(151, 75, 114, 22);
+								internalFrame.getContentPane().add(nombrefield);
+								nombrefield.setColumns(10);
+								
+								final JTextField apellidopfield = new JTextField();
+								apellidopfield.setBounds(151, 111, 114, 22);
+								internalFrame.getContentPane().add(apellidopfield);
+								apellidopfield.setColumns(10);
+								
+								JLabel label_3 = new JLabel("Apellido M");
+								label_3.setBounds(57, 145, 99, 14);
+								internalFrame.getContentPane().add(label_3);
+								
+								final JTextField apellidom = new JTextField();
+								apellidom.setBounds(151, 141, 114, 22);
+								internalFrame.getContentPane().add(apellidom);
+								apellidom.setColumns(10);
+								
+								JLabel label_4 = new JLabel("Apellido P");
+								label_4.setBounds(57, 115, 70, 14);
+								internalFrame.getContentPane().add(label_4);
+								
+								final JTextField callefield = new JTextField();
+								callefield.setBounds(151, 183, 114, 22);
+								internalFrame.getContentPane().add(callefield);
+								callefield.setColumns(10);
+								
+								JLabel label_5 = new JLabel("Calle");
+								label_5.setBounds(57, 185, 70, 14);
+								internalFrame.getContentPane().add(label_5);
+								
+								final JTextField ciudadfield = new JTextField();
+								ciudadfield.setBounds(151, 212, 114, 22);
+								internalFrame.getContentPane().add(ciudadfield);
+								ciudadfield.setColumns(10);
+								
+								JLabel label_6 = new JLabel("Ciudad");
+								label_6.setBounds(57, 214, 70, 14);
+								internalFrame.getContentPane().add(label_6);
+								
+								final JTextField estadofield = new JTextField();
+								estadofield.setBounds(151, 242, 114, 22);
+								internalFrame.getContentPane().add(estadofield);
+								estadofield.setColumns(10);
+								
+								JLabel label_7 = new JLabel("Estado");
+								label_7.setBounds(57, 246, 70, 14);
+								internalFrame.getContentPane().add(label_7);
+								
+								final JTextField cpfield = new JTextField();
+								cpfield.setBounds(357, 77, 114, 22);
+								internalFrame.getContentPane().add(cpfield);
+								cpfield.setColumns(10);
+								
+								JLabel label_8 = new JLabel("CP");
+								label_8.setBounds(289, 81, 70, 14);
+								internalFrame.getContentPane().add(label_8);
+								
+								final JTextField paisfield = new JTextField();
+								paisfield.setBounds(357, 111, 114, 22);
+								internalFrame.getContentPane().add(paisfield);
+								paisfield.setColumns(10);
+								
+								JLabel label_9 = new JLabel("Pais");
+								label_9.setBounds(289, 113, 70, 14);
+								internalFrame.getContentPane().add(label_9);
+								
+								final JTextField emailfield = new JTextField();
+								emailfield.setBounds(357, 143, 114, 22);
+								internalFrame.getContentPane().add(emailfield);
+								emailfield.setColumns(10);
+								
+								JLabel label_10 = new JLabel("Email");
+								label_10.setBounds(289, 147, 70, 14);
+								internalFrame.getContentPane().add(label_10);
+								
+								final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
+								aprobacionboton.setBounds(277, 242, 244, 22);
+								internalFrame.getContentPane().add(aprobacionboton);
+								
+								JButton registrarboton = new JButton("Registrar");
+								registrarboton.setBounds(245, 287, 114, 27);
+								
+								
+								registrarboton.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent arg0) {
+										// TODO Auto-generated method stub
+										String aprobado;
+										if(aprobacionboton.isSelected()== true){
+											aprobado = "1";
+										}else{
+											aprobado = "0";
+										}
+										try {
+											bd.insertarempleado(nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
+											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Registro Exitoso");
+											
+											
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Sin datos suficientes");
+											
+										}
+										
+									}});
+								internalFrame.getContentPane().add(registrarboton);
+								
+								JLabel label_11 = new JLabel("Usuario");
+								label_11.setBounds(289, 185, 70, 14);
+								internalFrame.getContentPane().add(label_11);
+								
+								usuariofield = new JTextField();
+								usuariofield.setBounds(357, 183, 114, 22);
+								internalFrame.getContentPane().add(usuariofield);
+								usuariofield.setColumns(10);
+								
+								contraseñafield = new JTextField();
+								contraseñafield.setBounds(364, 212, 114, 22);
+								internalFrame.getContentPane().add(contraseñafield);
+								contraseñafield.setColumns(10);
+								
+								JLabel lblContrasea = new JLabel("Contraseña");
+								lblContrasea.setBounds(277, 216, 87, 14);
+								internalFrame.getContentPane().add(lblContrasea);
+								
+								//
+								
+								
+								internalFrame.toFront();
+								internalFrame.setVisible(true);
+						
+								JPanel temp = contentPane;
+								SwingUtilities.updateComponentTreeUI(temp);
+								temp.validate();
+								
+							}});
+						menuBar.add(btnRegistro);
+						
+						tablaempleados.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+						    public void valueChanged(ListSelectionEvent e) {
+						        sel = tablaempleados.getSelectedRow();
+						        
+						    }
+						});
+						
+						JButton borrar = new JButton("Borrar");
+						borrar.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub	
+								
+								System.out.println("escogiste: "+ sel);
+								try {
+									String numero = (String) tablaempleados.getValueAt(sel, 0);
+									bd.borrarempleado(numero);
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									System.out.println("No se pudo borrar");
+									e.printStackTrace();
+								}
+								try {
+									tablaempleados.setModel(bd.regresamodelo());
+									tablaempleados.repaint();
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							}});
+						
+						JButton btnModificar = new JButton("Modificar");
+						btnModificar.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+								final String indice = (String)tablaempleados.getValueAt(sel, 0);
+								
+								internalFrame.getContentPane().removeAll();
+								
+								JLabel label = new JLabel("Modifica Empleado");
+								label.setBounds(208, 31, 140, 14);
+								internalFrame.getContentPane().add(label);
+								
+								JLabel label_1 = new JLabel("Nombre");
+								label_1.setBounds(57, 79, 70, 14);
+								internalFrame.getContentPane().add(label_1);
+								
+								final JTextField nombrefield = new JTextField();
+								nombrefield.setBounds(151, 75, 114, 22);
+								try {
+									nombrefield.setText(bd.regresanombreempleado(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(nombrefield);
+								nombrefield.setColumns(10);
+								
+								final JTextField apellidopfield = new JTextField();
+								apellidopfield.setBounds(151, 111, 114, 22);
+								try {
+									apellidopfield.setText(bd.regresapellidop(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(apellidopfield);
+								apellidopfield.setColumns(10);
+								
+								JLabel label_3 = new JLabel("Apellido M");
+								label_3.setBounds(57, 145, 99, 14);
+								internalFrame.getContentPane().add(label_3);
+								
+								final JTextField apellidom = new JTextField();
+								apellidom.setBounds(151, 141, 114, 22);
+								try {
+									apellidom.setText(bd.regresapellidom(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(apellidom);
+								apellidom.setColumns(10);
+								
+								JLabel label_4 = new JLabel("Apellido P");
+								label_4.setBounds(57, 115, 70, 14);
+								internalFrame.getContentPane().add(label_4);
+								
+								final JTextField callefield = new JTextField();
+								callefield.setBounds(151, 183, 114, 22);
+								try {
+									callefield.setText(bd.regresacalle(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(callefield);
+								callefield.setColumns(10);
+								
+								JLabel label_5 = new JLabel("Calle");
+								label_5.setBounds(57, 185, 70, 14);
+								internalFrame.getContentPane().add(label_5);
+								
+								final JTextField ciudadfield = new JTextField();
+								ciudadfield.setBounds(151, 212, 114, 22);
+								try {
+									ciudadfield.setText(bd.regresaciudad(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(ciudadfield);
+								ciudadfield.setColumns(10);
+								
+								JLabel label_6 = new JLabel("Ciudad");
+								label_6.setBounds(57, 214, 70, 14);
+								internalFrame.getContentPane().add(label_6);
+								
+								final JTextField estadofield = new JTextField();
+								estadofield.setBounds(151, 242, 114, 22);
+								try {
+									estadofield.setText(bd.regresaestado(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(estadofield);
+								estadofield.setColumns(10);
+								
+								JLabel label_7 = new JLabel("Estado");
+								label_7.setBounds(57, 246, 70, 14);
+								internalFrame.getContentPane().add(label_7);
+								
+								final JTextField cpfield = new JTextField();
+								cpfield.setBounds(357, 77, 114, 22);
+								try {
+									cpfield.setText(bd.regresacp(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(cpfield);
+								cpfield.setColumns(10);
+								
+								JLabel label_8 = new JLabel("CP");
+								label_8.setBounds(289, 81, 70, 14);
+								internalFrame.getContentPane().add(label_8);
+								
+								final JTextField paisfield = new JTextField();
+								paisfield.setBounds(357, 111, 114, 22);
+								try {
+									paisfield.setText(bd.regresapais(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(paisfield);
+								paisfield.setColumns(10);
+								
+								JLabel label_9 = new JLabel("Pais");
+								label_9.setBounds(289, 113, 70, 14);
+								internalFrame.getContentPane().add(label_9);
+								
+								final JTextField emailfield = new JTextField();
+								emailfield.setBounds(357, 143, 114, 22);
+								try {
+									emailfield.setText(bd.regresaemail(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(emailfield);
+								emailfield.setColumns(10);
+								
+								JLabel label_10 = new JLabel("Email");
+								label_10.setBounds(289, 147, 70, 14);
+								internalFrame.getContentPane().add(label_10);
+								
+								final JRadioButton aprobacionboton = new JRadioButton("Aprobación de Uso de Sistema");
+								aprobacionboton.setBounds(277, 242, 244, 18);
+								try {
+									String aproba = bd.regresaprobacion(indice);
+									if(aproba.equals("1")){
+										aprobacionboton.setSelected(true);
+									}else{
+										aprobacionboton.setSelected(false);
+									}
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								internalFrame.getContentPane().add(aprobacionboton);
+								
+								
+								
+								JButton registrarboton = new JButton("Modificar");
+								registrarboton.setBounds(245, 287, 114, 27);
+								
+								
+								registrarboton.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent arg0) {
+										// TODO Auto-generated method stub
+										String aprobado;
+										if(aprobacionboton.isSelected()== true){
+											aprobado = "1";
+										}else{
+											aprobado = "0";
+										}
+										try {
+											bd.modificarempleado(indice,nombrefield.getText(), apellidopfield.getText(), apellidom.getText(), callefield.getText(), ciudadfield.getText(), estadofield.getText(), cpfield.getText(), paisfield.getText(),  emailfield.getText(), aprobado, usuariofield.getText(), contraseñafield.getText());
+											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Modificado Exitosamente");
+											
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											JOptionPane.showMessageDialog((Component)arg0.getSource(), "Faltan Datos");
+											e.printStackTrace();
+											
+										}
+										
+									}});
+								internalFrame.getContentPane().add(registrarboton);
+								
+								JLabel label_11 = new JLabel("Usuario");
+								label_11.setBounds(289, 185, 70, 14);
+								internalFrame.getContentPane().add(label_11);
+								
+								usuariofield = new JTextField();
+								usuariofield.setBounds(357, 183, 114, 22);
+								try {
+									usuariofield.setText(bd.regresausuario(indice));
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								internalFrame.getContentPane().add(usuariofield);
+								usuariofield.setColumns(10);
+								
+								contraseñafield = new JTextField();
+								contraseñafield.setBounds(364, 212, 114, 22);
+								try {
+									contraseñafield.setText(bd.regresapassword(indice));
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								internalFrame.getContentPane().add(contraseñafield);
+								contraseñafield.setColumns(10);
+								
+								JLabel lblContrasea = new JLabel("Contraseña");
+								lblContrasea.setBounds(277, 216, 87, 14);
+								internalFrame.getContentPane().add(lblContrasea);
+								
+								
+								internalFrame.setVisible(true);
+						
+								JPanel temp = contentPane;
+								SwingUtilities.updateComponentTreeUI(temp);
+								temp.validate();
+								
+							}});
+						menuBar.add(btnModificar);
+						menuBar.add(borrar);
+						
+						JMenu mnAyuda = new JMenu("Ayuda");
+						menuBar.add(mnAyuda);
+						
+						JMenuItem mntmInstrucciones = new JMenuItem("Instrucciones");
+						mnAyuda.add(mntmInstrucciones);
+						
+						JMenuItem mntmSoporte = new JMenuItem("Soporte");
+						mnAyuda.add(mntmSoporte);
+						
+						try {
+							internalFrame.setSelected(true);
+						} catch (PropertyVetoException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						contentPane.add(btnIniciar);
+						contentPane.add(btnEmpledos);
+						contentPane.add(btnTransportistas);
+						contentPane.add(btnProveedores);
+						contentPane.add(btnClientes);
+						contentPane.add(btnPedidos);
+						contentPane.add(graficados);
+						contentPane.add(graficatres);
+						contentPane.add(graficacuatro);
+						contentPane.add(graficacinco);
+
+						internalFrame.toFront();
+						internalFrame.setVisible(true);
+						
+						JPanel temp1 = contentPane;
+						SwingUtilities.updateComponentTreeUI(temp1);
+						temp1.validate();
+
+						contentPane.repaint();
 						
 					}});
+				btnEmpledos.setBounds(842, 314, 117, 24);
+				btnEmpledos.setBorder(new RoundedBorder(20));
+				
 				contentPane.add(btnEmpledos);
 				
 				final JButton button = new JButton("Atras");
@@ -741,13 +752,45 @@ public class DBMSysAdministrator extends JFrame {
 				
 			}});
 		contentPane.add(btnIniciar);
-
-//		graficauno.getContentPane().add(comp);
 		
+		
+		graficatres = new JInternalFrame("Venta Productos");
+		graficatres.setEnabled(false);
+		graficatres.setBounds(12, 12, 322, 353);
+		contentPane.add(graficatres);
+		graficatres.getContentPane().setLayout(null);
+		
+		JLabel lblGraphuno = new JLabel("Graphuno");
+		lblGraphuno.setBounds(6, 6, 330, 310);
+		lblGraphuno.setIcon(grafiiconuno);
+		graficatres.getContentPane().add(lblGraphuno);
+		
+		graficados = new JInternalFrame("Ventas Semanal");
+		graficados.setEnabled(false);
+		graficados.setBounds(12, 370, 322, 345);
+		contentPane.add(graficados);
+		graficados.getContentPane().setLayout(null);
+		JLabel lblGraficados = new JLabel("Graficados");
+		lblGraficados.setIcon(imagengraficados);
+		lblGraficados.setBounds(6, 6, 298, 302);
+		graficados.getContentPane().add(lblGraficados);
+		
+		graficacinco = new JInternalFrame("Lista Pedidos");
+		graficacinco.setEnabled(false);
+		graficacinco.setBounds(1017, 362, 269, 353);
+		contentPane.add(graficacinco);
+		
+		graficacuatro = new JInternalFrame("Lista Productos");
+		graficacuatro.setEnabled(false);
+		graficacuatro.setBounds(1017, 12, 269, 353);
+		contentPane.add(graficacuatro);
+		
+		//		graficauno.getContentPane().add(comp);
+				
 		graficacuatro.setVisible(true);
 		graficacinco.setVisible(true);
-		graficatres.setVisible(true);
 		graficados.setVisible(true);
+		graficatres.setVisible(true);
 		
 	}
 	
