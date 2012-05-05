@@ -1,11 +1,14 @@
 //Holo!!
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -70,18 +73,27 @@ public class DBMSysAdministrator extends JFrame {
 	 Bidi bd;
 	 private JTextField textField_1;
 	 private JTable table_1;
+	 JTable table_2;
+	 JTable table_3;
 	 int Estado;
-	 private JTextField textField_2;
-	 private JTextField textField_3;
-	 private JTextField textField_4;
-	 private JTextField textField_5;
-	 private JTextField textField_6;
-	 private JTextField textField_7;
-	 private JTextField textField_8;
-	 private JTextField textField_9;
-	 private JTextField textField_10;
-	 private JTextField textField_11;
-	 private JTextField textField_12;
+	 private JTextField nombretext;
+	 private JTextField apellidotext;
+	 private JTextField apellidom;
+	 private JTextField calletext;
+	 private JTextField ciudadtext;
+	 private JTextField estadotext;
+	 private JTextField paistext;
+	 private JTextField emailtext;
+	 private JTextField rfctext;
+	 private JTextField idtext;
+	 private JTextField cargotext;
+	 private JTextField empresatext;
+	 private JTextField telefonotext;
+	 private JTextField paginatext;
+	 private JTextField cptext;
+	 JRadioButton rdbtnEsEmpresa;
+	 JButton btnTransportistas;
+	 JButton btnEmpledos;
 	/**
 	 * Launch the application.
 	 */
@@ -172,15 +184,743 @@ public class DBMSysAdministrator extends JFrame {
 				
 				final JButton btnProveedores = new JButton("Proveedores");
 				btnProveedores.setBorder(new RoundedBorder(20));
+				btnProveedores.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						contentPane.removeAll();
+						final JInternalFrame proveedoresFrame = new JInternalFrame("Proveedores");
+						proveedoresFrame.setClosable(true);
+						proveedoresFrame.setResizable(true);
+						proveedoresFrame.setBounds(152, 101, 980, 535);
+						contentPane.add(proveedoresFrame);
+						
+						JMenuBar menuBar = new JMenuBar();
+						proveedoresFrame.setJMenuBar(menuBar);
+						proveedoresFrame.getContentPane().setLayout(null);
+						
+
+						
+						JButton btnConsultar = new JButton("Consultar");
+						btnConsultar.addActionListener(new ActionListener(){
+												
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+								proveedoresFrame.getContentPane().removeAll();
+								
+								textField_1 = new JTextField();
+								textField_1.setBounds(6, 6, 215, 26);
+								proveedoresFrame.getContentPane().add(textField_1);
+								textField_1.setColumns(10);
+								
+								JButton btnBuscar_1 = new JButton("Buscar");
+								btnBuscar_1.setBounds(244, 6, 100, 26);
+								proveedoresFrame.getContentPane().add(btnBuscar_1);
+								
+								//Tablas de cada uno
+								//General
+								table_1 = new JTable();
+								table_1.setBounds(12, 41, 947, 422);
+								try {
+									table_1.setModel(bd.regresamodeloproveedor());
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+								table_1.setShowGrid(true);
+								table_1.setShowVerticalLines(true);
+								table_1.setGridColor(Color.black);
+								table_1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+								    public void valueChanged(ListSelectionEvent e) {
+								        sel = table_1.getSelectedRow();
+								        
+								    }
+								});
+								//Telefonos
+								
+								table_2 = new JTable();
+								table_2 .setBounds(12, 41, 947, 422);
+								try {
+									table_2.setModel(bd.regresamodeloproveedortels());
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								table_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+								table_2.setShowGrid(true);
+								table_2.setShowVerticalLines(true);
+								table_2.setGridColor(Color.black);
+								
+								//Empresa
+								table_3 = new JTable();
+								table_3 .setBounds(12, 41, 947, 422);
+								try {
+									table_3.setModel(bd.regresamodeloempresa());
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								table_3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+								table_3.setShowGrid(true);
+								table_3.setShowVerticalLines(true);
+								table_3.setGridColor(Color.black);
+								
+								JButton btnTelefonos = new JButton("Telefonos");
+								btnTelefonos.setBounds(610, 6, 100, 26);
+								btnTelefonos.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent arg0) {
+										// TODO Auto-generated method stub
+										
+										
+										if(Estado == 0){
+											proveedoresFrame.getContentPane().remove(table_1);
+										}else if(Estado == 3){
+											proveedoresFrame.getContentPane().remove(table_3);
+										}
+
+										proveedoresFrame.getContentPane().add(table_2);
+										Container bli = proveedoresFrame.getContentPane();
+										SwingUtilities.updateComponentTreeUI(bli);
+										bli.validate();
+										Estado = 1;
+									}});
+								
+								proveedoresFrame.getContentPane().add(btnTelefonos);
+								
+								JButton btnGeneral = new JButton("General");
+								btnGeneral.setBounds(466, 6, 100, 26);
+								btnGeneral.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										
+										if(Estado == 1){
+										proveedoresFrame.getContentPane().remove(table_2);
+										}else if(Estado == 3){
+											proveedoresFrame.getContentPane().remove(table_3);
+										}
+										
+										proveedoresFrame.getContentPane().add(table_1);
+										Container bli = proveedoresFrame.getContentPane();
+										SwingUtilities.updateComponentTreeUI(bli);
+										bli.validate();
+										Estado = 0;
+										
+									}});
+								proveedoresFrame.getContentPane().add(btnGeneral);
+								
+								JButton btnEmpresas = new JButton("Empresas");
+								btnEmpresas.setBounds(750, 6, 100, 26);
+								btnEmpresas.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										if(Estado == 0){
+											proveedoresFrame.getContentPane().remove(table_1);
+											}else if(Estado == 1){
+												proveedoresFrame.getContentPane().remove(table_2);
+											}
+										
+										proveedoresFrame.getContentPane().add(table_3);
+										Container bli = proveedoresFrame.getContentPane();
+										SwingUtilities.updateComponentTreeUI(bli);
+										bli.validate();
+										Estado = 3;
+										
+									}});
+								proveedoresFrame.getContentPane().add(btnEmpresas);
+								
+								Container bli = proveedoresFrame.getContentPane();
+								SwingUtilities.updateComponentTreeUI(bli);
+								bli.validate();
+							}});
+						menuBar.add(btnConsultar);
+						
+						JButton btnRegistrar = new JButton("Registrar");
+						btnRegistrar.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								
+								proveedoresFrame.getContentPane().removeAll();
+								
+								JLabel lblNombre = new JLabel("Nombre");
+								lblNombre.setBounds(40, 54, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNombre);
+								
+								nombretext = new JTextField();
+								nombretext.setBounds(128, 48, 122, 26);
+								proveedoresFrame.getContentPane().add(nombretext);
+								nombretext.setColumns(10);
+								
+								JLabel lblNewLabel = new JLabel("Apellido P");
+								lblNewLabel.setBounds(40, 101, 81, 14);
+								proveedoresFrame.getContentPane().add(lblNewLabel);
+								
+								apellidotext = new JTextField();
+								apellidotext.setBounds(128, 95, 122, 26);
+								proveedoresFrame.getContentPane().add(apellidotext);
+								apellidotext.setColumns(10);
+								
+								apellidom = new JTextField();
+								apellidom.setBounds(128, 145, 122, 26);
+								proveedoresFrame.getContentPane().add(apellidom);
+								apellidom.setColumns(10);
+								
+								JLabel lblApellidoM = new JLabel("Apellido M");
+								lblApellidoM.setBounds(40, 157, 81, 14);
+								proveedoresFrame.getContentPane().add(lblApellidoM);
+								
+								JLabel lblNewLabel_1 = new JLabel("Calle");
+								lblNewLabel_1.setBounds(40, 203, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNewLabel_1);
+								
+								calletext = new JTextField();
+								calletext.setBounds(128, 197, 122, 26);
+								proveedoresFrame.getContentPane().add(calletext);
+								calletext.setColumns(10);
+								
+								JLabel lblCiudad = new JLabel("Ciudad");
+								lblCiudad.setBounds(40, 249, 60, 14);
+								proveedoresFrame.getContentPane().add(lblCiudad);
+								
+								ciudadtext = new JTextField();
+								ciudadtext.setBounds(128, 243, 122, 26);
+								proveedoresFrame.getContentPane().add(ciudadtext);
+								ciudadtext.setColumns(10);
+								
+								JLabel lblEstado = new JLabel("Estado");
+								lblEstado.setBounds(40, 298, 60, 14);
+								proveedoresFrame.getContentPane().add(lblEstado);
+								
+								JLabel lblNewLabel_2 = new JLabel("Pais");
+								lblNewLabel_2.setBounds(40, 348, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNewLabel_2);
+								
+								estadotext = new JTextField();
+								estadotext.setBounds(128, 292, 122, 26);
+								proveedoresFrame.getContentPane().add(estadotext);
+								estadotext.setColumns(10);
+								
+								paistext = new JTextField();
+								paistext.setBounds(128, 348, 122, 26);
+								proveedoresFrame.getContentPane().add(paistext);
+								paistext.setColumns(10);
+								
+								JLabel lblEmail = new JLabel("Email");
+								lblEmail.setBounds(320, 54, 60, 14);
+								proveedoresFrame.getContentPane().add(lblEmail);
+								
+								emailtext = new JTextField();
+								emailtext.setBounds(392, 48, 122, 26);
+								proveedoresFrame.getContentPane().add(emailtext);
+								emailtext.setColumns(10);
+								
+								JLabel lblNotas = new JLabel("Notas");
+								lblNotas.setBounds(320, 107, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNotas);
+								
+								final JTextArea notastext = new JTextArea();
+								notastext.setBounds(392, 95, 158, 135);
+								proveedoresFrame.getContentPane().add(notastext);
+								
+								JLabel lblRfc = new JLabel("RFC");
+								lblRfc.setBounds(320, 249, 60, 14);
+								proveedoresFrame.getContentPane().add(lblRfc);
+								
+								rfctext = new JTextField();
+								rfctext.setBounds(392, 243, 122, 26);
+								proveedoresFrame.getContentPane().add(rfctext);
+								rfctext.setColumns(10);
+								
+								JLabel lblIdNum = new JLabel("ID Num");
+								lblIdNum.setBounds(40, 16, 60, 14);
+								proveedoresFrame.getContentPane().add(lblIdNum);
+								
+								idtext = new JTextField();
+								idtext.setBounds(128, 10, 122, 26);
+								proveedoresFrame.getContentPane().add(idtext);
+								idtext.setColumns(10);
+								
+								final JRadioButton rdbtnEsEmpresa = new JRadioButton("Es Empresa");
+								rdbtnEsEmpresa.setBounds(394, 372, 130, 18);
+								proveedoresFrame.getContentPane().add(rdbtnEsEmpresa);
+								
+								JButton btnRegistrar_1 = new JButton("Registrar");
+								btnRegistrar_1.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										
+										if(rdbtnEsEmpresa.isSelected()==true){
+											try {
+												System.out.println(bd.insertaProveedor(idtext.getText(),nombretext.getText(),apellidotext.getText(),apellidom.getText(),calletext.getText(),ciudadtext.getText(),estadotext.getText(),cptext.getText(),paistext.getText(),emailtext.getText(),notastext.getText(),rfctext.getText(),paginatext.getText()));
+												System.out.println(bd.insertaempresa(idtext.getText(),nombretext.getText(),cargotext.getText(),empresatext.getText()));
+												System.out.println(bd.insertatelefono(idtext.getText(),telefonotext.getText()));
+												JOptionPane.showMessageDialog((Component)e.getSource(), "Registro exitoso");
+											} catch (SQLException e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+										}
+										else{
+										try {
+											System.out.println(bd.insertaProveedor(idtext.getText(),nombretext.getText(),apellidotext.getText(),apellidom.getText(),calletext.getText(),ciudadtext.getText(),estadotext.getText(),cptext.getText(),paistext.getText(),emailtext.getText(),notastext.getText(),rfctext.getText(),paginatext.getText()));
+											System.out.println(bd.insertatelefono(idtext.getText(),telefonotext.getText()));
+											JOptionPane.showMessageDialog((Component)e.getSource(), "Registro Exitoso");
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											JOptionPane.showMessageDialog((Component)e.getSource(), "Datos Faltantes o Erroneos");
+											e1.printStackTrace();
+										}
+										}
+									}});
+								btnRegistrar_1.setBounds(724, 310, 100, 26);
+								proveedoresFrame.getContentPane().add(btnRegistrar_1);
+								
+								JLabel lblCargo = new JLabel("Cargo");
+								lblCargo.setBounds(639, 54, 60, 14);
+								proveedoresFrame.getContentPane().add(lblCargo);
+								
+								cargotext = new JTextField();
+								cargotext.setBounds(711, 48, 122, 26);
+								proveedoresFrame.getContentPane().add(cargotext);
+								cargotext.setColumns(10);
+								
+								empresatext = new JTextField();
+								empresatext.setBounds(711, 95, 122, 26);
+								proveedoresFrame.getContentPane().add(empresatext);
+								empresatext.setColumns(10);
+								
+								JLabel lblEmpresa = new JLabel("Empresa");
+								lblEmpresa.setBounds(639, 101, 60, 14);
+								proveedoresFrame.getContentPane().add(lblEmpresa);
+								
+								telefonotext = new JTextField();
+								telefonotext.setBounds(392, 292, 122, 26);
+								proveedoresFrame.getContentPane().add(telefonotext);
+								telefonotext.setColumns(10);
+								
+								JLabel lblTelefono = new JLabel("Telefono");
+								lblTelefono.setBounds(320, 298, 60, 14);
+								proveedoresFrame.getContentPane().add(lblTelefono);
+								
+								paginatext = new JTextField();
+								paginatext.setBounds(392, 330, 122, 26);
+								proveedoresFrame.getContentPane().add(paginatext);
+								paginatext.setColumns(10);
+								
+								JLabel lblEmail_1 = new JLabel("Pagina Web");
+								lblEmail_1.setBounds(280, 336, 100, 14);
+								proveedoresFrame.getContentPane().add(lblEmail_1);
+								
+								JLabel lblCp = new JLabel("CP");
+								lblCp.setBounds(40, 407, 60, 14);
+								proveedoresFrame.getContentPane().add(lblCp);
+								
+								cptext = new JTextField();
+								cptext.setBounds(128, 401, 122, 26);
+								proveedoresFrame.getContentPane().add(cptext);
+								cptext.setColumns(10);
+								
+								//JPanel temp = contentPane;
+								Container bli = proveedoresFrame.getContentPane();
+								SwingUtilities.updateComponentTreeUI(bli);
+								bli.validate();
+								
+							}});
+						menuBar.add(btnRegistrar);
+						
+						JButton btnModificar_1 = new JButton("Modificar");
+						btnModificar_1.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+								final String indice = (String) table_1.getValueAt(sel, 0);
+								
+								proveedoresFrame.getContentPane().removeAll();
+								
+								JLabel lblNombre = new JLabel("Nombre");
+								lblNombre.setBounds(40, 54, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNombre);
+								
+								nombretext = new JTextField();
+								nombretext.setBounds(128, 48, 122, 26);
+								try {
+									nombretext.setText(bd.regresaPNombre(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(nombretext);
+								nombretext.setColumns(10);
+								
+								JLabel lblNewLabel = new JLabel("Apellido P");
+								lblNewLabel.setBounds(40, 101, 81, 14);
+								proveedoresFrame.getContentPane().add(lblNewLabel);
+								
+								apellidotext = new JTextField();
+								apellidotext.setBounds(128, 95, 122, 26);
+								try {
+									apellidotext.setText(bd.regresaPApellidoM(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(apellidotext);
+								apellidotext.setColumns(10);
+								
+								apellidom = new JTextField();
+								apellidom.setBounds(128, 145, 122, 26);
+								try {
+									apellidom.setText(bd.regresaPApellidoP(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(apellidom);
+								apellidom.setColumns(10);
+								
+								JLabel lblApellidoM = new JLabel("Apellido M");
+								lblApellidoM.setBounds(40, 157, 81, 14);
+								proveedoresFrame.getContentPane().add(lblApellidoM);
+								
+								JLabel lblNewLabel_1 = new JLabel("Calle");
+								lblNewLabel_1.setBounds(40, 203, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNewLabel_1);
+								
+								calletext = new JTextField();
+								calletext.setBounds(128, 197, 122, 26);
+								try {
+									calletext.setText(bd.regresaPCalle(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(calletext);
+								calletext.setColumns(10);
+								
+								JLabel lblCiudad = new JLabel("Ciudad");
+								lblCiudad.setBounds(40, 249, 60, 14);
+								proveedoresFrame.getContentPane().add(lblCiudad);
+								
+								ciudadtext = new JTextField();
+								ciudadtext.setBounds(128, 243, 122, 26);
+								try {
+									ciudadtext.setText(bd.regresaPCiudad(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(ciudadtext);
+								ciudadtext.setColumns(10);
+								
+								JLabel lblEstado = new JLabel("Estado");
+								lblEstado.setBounds(40, 298, 60, 14);
+								proveedoresFrame.getContentPane().add(lblEstado);
+								
+								JLabel lblNewLabel_2 = new JLabel("Pais");
+								lblNewLabel_2.setBounds(40, 348, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNewLabel_2);
+								
+								estadotext = new JTextField();
+								estadotext.setBounds(128, 292, 122, 26);
+								try {
+									estadotext.setText(bd.regresaPEstado(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(estadotext);
+								estadotext.setColumns(10);
+								
+								paistext = new JTextField();
+								paistext.setBounds(128, 348, 122, 26);
+								try {
+									paistext.setText(bd.regresaPPais(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(paistext);
+								paistext.setColumns(10);
+								
+								JLabel lblEmail = new JLabel("Email");
+								lblEmail.setBounds(320, 54, 60, 14);
+								proveedoresFrame.getContentPane().add(lblEmail);
+								
+								emailtext = new JTextField();
+								emailtext.setBounds(392, 48, 122, 26);
+								try {
+									emailtext.setText(bd.regresaPEmail(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(emailtext);
+								emailtext.setColumns(10);
+								
+								JLabel lblNotas = new JLabel("Notas");
+								lblNotas.setBounds(320, 107, 60, 14);
+								proveedoresFrame.getContentPane().add(lblNotas);
+								
+								final JTextArea notastext = new JTextArea();
+								notastext.setBounds(392, 95, 158, 135);
+								try {
+									notastext.setText(bd.regresaPNotas(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(notastext);
+								
+								JLabel lblRfc = new JLabel("RFC");
+								lblRfc.setBounds(320, 249, 60, 14);
+								proveedoresFrame.getContentPane().add(lblRfc);
+								
+								rfctext = new JTextField();
+								rfctext.setBounds(392, 243, 122, 26);
+								try {
+									rfctext.setText(bd.regresaPRFC(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(rfctext);
+								rfctext.setColumns(10);
+								
+								JLabel lblIdNum = new JLabel("ID Num");
+								lblIdNum.setBounds(40, 16, 60, 14);
+								proveedoresFrame.getContentPane().add(lblIdNum);
+								
+								idtext = new JTextField();
+								idtext.setBounds(128, 10, 122, 26);
+								try {
+									idtext.setText(bd.regresaID(indice));
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								
+								proveedoresFrame.getContentPane().add(idtext);
+								idtext.setColumns(10);
+								idtext.setDisabledTextColor(Color.GRAY);
+								idtext.disable();
+								
+								
+								rdbtnEsEmpresa = new JRadioButton("Es Empresa");
+								rdbtnEsEmpresa.setBounds(394, 372, 130, 18);
+								proveedoresFrame.getContentPane().add(rdbtnEsEmpresa);
+								
+								try {
+									if(bd.regresaPEmpresa(indice)!=null){
+										rdbtnEsEmpresa.setSelected(true);
+									}
+								} catch (SQLException e2) {
+									// TODO Auto-generated catch block
+									e2.printStackTrace();
+								}
+								rdbtnEsEmpresa.disable();
+								
+								JButton btnRegistrar_1 = new JButton("Modificar");
+								btnRegistrar_1.addActionListener(new ActionListener(){
+
+									@Override
+									public void actionPerformed(ActionEvent e) {
+										// TODO Auto-generated method stub
+										
+										if(rdbtnEsEmpresa.isSelected()==true){
+											try {
+												bd.actualizaProveedor(idtext.getText(),nombretext.getText(),apellidotext.getText(),apellidom.getText(),calletext.getText(),ciudadtext.getText(),estadotext.getText(),cptext.getText(),paistext.getText(),emailtext.getText(),notastext.getText(),rfctext.getText(),paginatext.getText(),indice);
+												bd.actualizaempresa(idtext.getText(),nombretext.getText(),cargotext.getText(),empresatext.getText(),indice);
+												bd.actualizatelefono(idtext.getText(),telefonotext.getText(),indice);
+												table_1.setModel(bd.regresamodeloproveedor());
+												table_2.setModel(bd.regresamodeloproveedortels());
+												table_3.setModel(bd.regresamodeloempresa());
+												JOptionPane.showMessageDialog((Component)e.getSource(), "Actualizacion exitosa");
+											} catch (Exception e1) {
+												// TODO Auto-generated catch block
+												e1.printStackTrace();
+											}
+										}
+										else{
+										try {
+											bd.actualizaProveedor(idtext.getText(),nombretext.getText(),apellidotext.getText(),apellidom.getText(),calletext.getText(),ciudadtext.getText(),estadotext.getText(),cptext.getText(),paistext.getText(),emailtext.getText(),notastext.getText(),rfctext.getText(),paginatext.getText(),indice);
+											bd.actualizatelefono(idtext.getText(),telefonotext.getText(),indice);
+											table_1.setModel(bd.regresamodeloproveedor());
+											table_2.setModel(bd.regresamodeloproveedortels());
+											table_3.setModel(bd.regresamodeloempresa());
+											JOptionPane.showMessageDialog((Component)e.getSource(), "Actualizacion exitosa");
+										} catch (SQLException e1) {
+											// TODO Auto-generated catch block
+											JOptionPane.showMessageDialog((Component)e.getSource(), "Datos Faltantes o Erroneos");
+											e1.printStackTrace();
+										}
+										}
+									}});
+								btnRegistrar_1.setBounds(724, 310, 100, 26);
+								proveedoresFrame.getContentPane().add(btnRegistrar_1);
+								
+								JLabel lblCargo = new JLabel("Cargo");
+								lblCargo.setBounds(639, 54, 60, 14);
+								proveedoresFrame.getContentPane().add(lblCargo);
+								
+								cargotext = new JTextField();
+								cargotext.setBounds(711, 48, 122, 26);
+								try {
+									cargotext.setText(bd.regresaPCargo(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(cargotext);
+								cargotext.setColumns(10);
+								
+								empresatext = new JTextField();
+								empresatext.setBounds(711, 95, 122, 26);
+								try {
+									empresatext.setText(bd.regresaPEmpresa(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(empresatext);
+								empresatext.setColumns(10);
+								
+								JLabel lblEmpresa = new JLabel("Empresa");
+								lblEmpresa.setBounds(639, 101, 60, 14);
+								proveedoresFrame.getContentPane().add(lblEmpresa);
+								
+								telefonotext = new JTextField();
+								telefonotext.setBounds(392, 292, 122, 26);
+								try {
+									telefonotext.setText(bd.regresaPTelefono(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(telefonotext);
+								telefonotext.setColumns(10);
+								
+								JLabel lblTelefono = new JLabel("Telefono");
+								lblTelefono.setBounds(320, 298, 60, 14);
+								proveedoresFrame.getContentPane().add(lblTelefono);
+								
+								paginatext = new JTextField();
+								paginatext.setBounds(392, 330, 122, 26);
+								try {
+									paginatext.setText(bd.regresaPPagina(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(paginatext);
+								paginatext.setColumns(10);
+								
+								JLabel lblEmail_1 = new JLabel("Pagina Web");
+								lblEmail_1.setBounds(280, 336, 100, 14);
+								proveedoresFrame.getContentPane().add(lblEmail_1);
+								
+								JLabel lblCp = new JLabel("CP");
+								lblCp.setBounds(40, 407, 60, 14);
+								proveedoresFrame.getContentPane().add(lblCp);
+								
+								cptext = new JTextField();
+								cptext.setBounds(128, 401, 122, 26);
+								try {
+									cptext.setText(bd.regresaPCP(indice));
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								proveedoresFrame.getContentPane().add(cptext);
+								cptext.setColumns(10);
+								
+								Container bli = proveedoresFrame.getContentPane();
+								SwingUtilities.updateComponentTreeUI(bli);
+								bli.validate();
+								
+								
+							}});
+						menuBar.add(btnModificar_1);
+						
+						JButton btnBorrar = new JButton("Borrar");
+						btnBorrar.addActionListener(new ActionListener(){
+
+							@Override
+							public void actionPerformed(ActionEvent arg0) {
+								// TODO Auto-generated method stub
+
+								final String indice = (String) table_1.getValueAt(sel, 0);
+								
+							
+										try {
+											bd.borrarProveedorEmpresa(indice);
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										
+										try {
+											table_1.setModel(bd.regresamodeloproveedor());
+											table_2.setModel(bd.regresamodeloproveedortels());
+											table_3.setModel(bd.regresamodeloempresa());
+											table_1.repaint();
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										
+																				
+								
+							}});
+						menuBar.add(btnBorrar);
+						try {
+							proveedoresFrame.setSelected(true);
+						} catch (PropertyVetoException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						contentPane.add(btnIniciar);
+						contentPane.add(btnEmpledos);
+						contentPane.add(btnTransportistas);
+						contentPane.add(btnProveedores);
+						contentPane.add(btnClientes);
+						contentPane.add(btnPedidos);
+						contentPane.add(graficados);
+						contentPane.add(graficatres);
+						contentPane.add(graficacuatro);
+						contentPane.add(graficacinco);
+
+						proveedoresFrame.toFront();
+						proveedoresFrame.setVisible(true);
+						
+						JPanel temp1 = contentPane;
+						SwingUtilities.updateComponentTreeUI(temp1);
+						temp1.validate();
+
+						contentPane.repaint();
+
+					}});
 				btnProveedores.setBounds(807, 174, 145, 24);
 				contentPane.add(btnProveedores);
-				
-				final JButton btnTransportistas = new JButton("Transportistas");
+				btnTransportistas = new JButton("Transportistas");
 				btnTransportistas.setBorder(new RoundedBorder(20));
 				btnTransportistas.setBounds(350, 283, 153, 24);
 				contentPane.add(btnTransportistas);
 				
-				final JButton btnEmpledos = new JButton("Empleados");
+				btnEmpledos = new JButton("Empleados");
 				btnEmpledos.addActionListener(new ActionListener(){
 
 					@Override
@@ -258,9 +998,12 @@ public class DBMSysAdministrator extends JFrame {
 								
 								//contentPane.add(tablaempleados);
 								internalFrame.getContentPane().add(tablaempleados);
-								JPanel temp = contentPane;
-								SwingUtilities.updateComponentTreeUI(temp);
-								temp.validate();
+//								JPanel temp = contentPane;
+//								SwingUtilities.updateComponentTreeUI(temp);
+//								temp.validate();
+								Container bli = internalFrame.getContentPane();
+								SwingUtilities.updateComponentTreeUI(bli);
+								bli.validate();
 								
 							}});
 						menuBar.add(btnConsulta);
@@ -415,10 +1158,12 @@ public class DBMSysAdministrator extends JFrame {
 								internalFrame.toFront();
 								internalFrame.setVisible(true);
 						
-								JPanel temp = contentPane;
-								SwingUtilities.updateComponentTreeUI(temp);
-								temp.validate();
-								
+//								JPanel temp = contentPane;
+//								SwingUtilities.updateComponentTreeUI(temp);
+//								temp.validate();
+								Container bli = internalFrame.getContentPane();
+								SwingUtilities.updateComponentTreeUI(bli);
+								bli.validate();
 							}});
 						menuBar.add(btnRegistro);
 						
@@ -683,9 +1428,12 @@ public class DBMSysAdministrator extends JFrame {
 								
 								internalFrame.setVisible(true);
 						
-								JPanel temp = contentPane;
-								SwingUtilities.updateComponentTreeUI(temp);
-								temp.validate();
+//								JPanel temp = contentPane;
+//								SwingUtilities.updateComponentTreeUI(temp);
+//								temp.validate();
+								Container bli = internalFrame.getContentPane();
+								SwingUtilities.updateComponentTreeUI(bli);
+								bli.validate();
 								
 							}});
 						menuBar.add(btnModificar);
@@ -705,8 +1453,7 @@ public class DBMSysAdministrator extends JFrame {
 						} catch (PropertyVetoException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
-						}
-						
+						}	
 						contentPane.add(btnIniciar);
 						contentPane.add(btnEmpledos);
 						contentPane.add(btnTransportistas);
@@ -754,291 +1501,12 @@ public class DBMSysAdministrator extends JFrame {
 					}});
 				contentPane.add(button);
 				
-				
-
 				JPanel temp = contentPane;
 				SwingUtilities.updateComponentTreeUI(temp);
 				temp.validate();
-				
-				
 			}});
 		//Comienza el codigo del modulo de proveedores
-		final JInternalFrame proveedoresFrame = new JInternalFrame("Proveedores");
-		proveedoresFrame.setClosable(true);
-		proveedoresFrame.setBounds(152, 101, 980, 535);
-		contentPane.add(proveedoresFrame);
-		
-		JMenuBar menuBar = new JMenuBar();
-		proveedoresFrame.setJMenuBar(menuBar);
-		proveedoresFrame.getContentPane().setLayout(null);
-		
-		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(40, 54, 60, 14);
-		proveedoresFrame.getContentPane().add(lblNombre);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(128, 48, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("Apellido P");
-		lblNewLabel.setBounds(40, 101, 81, 14);
-		proveedoresFrame.getContentPane().add(lblNewLabel);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(128, 95, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_3);
-		textField_3.setColumns(10);
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(128, 145, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_4);
-		textField_4.setColumns(10);
-		
-		JLabel lblApellidoM = new JLabel("Apellido M");
-		lblApellidoM.setBounds(40, 157, 81, 14);
-		proveedoresFrame.getContentPane().add(lblApellidoM);
-		
-		JLabel lblNewLabel_1 = new JLabel("Calle");
-		lblNewLabel_1.setBounds(40, 203, 60, 14);
-		proveedoresFrame.getContentPane().add(lblNewLabel_1);
-		
-		textField_5 = new JTextField();
-		textField_5.setBounds(128, 197, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_5);
-		textField_5.setColumns(10);
-		
-		JLabel lblCiudad = new JLabel("Ciudad");
-		lblCiudad.setBounds(40, 249, 60, 14);
-		proveedoresFrame.getContentPane().add(lblCiudad);
-		
-		textField_6 = new JTextField();
-		textField_6.setBounds(128, 243, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_6);
-		textField_6.setColumns(10);
-		
-		JLabel lblEstado = new JLabel("Estado");
-		lblEstado.setBounds(40, 298, 60, 14);
-		proveedoresFrame.getContentPane().add(lblEstado);
-		
-		JLabel lblNewLabel_2 = new JLabel("Pais");
-		lblNewLabel_2.setBounds(40, 348, 60, 14);
-		proveedoresFrame.getContentPane().add(lblNewLabel_2);
-		
-		textField_7 = new JTextField();
-		textField_7.setBounds(128, 292, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_7);
-		textField_7.setColumns(10);
-		
-		textField_8 = new JTextField();
-		textField_8.setBounds(128, 348, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_8);
-		textField_8.setColumns(10);
-		
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(320, 54, 60, 14);
-		proveedoresFrame.getContentPane().add(lblEmail);
-		
-		textField_9 = new JTextField();
-		textField_9.setBounds(392, 48, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_9);
-		textField_9.setColumns(10);
-		
-		JLabel lblNotas = new JLabel("Notas");
-		lblNotas.setBounds(320, 107, 60, 14);
-		proveedoresFrame.getContentPane().add(lblNotas);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(392, 95, 158, 135);
-		proveedoresFrame.getContentPane().add(textArea);
-		
-		JLabel lblRfc = new JLabel("RFC");
-		lblRfc.setBounds(320, 249, 60, 14);
-		proveedoresFrame.getContentPane().add(lblRfc);
-		
-		textField_10 = new JTextField();
-		textField_10.setBounds(392, 243, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_10);
-		textField_10.setColumns(10);
-		
-		JLabel lblTelefonos = new JLabel("Telefonos");
-		lblTelefonos.setBounds(308, 298, 72, 14);
-		proveedoresFrame.getContentPane().add(lblTelefonos);
-		
-		textField_11 = new JTextField();
-		textField_11.setBounds(403, 298, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_11);
-		textField_11.setColumns(10);
-		
-		JLabel lblIdNum = new JLabel("ID Num");
-		lblIdNum.setBounds(40, 16, 60, 14);
-		proveedoresFrame.getContentPane().add(lblIdNum);
-		
-		textField_12 = new JTextField();
-		textField_12.setBounds(128, 10, 122, 26);
-		proveedoresFrame.getContentPane().add(textField_12);
-		textField_12.setColumns(10);
-		
-		JRadioButton rdbtnEsEmpresa = new JRadioButton("Es Empresa");
-		rdbtnEsEmpresa.setBounds(395, 346, 130, 18);
-		proveedoresFrame.getContentPane().add(rdbtnEsEmpresa);
-		
-		JButton btnRegistrar_1 = new JButton("Registrar");
-		btnRegistrar_1.setBounds(724, 310, 100, 26);
-		proveedoresFrame.getContentPane().add(btnRegistrar_1);
-		
-		
-		
-		JButton btnConsultar = new JButton("Consultar");
-		btnConsultar.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				proveedoresFrame.getContentPane().removeAll();
-				
-				
-				textField_1 = new JTextField();
-				textField_1.setBounds(6, 6, 215, 26);
-				proveedoresFrame.getContentPane().add(textField_1);
-				textField_1.setColumns(10);
-				
-				JButton btnBuscar_1 = new JButton("Buscar");
-				btnBuscar_1.setBounds(244, 6, 100, 26);
-				proveedoresFrame.getContentPane().add(btnBuscar_1);
-				
-				//Tablas de cada uno
-				//General
-				table_1 = new JTable();
-				table_1.setBounds(12, 41, 947, 422);
-				try {
-					table_1.setModel(bd.regresamodeloproveedor());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				table_1.setShowGrid(true);
-				table_1.setShowVerticalLines(true);
-				table_1.setGridColor(Color.black);
-				
-				//Telefonos
-				
-				final JTable table_2 = new JTable();
-				table_2 .setBounds(12, 41, 947, 422);
-				try {
-					table_2.setModel(bd.regresamodeloproveedortels());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				table_2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				table_2.setShowGrid(true);
-				table_2.setShowVerticalLines(true);
-				table_2.setGridColor(Color.black);
-				
-				//Empresa
-				final JTable table_3 = new JTable();
-				table_3 .setBounds(12, 41, 947, 422);
-				try {
-					table_3.setModel(bd.regresamodeloempresa());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				table_3.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-				table_3.setShowGrid(true);
-				table_3.setShowVerticalLines(true);
-				table_3.setGridColor(Color.black);
-				
-				
-				
-				
-				JButton btnTelefonos = new JButton("Telefonos");
-				btnTelefonos.setBounds(610, 6, 100, 26);
-				btnTelefonos.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						// TODO Auto-generated method stub
-						
-						
-						if(Estado == 0){
-							proveedoresFrame.getContentPane().remove(table_1);
-						}else if(Estado == 3){
-							proveedoresFrame.getContentPane().remove(table_3);
-						}
-
-						proveedoresFrame.getContentPane().add(table_2);
-						JPanel temp = contentPane;
-						SwingUtilities.updateComponentTreeUI(temp);
-						temp.validate();
-						Estado = 1;
-					}});
-				
-				proveedoresFrame.getContentPane().add(btnTelefonos);
-				
-				JButton btnGeneral = new JButton("General");
-				btnGeneral.setBounds(466, 6, 100, 26);
-				btnGeneral.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						
-						if(Estado == 1){
-						proveedoresFrame.getContentPane().remove(table_2);
-						}else if(Estado == 3){
-							proveedoresFrame.getContentPane().remove(table_3);
-						}
-						
-						proveedoresFrame.getContentPane().add(table_1);
-						JPanel temp = contentPane;
-						SwingUtilities.updateComponentTreeUI(temp);
-						temp.validate();
-						Estado = 0;
-						
-					}});
-				proveedoresFrame.getContentPane().add(btnGeneral);
-				
-				JButton btnEmpresas = new JButton("Empresas");
-				btnEmpresas.setBounds(750, 6, 100, 26);
-				btnEmpresas.addActionListener(new ActionListener(){
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						// TODO Auto-generated method stub
-						if(Estado == 0){
-							proveedoresFrame.getContentPane().remove(table_1);
-							}else if(Estado == 1){
-								proveedoresFrame.getContentPane().remove(table_2);
-							}
-						
-						proveedoresFrame.getContentPane().add(table_3);
-						JPanel temp = contentPane;
-						SwingUtilities.updateComponentTreeUI(temp);
-						temp.validate();
-						Estado = 3;
-						
-					}});
-				proveedoresFrame.getContentPane().add(btnEmpresas);
-				
-				JPanel temp = contentPane;
-				SwingUtilities.updateComponentTreeUI(temp);
-				temp.validate();
-			}});
-		menuBar.add(btnConsultar);
-		
-		JButton btnRegistrar = new JButton("Registrar");
-		menuBar.add(btnRegistrar);
-		
-		JButton btnModificar_1 = new JButton("Modificar");
-		menuBar.add(btnModificar_1);
-		
-		JButton btnBorrar = new JButton("Borrar");
-		menuBar.add(btnBorrar);
-		proveedoresFrame.setVisible(true);
-		
 		//Acaba el modulo de proveedores
 		contentPane.add(btnIniciar);
 		

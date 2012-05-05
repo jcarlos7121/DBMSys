@@ -295,7 +295,7 @@ public class Bidi {
 	//Modelo de la tabla
 	public DefaultTableModel regresamodeloproveedor() throws SQLException {
 		PreparedStatement datines = conect
-				.prepareStatement("select * from proveedor;");
+				.prepareStatement("select * from proveedor order by noproveedor;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -324,7 +324,7 @@ public class Bidi {
 	public TableModel regresamodeloproveedortels() throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement datines = conect
-				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,telefono from proveedortels natural join proveedor;");
+				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,telefono from proveedortels natural join proveedor order by noproveedor;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -351,7 +351,7 @@ public class Bidi {
 	public TableModel regresamodeloempresa() throws SQLException {
 		// TODO Auto-generated method stub
 		PreparedStatement datines = conect
-				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,empresapersona,cargo,compañia from proveedorempresa natural join proveedor;");
+				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,empresapersona,cargo,compañia from proveedorempresa natural join proveedor order by noproveedor;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -377,5 +377,241 @@ public class Bidi {
 	}
 	//Termina la definiciòn de modelos del empleado
 	//Metodos para inserciòn a base de datos de proveedores
+	
+	public String insertaProveedor(String string, String string2, String string3, String string4, String string5, String string6, String string7, String string8, String string9, String string10, String string11, String string12, String string13) throws SQLException{
+		
+		PreparedStatement insercion = conect.prepareStatement("insert into proveedor values("+string+",'"+string2+"','"+string3+"','"+string4+"','"+string5+"','"+string6+"','"+string7+"',"+string8+",'"+string9+"','"+string10+"','"+string11+"','"+string12+"','"+string13+"');");
+		String ble = "insert into proveedor values("+string+",'"+string2+"','"+string3+"','"+string4+"','"+string5+"','"+string6+"','"+string7+"',"+string8+",'"+string9+"','"+string10+"','"+string11+"','"+string12+",'"+string13+"');";
+		insercion.execute();
+		return ble;
+	}
+
+	public String insertaempresa(String text, String text2, String text3,
+			String text4) throws SQLException {
+				PreparedStatement insercion = conect.prepareStatement("insert into proveedorempresa values("+text+",'"+text2+"','"+text3+"','"+text4+"');");
+				String ejecucion = "insert into proveedorempresa values("+text+",'"+text2+"','"+text3+"','"+text4+"');";
+				insercion.execute();
+				return ejecucion;
+		// TODO Auto-generated method stub
+		
+		
+	}
+
+	public String insertatelefono(String text, String text2) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement insercion = conect.prepareStatement("insert into proveedortels values("+text+","+text2+");");
+		String ejecucion = "insert into proveedortels values("+text+","+text2+");";
+		insercion.execute();
+		return ejecucion;
+	}
+	
+	//comienzan los miles de metodos para regresar datos de proveedores para modificaciòn
+	public String regresaID(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select noproveedor from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("noproveedor");
+		return ble;
+	}
+	
+	public String regresaPNombre(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select nombre from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("nombre");
+		return ble;
+	}
+	
+	public String regresaPApellidoP(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select apellidop from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("apellidop");
+		return ble;
+	}
+	
+	public String regresaPApellidoM(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select apellidom from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("apellidom");
+		return ble;
+	}
+	
+	public String regresaPCalle(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select calle from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("calle");
+		return ble;
+	}
+	
+	public String regresaPCiudad(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select ciudad from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("ciudad");
+		return ble;
+	}
+	
+	public String regresaPEstado(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select estado from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("estado");
+		return ble;
+	}
+	
+	public String regresaPCP(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("cp");
+		return ble;
+	}
+	
+	public String regresaPPais(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("pais");
+		return ble;
+	}
+	
+	public String regresaPEmail(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("email");
+		return ble;
+	}
+	
+	public String regresaPNotas(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("notas");
+		return ble;
+	}
+	
+	public String regresaPRFC(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("rfc");
+		return ble;
+	}
+	
+	public String regresaPPagina(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("paginaweb");
+		return ble;
+	}
+	
+	public String regresaPTelefono(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedortels where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("telefono");
+		return ble;
+	}
+	
+	public String regresaPCargo(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedorempresa where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("cargo");
+		return ble;
+	}
+	
+	public String regresaPEmpresa(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from proveedorempresa where noproveedor = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("compañia");
+		return ble;
+	}
+
+	public void actualizaProveedor(String text, String text2, String text3,
+			String text4, String text5, String text6, String text7,
+			String text8, String text9, String text10, String text11,
+			String text12, String text13, String indice) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement actualizacion = conect.prepareStatement("update proveedor set noproveedor = "+text+" where noproveedor = "+indice+";");
+		actualizacion.execute();
+		PreparedStatement actualizacion2 = conect.prepareStatement("update proveedor set nombre = '"+text2+"' where noproveedor = "+indice+";");
+		actualizacion2.execute();
+		PreparedStatement actualizacion3 = conect.prepareStatement("update proveedor set apellidom = '"+text3+"' where noproveedor = "+indice+";");
+		actualizacion3.execute();
+		PreparedStatement actualizacion4 = conect.prepareStatement("update proveedor set apellidop = '"+text4+"' where noproveedor = "+indice+";");
+		actualizacion4.execute();
+		PreparedStatement actualizacion5 = conect.prepareStatement("update proveedor set calle = '"+text5+"' where noproveedor = "+indice+";");
+		actualizacion5.execute();
+		PreparedStatement actualizacion6 = conect.prepareStatement("update proveedor set ciudad = '"+text6+"' where noproveedor = "+indice+";");
+		actualizacion6.execute();
+		PreparedStatement actualizacion7 = conect.prepareStatement("update proveedor set estado = '"+text7+"' where noproveedor = "+indice+";");		
+		actualizacion7.execute();
+		PreparedStatement actualizacion8 = conect.prepareStatement("update proveedor set cp = "+text8+" where noproveedor = "+indice+";");		
+		actualizacion8.execute();
+		PreparedStatement actualizacion9 = conect.prepareStatement("update proveedor set pais = '"+text9+"' where noproveedor = "+indice+";");		
+		actualizacion9.execute();
+		PreparedStatement actualizacion10 = conect.prepareStatement("update proveedor set email = '"+text10+"' where noproveedor = "+indice+";");		
+		actualizacion10.execute();
+		PreparedStatement actualizacion11 = conect.prepareStatement("update proveedor set notas = '"+text11+"' where noproveedor = "+indice+";");		
+		actualizacion11.execute();
+		PreparedStatement actualizacion12 = conect.prepareStatement("update proveedor set rfc = '"+text12+"' where noproveedor = "+indice+";");		
+		actualizacion12.execute();
+		PreparedStatement actualizacion13 = conect.prepareStatement("update proveedor set paginaweb = '"+text13+"' where noproveedor = "+indice+";");		
+		actualizacion13.execute();
+	}
+
+	public void actualizaempresa(String text, String text2, String text3,
+			String text4, String indice) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		PreparedStatement actualizacion = conect.prepareStatement("update proveedorempresa set empresapersona = '"+text2+"' where noproveedor = "+indice+";");
+		actualizacion.execute();
+
+		PreparedStatement actualizacion2 = conect.prepareStatement("update proveedorempresa set cargo = '"+text3+"' where noproveedor = "+indice+";");
+		actualizacion2.execute();
+		
+		PreparedStatement actualizacion3 = conect.prepareStatement("update proveedorempresa set compañia = '"+text4+"' where noproveedor = "+indice+";");
+		actualizacion3.execute();
+		
+		PreparedStatement actualizacion4 = conect.prepareStatement("update proveedorempresa set noproveedor = "+text+" where noproveedor = "+indice+";");
+		actualizacion4.execute();
+	}
+
+	public void actualizatelefono(String text, String text2, String indice) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement actualizacion = conect.prepareStatement("update proveedortels set noproveedor = "+text+" where noproveedor = "+indice+";");
+		actualizacion.execute();
+		PreparedStatement actualizacion2 = conect.prepareStatement("update proveedortels set telefono = "+text2+" where noproveedor = "+indice+";");
+		actualizacion2.execute();
+		
+	}
+	
+	public void borrarProveedor(String a) throws SQLException{
+		PreparedStatement borrado = conect.prepareStatement("delete from proveedor where noproveedor="+a+";");
+		borrado.execute();
+		PreparedStatement borrado2 = conect.prepareStatement("delete from proveedortels where noproveedor="+a+";");
+		borrado.execute();
+		
+	}
+	
+	public void borrarProveedorEmpresa(String a) throws SQLException{
+
+		PreparedStatement borrado2 = conect.prepareStatement("delete from proveedortels where noproveedor="+a+";");
+		borrado2.execute();
+		PreparedStatement borrado3 = conect.prepareStatement("delete from proveedorempresa where noproveedor="+a+";");
+		borrado3.execute();
+		PreparedStatement borrado = conect.prepareStatement("delete from proveedor where noproveedor="+a+";");
+		borrado.execute();
+		
+	}
+	
+	
 	
 }
