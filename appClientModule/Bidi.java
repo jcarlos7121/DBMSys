@@ -612,6 +612,93 @@ public class Bidi {
 		
 	}
 	
+	//Acaba los metodos para manejo de proveedores
 	
+	//Comienzan los metodos para manejo de clientes
+	
+	public DefaultTableModel regresamodelocliente() throws SQLException {
+		PreparedStatement datines = conect
+				.prepareStatement("select * from cliente order by nocliente;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;
+
+	}
+	
+	public DefaultTableModel regresamodeloclienteempresa() throws SQLException {
+		PreparedStatement datines = conect
+				.prepareStatement("select * from clienteempresa order by nocliente;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;
+
+	}
+
+	public TableModel regresamodeloclientetels() throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement datines = conect
+				.prepareStatement("select * from clientetels order by nocliente;");
+		ResultSet datiness = datines.executeQuery();
+		ResultSetMetaData ble = datiness.getMetaData();
+		blop = new DefaultTableModel();
+
+		int columnas = ble.getColumnCount();
+		String[] nombrecol = new String[columnas];
+		for (int i = 1; i <= columnas; i++) {
+			nombrecol[i - 1] = ble.getColumnName(i);
+		}
+		blop.setColumnIdentifiers(nombrecol);
+
+		while (datiness.next()) {
+			String[] rowData = new String[columnas];
+			for (int i = 1; i <= columnas; i++) {
+				rowData[i - 1] = datiness.getString(i);
+			}
+			blop.addRow(rowData);
+		}
+		datiness.close();
+		
+
+		return blop;	}
+
+
 	
 }

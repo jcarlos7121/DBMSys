@@ -1,4 +1,3 @@
-//Holo!!
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -94,6 +93,10 @@ public class DBMSysAdministrator extends JFrame {
 	 JRadioButton rdbtnEsEmpresa;
 	 JButton btnTransportistas;
 	 JButton btnEmpledos;
+	 private JTextField textField_2;
+	 private JTable table_4;
+	 private JTable table_5;
+	 private JTable table_6;
 	/**
 	 * Launch the application.
 	 */
@@ -915,6 +918,7 @@ public class DBMSysAdministrator extends JFrame {
 					}});
 				btnProveedores.setBounds(807, 174, 145, 24);
 				contentPane.add(btnProveedores);
+				
 				btnTransportistas = new JButton("Transportistas");
 				btnTransportistas.setBorder(new RoundedBorder(20));
 				btnTransportistas.setBounds(350, 283, 153, 24);
@@ -1505,9 +1509,121 @@ public class DBMSysAdministrator extends JFrame {
 				SwingUtilities.updateComponentTreeUI(temp);
 				temp.validate();
 			}});
-		//Comienza el codigo del modulo de proveedores
+		
+		//Comienza el modulo de Clientes
+		final JInternalFrame internalFrame_1 = new JInternalFrame("New JInternalFrame");
+		internalFrame_1.setBounds(274, 146, 976, 517);
+		contentPane.add(internalFrame_1);
+		
+		JMenuBar menuBar = new JMenuBar();
+		internalFrame_1.setJMenuBar(menuBar);
+		
+		JButton btnConsulta_1 = new JButton("Consulta");
+		btnConsulta_1.addActionListener(new ActionListener(){
 
-		//Acaba el modulo de proveedores
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+				internalFrame_1.getContentPane().removeAll();
+				
+				textField_2 = new JTextField();
+				textField_2.setBounds(6, 6, 122, 26);
+				internalFrame_1.getContentPane().add(textField_2);
+				textField_2.setColumns(10);
+				
+				JButton btnNewButton = new JButton("Buscar");
+				btnNewButton.setBounds(140, 6, 100, 26);
+				internalFrame_1.getContentPane().add(btnNewButton);
+				
+				table_4 = new JTable();
+				try {
+					table_4.setModel(bd.regresamodelocliente());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				table_4.setBounds(12, 41, 947, 422);
+				table_4.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				table_4.setShowGrid(true);
+				table_4.setShowHorizontalLines(true);
+				table_4.setGridColor(Color.black);
+				table_4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				    public void valueChanged(ListSelectionEvent e) {
+				        sel = table_4.getSelectedRow();
+				        
+				    }
+				});
+				
+				table_5 = new JTable();
+				try {
+					table_5.setModel(bd.regresamodeloclientetels());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				table_5.setBounds(12, 41, 947, 422);
+				table_5.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				table_5.setShowGrid(true);
+				table_5.setShowHorizontalLines(true);
+				table_5.setGridColor(Color.black);
+				
+				
+				table_6 = new JTable();
+				try {
+					table_6.setModel(bd.regresamodeloclienteempresa());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				table_6.setBounds(12, 41, 947, 422);
+				table_6.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+				table_6.setShowGrid(true);
+				table_6.setShowHorizontalLines(true);
+				table_6.setGridColor(Color.black);
+				
+				
+				internalFrame_1.getContentPane().add(table_4);
+				
+				JButton btnGeneral_1 = new JButton("General");
+				btnGeneral_1.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						
+					}});
+				btnGeneral_1.setBounds(604, 6, 100, 26);
+				internalFrame_1.getContentPane().add(btnGeneral_1);
+				
+				JButton btnTels = new JButton("Tels");
+				btnTels.setBounds(716, 6, 100, 26);
+				internalFrame_1.getContentPane().add(btnTels);
+				
+				JButton btnNewButton_1 = new JButton("Empresa");
+				btnNewButton_1.setBounds(828, 6, 100, 26);
+				internalFrame_1.getContentPane().add(btnNewButton_1);
+				internalFrame_1.setVisible(true);
+				
+				Container temp = internalFrame_1.getContentPane();
+				SwingUtilities.updateComponentTreeUI(temp);
+				temp.validate();
+				
+			}});
+		menuBar.add(btnConsulta_1);
+		
+		JButton btnRegistrar_2 = new JButton("Registrar");
+		menuBar.add(btnRegistrar_2);
+		
+		JButton btnModificar_2 = new JButton("Modificar");
+		menuBar.add(btnModificar_2);
+		
+		JButton btnBorrar_1 = new JButton("Borrar");
+		menuBar.add(btnBorrar_1);
+		internalFrame_1.getContentPane().setLayout(null);
+		
+
+//Acaba el modulo de clientes
 		contentPane.add(btnIniciar);
 		
 		
