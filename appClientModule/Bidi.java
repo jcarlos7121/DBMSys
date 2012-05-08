@@ -699,6 +699,205 @@ public class Bidi {
 
 		return blop;	}
 
+	public void insertacliente(String text, String text2, String text3,
+			String text4, String text5, String text6, String text7,
+			String text8, String text9, String text10, String text11,
+			String text12) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement esteit = conect.prepareStatement("insert into cliente values(?,?,?,?,?,?,?,?,?,?,?,?);");
+		int numerex = Integer.parseInt(text);
+		esteit.setInt(1, numerex);
+		esteit.setString(2, text2);
+		esteit.setString(3, text3);
+		esteit.setString(4, text4);
+		esteit.setString(5, text5);
+		esteit.setString(6, text6);
+		esteit.setString(7,text7);
+		int fechi = Integer.parseInt(text8);
+		esteit.setInt(8, fechi);
+		esteit.setString(9, text9);
+		esteit.setString(10, text10);
+		esteit.setString(11, text11);
+		int descuentext = Integer.parseInt(text12);
+		esteit.setInt(12, descuentext);
+		esteit.execute();
+		
+		
+	}
+
+	public void insertaclientempresa(String text, String text2, String text3) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement esteit = conect.prepareStatement("insert into clienteempresa values(?,?,?);");
+		int numerex = Integer.parseInt(text);
+		esteit.setInt(1, numerex);
+		esteit.setString(2, text2);
+		esteit.setString(3, text3);
+		esteit.execute();
+	}
+
+	public void insertaclientetels(String text, String text2) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		PreparedStatement esteit = conect.prepareStatement("insert into clientetels values(?,?);");
+		int numerex = Integer.parseInt(text);
+		esteit.setInt(1, numerex);
+		int telefonex = Integer.parseInt(text2);
+		esteit.setInt(2, telefonex);
+		esteit.execute();
+		
+		
+	}
+
+	public void insertaatiendecliente(String text, String text2) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		PreparedStatement esteit = conect.prepareStatement("insert into empleadoatiendeclientes values(?,?,NOW());");
+		int numerex = Integer.parseInt(text);
+		esteit.setInt(1, numerex );
+		int antiendex = Integer.parseInt(text2);
+		esteit.setInt(2, antiendex);
+		esteit.execute();
+		
+		
+	}
+	
+	public String regresaCID(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select nocliente from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("nocliente");
+		return ble;
+	}
+	
+	public String regresaCNombre(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select nombre from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("nombre");
+		return ble;
+	}
+	
+	public String regresaCApellidoP(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select apellidop from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("apellidop");
+		return ble;
+	}
+	
+	public String regresaCApellidoM(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select apellidom from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("apellidom");
+		return ble;
+	}
+	
+	public String regresaCCalle(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select calle from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("calle");
+		return ble;
+	}
+	
+	public String regresaCCiudad(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select ciudad from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("ciudad");
+		return ble;
+	}
+	
+	public String regresaCEstado(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select estado from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("estado");
+		return ble;
+	}
+	
+	public String regresaCCP(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("cp");
+		return ble;
+	}
+	
+	public String regresaCPais(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("pais");
+		return ble;
+	}
+	
+	public String regresaCEmail(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("email");
+		return ble;
+	}
+	
+	public String regresaCNotas(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("notas");
+		return ble;
+	}
+	
+	public String regresaCRFC(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("rfc");
+		return ble;
+	}
+	
+	public String regresaCDescuento(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("descuento");
+		return ble;
+	}
+	
+	public String regresaCTelefono(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("telefono");
+		return ble;
+	}
+	
+	public String regresaCCargo(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from clienteempresa where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("cargo");
+		return ble;
+	}
+	
+	public String regresaCEmpresa(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from clienteempresa where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("compañia");
+		return ble;
+	}
+	
+	public String regresaCTel(String indice) throws SQLException{
+		PreparedStatement insercion = conect.prepareStatement("select * from clientetels where nocliente = "+indice+";");
+		ResultSet rs = insercion.executeQuery();
+		rs.next();
+		String ble = rs.getString("telefono");
+		return ble;
+		
+	}
+
 
 	
 }
