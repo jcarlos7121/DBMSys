@@ -618,7 +618,7 @@ public class Bidi {
 	
 	public DefaultTableModel regresamodelocliente() throws SQLException {
 		PreparedStatement datines = conect
-				.prepareStatement("select * from cliente order by nocliente;");
+				.prepareStatement("select nocliente,nombre,apellidom,apellidop,calle,ciudad,estado,cp,pais,email,rfc,descuentocliente,noempleado from empleadoatiendeclientes natural join cliente order by nocliente;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();

@@ -6,10 +6,6 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.sql.SQLException;
 
@@ -46,11 +42,6 @@ import org.jfree.chart.plot.*;
 import javax.swing.JLabel;
 
 import javax.swing.*;
-import javax.swing.event.*;
-import javax.swing.table.*;
-
-import java.util.*;
-import java.awt.*;
 import java.beans.PropertyVetoException;
 
 
@@ -97,6 +88,7 @@ public class DBMSysAdministrator extends JFrame {
 	 private JTable table_4;
 	 private JTable table_5;
 	 private JTable table_6;
+	 int estadillo;
 	/**
 	 * Launch the application.
 	 */
@@ -138,6 +130,7 @@ public class DBMSysAdministrator extends JFrame {
 		
 		
 		bd = new Bidi("postgres", "132410jh");
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1300, 750);
@@ -1432,9 +1425,6 @@ public class DBMSysAdministrator extends JFrame {
 								
 								internalFrame.setVisible(true);
 						
-//								JPanel temp = contentPane;
-//								SwingUtilities.updateComponentTreeUI(temp);
-//								temp.validate();
 								Container bli = internalFrame.getContentPane();
 								SwingUtilities.updateComponentTreeUI(bli);
 								bli.validate();
@@ -1511,8 +1501,10 @@ public class DBMSysAdministrator extends JFrame {
 			}});
 		
 		//Comienza el modulo de Clientes
-		final JInternalFrame internalFrame_1 = new JInternalFrame("New JInternalFrame");
+		final JInternalFrame internalFrame_1 = new JInternalFrame("Clientes");
 		internalFrame_1.setBounds(274, 146, 976, 517);
+		internalFrame_1.setClosable(true);
+		internalFrame_1.setResizable(true);
 		contentPane.add(internalFrame_1);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -1526,6 +1518,7 @@ public class DBMSysAdministrator extends JFrame {
 				// TODO Auto-generated method stub
 				
 				internalFrame_1.getContentPane().removeAll();
+				estadillo = 1;
 				
 				textField_2 = new JTextField();
 				textField_2.setBounds(6, 6, 122, 26);
@@ -1550,8 +1543,7 @@ public class DBMSysAdministrator extends JFrame {
 				table_4.setGridColor(Color.black);
 				table_4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 				    public void valueChanged(ListSelectionEvent e) {
-				        sel = table_4.getSelectedRow();
-				        
+				        sel = table_4.getSelectedRow();   
 				    }
 				});
 				
@@ -1568,42 +1560,108 @@ public class DBMSysAdministrator extends JFrame {
 				table_5.setShowHorizontalLines(true);
 				table_5.setGridColor(Color.black);
 				
-				
 				table_6 = new JTable();
-				try {
-					table_6.setModel(bd.regresamodeloclienteempresa());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 				table_6.setBounds(12, 41, 947, 422);
 				table_6.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				table_6.setShowGrid(true);
 				table_6.setShowHorizontalLines(true);
 				table_6.setGridColor(Color.black);
 				
-				
-				internalFrame_1.getContentPane().add(table_4);
-				
+
 				JButton btnGeneral_1 = new JButton("General");
+				btnGeneral_1.setBounds(466, 6, 100, 26);
 				btnGeneral_1.addActionListener(new ActionListener(){
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
 						// TODO Auto-generated method stub
 						
+						if(estadillo == 2){
+							internalFrame_1.getContentPane().remove(table_5);
+						}else if(estadillo ==3){
+							internalFrame_1.getContentPane().remove(table_6);
+						}
+						
+						try {
+							table_4.setModel(bd.regresamodelocliente());
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						internalFrame_1.getContentPane().add(table_4);
+						estadillo = 1;
+						
+						
+						Container temp = internalFrame_1.getContentPane();
+						SwingUtilities.updateComponentTreeUI(temp);
+						temp.validate();
+						
 					}});
-				btnGeneral_1.setBounds(604, 6, 100, 26);
+				JButton btnTelefonoss = new JButton("Telefonos");
+				btnTelefonoss.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						// TODO Auto-generated method stub
+						
+						if(estadillo == 1){
+							internalFrame_1.getContentPane().remove(table_4);
+						}else if(estadillo ==3){
+							internalFrame_1.getContentPane().remove(table_6);
+						}
+						
+						try {
+							table_5.setModel(bd.regresamodeloclientetels());
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						estadillo = 2;
+						
+						internalFrame_1.getContentPane().add(table_5);
+						Container temp = internalFrame_1.getContentPane();
+						SwingUtilities.updateComponentTreeUI(temp);
+						temp.validate();
+						
+					}});
+				btnTelefonoss.setBounds(610, 6, 100, 26);
+				
+				JButton btnEmpresass = new JButton("Empresas");
+				btnEmpresass.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+						if(estadillo ==2){
+							internalFrame_1.getContentPane().remove(table_5);
+						}else if(estadillo ==1){
+							internalFrame_1.getContentPane().remove(table_4);
+						}
+						
+						try {
+							table_6.setModel(bd.regresamodeloclienteempresa());
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						estadillo = 3;
+						
+						internalFrame_1.getContentPane().add(table_6);
+						Container temp = internalFrame_1.getContentPane();
+						SwingUtilities.updateComponentTreeUI(temp);
+						temp.validate();
+						
+						
+					}});
+				btnEmpresass.setBounds(750, 6, 100, 26);
+				
+				internalFrame_1.getContentPane().add(table_4);
 				internalFrame_1.getContentPane().add(btnGeneral_1);
-				
-				JButton btnTels = new JButton("Tels");
-				btnTels.setBounds(716, 6, 100, 26);
-				internalFrame_1.getContentPane().add(btnTels);
-				
-				JButton btnNewButton_1 = new JButton("Empresa");
-				btnNewButton_1.setBounds(828, 6, 100, 26);
-				internalFrame_1.getContentPane().add(btnNewButton_1);
-				internalFrame_1.setVisible(true);
+				internalFrame_1.getContentPane().add(btnTelefonoss);
+				internalFrame_1.getContentPane().add(btnEmpresass);
 				
 				Container temp = internalFrame_1.getContentPane();
 				SwingUtilities.updateComponentTreeUI(temp);
@@ -1613,6 +1671,195 @@ public class DBMSysAdministrator extends JFrame {
 		menuBar.add(btnConsulta_1);
 		
 		JButton btnRegistrar_2 = new JButton("Registrar");
+		btnRegistrar_2.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				internalFrame_1.getContentPane().removeAll();
+				
+				JLabel lblNombre = new JLabel("Nombre");
+				lblNombre.setBounds(40, 54, 60, 14);
+				internalFrame_1.getContentPane().add(lblNombre);
+				
+				nombretext = new JTextField();
+				nombretext.setBounds(128, 48, 122, 26);
+				internalFrame_1.getContentPane().add(nombretext);
+				nombretext.setColumns(10);
+				
+				JLabel lblNewLabel = new JLabel("Apellido P");
+				lblNewLabel.setBounds(40, 101, 81, 14);
+				internalFrame_1.getContentPane().add(lblNewLabel);
+				
+				apellidotext = new JTextField();
+				apellidotext.setBounds(128, 95, 122, 26);
+				internalFrame_1.getContentPane().add(apellidotext);
+				apellidotext.setColumns(10);
+				
+				apellidom = new JTextField();
+				apellidom.setBounds(128, 145, 122, 26);
+				internalFrame_1.getContentPane().add(apellidom);
+				apellidom.setColumns(10);
+				
+				JLabel lblApellidoM = new JLabel("Apellido M");
+				lblApellidoM.setBounds(40, 157, 81, 14);
+				internalFrame_1.getContentPane().add(lblApellidoM);
+				
+				JLabel lblNewLabel_1 = new JLabel("Calle");
+				lblNewLabel_1.setBounds(40, 203, 60, 14);
+				internalFrame_1.getContentPane().add(lblNewLabel_1);
+				
+				calletext = new JTextField();
+				calletext.setBounds(128, 197, 122, 26);
+				internalFrame_1.getContentPane().add(calletext);
+				calletext.setColumns(10);
+				
+				JLabel lblCiudad = new JLabel("Ciudad");
+				lblCiudad.setBounds(40, 249, 60, 14);
+				internalFrame_1.getContentPane().add(lblCiudad);
+				
+				ciudadtext = new JTextField();
+				ciudadtext.setBounds(128, 243, 122, 26);
+				internalFrame_1.getContentPane().add(ciudadtext);
+				ciudadtext.setColumns(10);
+				
+				JLabel lblEstado = new JLabel("Estado");
+				lblEstado.setBounds(40, 298, 60, 14);
+				internalFrame_1.getContentPane().add(lblEstado);
+				
+				JLabel lblNewLabel_2 = new JLabel("Pais");
+				lblNewLabel_2.setBounds(40, 348, 60, 14);
+				internalFrame_1.getContentPane().add(lblNewLabel_2);
+				
+				estadotext = new JTextField();
+				estadotext.setBounds(128, 292, 122, 26);
+				internalFrame_1.getContentPane().add(estadotext);
+				estadotext.setColumns(10);
+				
+				paistext = new JTextField();
+				paistext.setBounds(128, 348, 122, 26);
+				internalFrame_1.getContentPane().add(paistext);
+				paistext.setColumns(10);
+				
+				JLabel lblEmail = new JLabel("Email");
+				lblEmail.setBounds(320, 54, 60, 14);
+				internalFrame_1.getContentPane().add(lblEmail);
+				
+				emailtext = new JTextField();
+				emailtext.setBounds(392, 48, 122, 26);
+				internalFrame_1.getContentPane().add(emailtext);
+				emailtext.setColumns(10);
+				
+				JLabel lblNotas = new JLabel("Notas");
+				lblNotas.setBounds(320, 107, 60, 14);
+				internalFrame_1.getContentPane().add(lblNotas);
+				
+				final JTextArea notastext = new JTextArea();
+				notastext.setBounds(392, 95, 158, 135);
+				internalFrame_1.getContentPane().add(notastext);
+				
+				JLabel lblRfc = new JLabel("RFC");
+				lblRfc.setBounds(320, 249, 60, 14);
+				internalFrame_1.getContentPane().add(lblRfc);
+				
+				rfctext = new JTextField();
+				rfctext.setBounds(392, 243, 122, 26);
+				internalFrame_1.getContentPane().add(rfctext);
+				rfctext.setColumns(10);
+				
+				JLabel lblIdNum = new JLabel("ID Num");
+				lblIdNum.setBounds(40, 16, 60, 14);
+				internalFrame_1.getContentPane().add(lblIdNum);
+				
+				idtext = new JTextField();
+				idtext.setBounds(128, 10, 122, 26);
+				internalFrame_1.getContentPane().add(idtext);
+				idtext.setColumns(10);
+				
+				final JRadioButton rdbtnEsEmpresa = new JRadioButton("Es Empresa");
+				rdbtnEsEmpresa.setBounds(394, 372, 130, 18);
+				internalFrame_1.getContentPane().add(rdbtnEsEmpresa);
+				
+				JButton btnRegistrar_1 = new JButton("Registrar");
+				btnRegistrar_1.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						
+						if(rdbtnEsEmpresa.isSelected()==true){
+							try {
+								
+								JOptionPane.showMessageDialog((Component)e.getSource(), "Registro exitoso");
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+						else{
+						try {
+							JOptionPane.showMessageDialog((Component)e.getSource(), "Registro Exitoso");
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							JOptionPane.showMessageDialog((Component)e.getSource(), "Datos Faltantes o Erroneos");
+							e1.printStackTrace();
+						}
+						}
+					}});
+				btnRegistrar_1.setBounds(724, 310, 100, 26);
+				internalFrame_1.getContentPane().add(btnRegistrar_1);
+				
+				JLabel lblCargo = new JLabel("Cargo");
+				lblCargo.setBounds(639, 54, 60, 14);
+				internalFrame_1.getContentPane().add(lblCargo);
+				
+				cargotext = new JTextField();
+				cargotext.setBounds(711, 48, 122, 26);
+				internalFrame_1.getContentPane().add(cargotext);
+				cargotext.setColumns(10);
+				
+				empresatext = new JTextField();
+				empresatext.setBounds(711, 95, 122, 26);
+				internalFrame_1.getContentPane().add(empresatext);
+				empresatext.setColumns(10);
+				
+				JLabel lblEmpresa = new JLabel("Empresa");
+				lblEmpresa.setBounds(639, 101, 60, 14);
+				internalFrame_1.getContentPane().add(lblEmpresa);
+				
+				telefonotext = new JTextField();
+				telefonotext.setBounds(392, 292, 122, 26);
+				internalFrame_1.getContentPane().add(telefonotext);
+				telefonotext.setColumns(10);
+				
+				JLabel lblTelefono = new JLabel("Telefono");
+				lblTelefono.setBounds(320, 298, 60, 14);
+				internalFrame_1.getContentPane().add(lblTelefono);
+				
+				paginatext = new JTextField();
+				paginatext.setBounds(392, 330, 122, 26);
+				internalFrame_1.getContentPane().add(paginatext);
+				paginatext.setColumns(10);
+				
+				JLabel lblEmail_1 = new JLabel("Pagina Web");
+				lblEmail_1.setBounds(280, 336, 100, 14);
+				internalFrame_1.getContentPane().add(lblEmail_1);
+				
+				JLabel lblCp = new JLabel("CP");
+				lblCp.setBounds(40, 407, 60, 14);
+				internalFrame_1.getContentPane().add(lblCp);
+				
+				cptext = new JTextField();
+				cptext.setBounds(128, 401, 122, 26);
+				internalFrame_1.getContentPane().add(cptext);
+				cptext.setColumns(10);
+				
+				//JPanel temp = contentPane;
+				Container bli = internalFrame_1.getContentPane();
+				SwingUtilities.updateComponentTreeUI(bli);
+				bli.validate();
+				
+			}});
 		menuBar.add(btnRegistrar_2);
 		
 		JButton btnModificar_2 = new JButton("Modificar");
@@ -1621,7 +1868,7 @@ public class DBMSysAdministrator extends JFrame {
 		JButton btnBorrar_1 = new JButton("Borrar");
 		menuBar.add(btnBorrar_1);
 		internalFrame_1.getContentPane().setLayout(null);
-		
+		internalFrame_1.setVisible(true);
 
 //Acaba el modulo de clientes
 		contentPane.add(btnIniciar);
