@@ -7,8 +7,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="/mnt/Juan Carlos/Programación/Java/Librerias/conectores/postgresql-9.1-901.jdbc4.jar"/>
 	<classpathentry kind="lib" path="/mnt/Juan Carlos/Programación/Java/Librerias/JFreechart/jfreechart-1.0.14.jar"/>
 	<classpathentry kind="lib" path="/mnt/Juan Carlos/Programación/Java/Librerias/JFreechart/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="/mnt/Juan Carlos/Programación/Java/Librerias/conectores/mysql-connector-java-5.1.18-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

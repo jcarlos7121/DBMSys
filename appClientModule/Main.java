@@ -1,6 +1,7 @@
 //Holo!!!dsad
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -23,19 +24,25 @@ public class Main {
 //holo
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		String user = args[0];
+		String password = args[1];
+		
 		Splash spl = new Splash(5000);
 		spl.mostrarSplash();
 		Sesion ses = null;
 		try {
-			ses = new Sesion();
+			ses = new Sesion(user, password);
 			ses.setLocationRelativeTo(null);
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("No se pudo conectar con la base de datos");
+			// TODO Auto-generated catch blockJOptionPane.showMessageDialog((Component)e.getSource(), "Registro Exitoso");
 			e.printStackTrace();
+			
+		}catch(ArrayIndexOutOfBoundsException e){
+			JOptionPane.showMessageDialog(ses, "Correr el jar desde consola con 'java -jar DBMSys.jar (usuario) (contraseña)' de la base de datos", null, 0);
 		}
 		ses.setVisible(true);
 	}

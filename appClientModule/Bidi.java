@@ -11,27 +11,32 @@ import javax.swing.table.TableModel;
 public class Bidi {
 
 	
-	Connection conect;
+	Connection con;
 	DefaultTableModel blop;
+	private Statement st;
+	private CallableStatement cs;
 
 	public Bidi(String a, String b) throws ClassNotFoundException, SQLException {
 
-		String basedatos = "jdbc:postgresql://localhost:5432/dbmsys";
-		String driver = "org.postgresql.Driver";
+//		String basedatos = "jdbc:postgresql://localhost:5432/dbmsys";
+//		String driver = "org.postgresql.Driver";		
+
+		String basedatos = "jdbc:mysql://localhost/dbmsys";
+		String driver = "com.mysql.jdbc.Driver";
 
 		Class.forName(driver);
-		conect = DriverManager.getConnection(basedatos, a, b);
+		con = DriverManager.getConnection(basedatos, a, b);
 		// DriverManager.registerDriver(new AppEngineDriver());
 
 	};
 
 	public String dameadmincontra(String a) throws SQLException {
-		PreparedStatement steit = conect
-				.prepareStatement("Select * from empleado where username = '"
+		PreparedStatement steit = con
+				.prepareStatement("select * from Empleado where Username = '"
 						+ a + "';");
 		ResultSet rs = steit.executeQuery();
 		rs.next();
-		String bli = rs.getString("password");
+		String bli = rs.getString("Passwrd");
 		rs.close();
 		return bli;
 
@@ -39,11 +44,11 @@ public class Bidi {
 
 	public String damenombreusuario(String username) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement blo = conect.prepareStatement("select * from empleado where username ='"
+		PreparedStatement blo = con.prepareStatement("select * from Empleado where Username ='"
 						+ username + "';");
 		ResultSet rs = blo.executeQuery();
 		rs.next();
-		String bli = rs.getString("nombre");
+		String bli = rs.getString("Nombre");
 
 		return bli;
 	};
@@ -51,7 +56,7 @@ public class Bidi {
 	//Metodos para empleados
 
 	public void borrarempleado(String numero) throws SQLException{
-		PreparedStatement borrado = conect.prepareStatement("delete from empleado where noempleado ="+numero+";");
+		PreparedStatement borrado = con.prepareStatement("delete from Empleado where NoEmpleado ="+numero+";");
 		borrado.execute();
 	}
 	
@@ -59,8 +64,8 @@ public class Bidi {
 			String apellidop, String calle, String ciudad, String estado,
 			String string2, String pais, String email, String aprobado,
 			String username, String password) throws SQLException {
-		PreparedStatement maton = conect
-				.prepareStatement("insert into empleado(nombre,apellidom,apellidop,calle,ciudad,estado,cp,pais,email,aprobado,username,password) values('"
+		PreparedStatement maton = con
+				.prepareStatement("insert into Empleado(Nombre,ApellidoM,ApellidoP,Calle,Ciudad,Estado,CP,Pais,Email,Aprobado,Username,Passwrd) values('"
 						+ nombre
 						+ "','"
 						+ apellidop
@@ -84,7 +89,7 @@ public class Bidi {
 	};
 
 	public int regresatamaño() throws SQLException {
-		PreparedStatement holo = conect
+		PreparedStatement holo = con
 				.prepareStatement("select count(*) from empleado");
 		ResultSet mm = holo.executeQuery();
 		int conteo = mm.getInt("count");
@@ -94,8 +99,8 @@ public class Bidi {
 	};
 
 	public DefaultTableModel regresamodelo() throws SQLException {
-		PreparedStatement datines = conect
-				.prepareStatement("select * from empleado order by noempleado;");
+		PreparedStatement datines = con
+				.prepareStatement("select * from Empleado order by NoEmpleado;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -127,103 +132,103 @@ public class Bidi {
 	 * @throws SQLException 
 	 */
 	public String regresanombreempleado(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select nombre from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Nombre from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String nombre = rss.getString("nombre");
+		String nombre = rss.getString("Nombre");
 		return nombre;
 	}
 	
 	public String regresapellidop(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select apellidop from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select ApellidoP from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String apellidop = rss.getString("apellidop");
+		String apellidop = rss.getString("ApellidoP");
 		return apellidop;
 	}
 
 	public String regresapellidom(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select apellidom from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select ApellidoM from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String apellidom = rss.getString("apellidom");
+		String apellidom = rss.getString("ApellidoM");
 		return apellidom;
 	}
 	
 	public String regresacalle(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select calle from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Calle from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String calle = rss.getString("calle");
+		String calle = rss.getString("Calle");
 		return calle;
 	}
 	
 	public String regresaciudad(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select ciudad from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Ciudad from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String ciudad = rss.getString("ciudad");
+		String ciudad = rss.getString("Ciudad");
 		return ciudad;
 	}
 	public String regresaestado(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select estado from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Estado from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String estado = rss.getString("estado");
+		String estado = rss.getString("Estado");
 		return estado;
 	}
 	public String regresacp(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select cp from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select CP from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String cp = rss.getString("cp");
+		String cp = rss.getString("CP");
 		return cp;
 	}
 	
 	public String regresapais(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select pais from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Pais from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String cp = rss.getString("pais");
+		String cp = rss.getString("Pais");
 		return cp;
 	}
 	
 	public String regresaemail(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select email from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Email from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String email = rss.getString("email");
+		String email = rss.getString("Email");
 		return email;
 	}
 	
 	public String regresausuario(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select username from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Username from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String username = rss.getString("username");
+		String username = rss.getString("Username");
 		return username;
 	}
 	
 	public String regresapassword(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select password from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Passwrd from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String username = rss.getString("password");
+		String username = rss.getString("Passwrd");
 		return username;
 	}
 	public String regresaprobacion(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select aprobado from empleado where noempleado = "+aa+";");
+		PreparedStatement bloooo = con.prepareStatement("select Aprobado from Empleado where NoEmpleado = "+aa+";");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String aprobado = rss.getString("aprobado");
+		String aprobado = rss.getString("Aprobado");
 		return aprobado;
 	}
 	
 	public String regresaprobadoo(String aa) throws SQLException{
-		PreparedStatement bloooo = conect.prepareStatement("select aprobado from empleado where username = '"+aa+"';");
+		PreparedStatement bloooo = con.prepareStatement("select Aprobado from Empleado where Username = '"+aa+"';");
 		ResultSet rss = bloooo.executeQuery();
 		rss.next();
-		String aprobado = rss.getString("aprobado");
+		String aprobado = rss.getString("Aprobado");
 		return aprobado;
 	}
 
@@ -232,29 +237,29 @@ public class Bidi {
 			String text8, String text9, String aprobado, String text10,
 			String text11) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement actualizanombre = conect.prepareStatement("update empleado set nombre = '"+text+"' where noempleado ="+indice+";");
+		PreparedStatement actualizanombre = con.prepareStatement("update Empleado set Nombre = '"+text+"' where NoEmpleado ="+indice+";");
 		actualizanombre.execute();
-		PreparedStatement actualizapellidop = conect.prepareStatement("update empleado set apellidop = '"+text2+"' where noempleado ="+indice+";");
+		PreparedStatement actualizapellidop = con.prepareStatement("update Empleado set ApellidoP = '"+text2+"' where NoEmpleado ="+indice+";");
 		actualizapellidop.execute();
-		PreparedStatement actualizapellidom = conect.prepareStatement("update empleado set apellidop = '"+text3+"' where noempleado ="+indice+";");
+		PreparedStatement actualizapellidom = con.prepareStatement("update Empleado set ApellidoP = '"+text3+"' where NoEmpleado ="+indice+";");
 		actualizapellidom.execute();
-		PreparedStatement actualizacalle = conect.prepareStatement("update empleado set calle = '"+text4+"' where noempleado ="+indice+";");
+		PreparedStatement actualizacalle = con.prepareStatement("update Empleado set Calle = '"+text4+"' where NoEmpleado ="+indice+";");
 		actualizacalle.execute();
-		PreparedStatement actualizaciudad = conect.prepareStatement("update empleado set ciudad = '"+text5+"' where noempleado ="+indice+";");
+		PreparedStatement actualizaciudad = con.prepareStatement("update Empleado set Ciudad = '"+text5+"' where NoEmpleado ="+indice+";");
 		actualizaciudad.execute();
-		PreparedStatement actualizaestado = conect.prepareStatement("update empleado set estado = '"+text6+"' where noempleado ="+indice+";");
+		PreparedStatement actualizaestado = con.prepareStatement("update Empleado set Estado = '"+text6+"' where NoEmpleado ="+indice+";");
 		actualizaestado.execute();
-		PreparedStatement actualizacp = conect.prepareStatement("update empleado set cp = "+text7+" where noempleado ="+indice+";");
+		PreparedStatement actualizacp = con.prepareStatement("update Empleado set CP = "+text7+" where NoEmpleado ="+indice+";");
 		actualizacp.execute();
-		PreparedStatement actualizapais = conect.prepareStatement("update empleado set pais = '"+text8+"' where noempleado ="+indice+";");
+		PreparedStatement actualizapais = con.prepareStatement("update Empleado set Pais = '"+text8+"' where NoEmpleado ="+indice+";");
 		actualizapais.execute();
-		PreparedStatement actualizaemail = conect.prepareStatement("update empleado set email = '"+text9+"' where noempleado ="+indice+";");
+		PreparedStatement actualizaemail = con.prepareStatement("update Empleado set Email = '"+text9+"' where NoEmpleado ="+indice+";");
 		actualizaemail.execute();
-		PreparedStatement actualizaprobado = conect.prepareStatement("update empleado set aprobado = "+aprobado+" where noempleado ="+indice+";");
+		PreparedStatement actualizaprobado = con.prepareStatement("update Empleado set Aprobado = "+aprobado+" where NoEmpleado ="+indice+";");
 		actualizaprobado.execute();
-		PreparedStatement actualizausuario = conect.prepareStatement("update empleado set username = '"+text10+"' where noempleado ="+indice+";");
+		PreparedStatement actualizausuario = con.prepareStatement("update Empleado set Username = '"+text10+"' where NoEmpleado ="+indice+";");
 		actualizausuario.execute();
-		PreparedStatement actualizacontraseña = conect.prepareStatement("update empleado set password = '"+text11+"' where noempleado ="+indice+";");
+		PreparedStatement actualizacontraseña = con.prepareStatement("update Empleado set Passwrd = '"+text11+"' where NoEmpleado ="+indice+";");
 		actualizacontraseña.execute();
 		
 	}
@@ -262,8 +267,8 @@ public class Bidi {
 	
 	
 	public DefaultTableModel regresabusqueda(String d) throws SQLException {
-		PreparedStatement datines = conect
-				.prepareStatement("select * from empleado where nombre = '"+d+"' order by noempleado;");
+		PreparedStatement datines = con
+				.prepareStatement("select * from Empleado where Nombre = '"+d+"' order by NoEmpleado;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -294,8 +299,8 @@ public class Bidi {
 	
 	//Modelo de la tabla
 	public DefaultTableModel regresamodeloproveedor() throws SQLException {
-		PreparedStatement datines = conect
-				.prepareStatement("select * from proveedor order by noproveedor;");
+		PreparedStatement datines = con
+				.prepareStatement("select * from Proveedor order by NoProveedor;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -323,8 +328,8 @@ public class Bidi {
 
 	public TableModel regresamodeloproveedortels() throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement datines = conect
-				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,telefono from proveedortels natural join proveedor order by noproveedor;");
+		PreparedStatement datines = con
+				.prepareStatement("select NoProveedor,Nombre,ApellidoP,ApellidoM,Telefono from ProveedorTels natural join Proveedor order by NoProveedor;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -350,8 +355,8 @@ public class Bidi {
 	}
 	public TableModel regresamodeloempresa() throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement datines = conect
-				.prepareStatement("select noproveedor,nombre,apellidop,apellidom,empresapersona,cargo,compañia from proveedorempresa natural join proveedor order by noproveedor;");
+		PreparedStatement datines = con
+				.prepareStatement("select NoProveedor,Nombre,ApellidoP,ApellidoM,Cargo,Compañia from ProveedorEmpresa natural join Proveedor order by NoProveedor;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -378,18 +383,17 @@ public class Bidi {
 	//Termina la definiciòn de modelos del empleado
 	//Metodos para inserciòn a base de datos de proveedores
 	
-	public String insertaProveedor(String string, String string2, String string3, String string4, String string5, String string6, String string7, String string8, String string9, String string10, String string11, String string12, String string13) throws SQLException{
-		
-		PreparedStatement insercion = conect.prepareStatement("insert into proveedor values("+string+",'"+string2+"','"+string3+"','"+string4+"','"+string5+"','"+string6+"','"+string7+"',"+string8+",'"+string9+"','"+string10+"','"+string11+"','"+string12+"','"+string13+"');");
-		String ble = "insert into proveedor values("+string+",'"+string2+"','"+string3+"','"+string4+"','"+string5+"','"+string6+"','"+string7+"',"+string8+",'"+string9+"','"+string10+"','"+string11+"','"+string12+",'"+string13+"');";
+	public String insertaProveedor(String string, String string2, String string3, String string4, String string5, String string6, String string7, String string8, String string9, String string10, String string11, String string12, String string13, char c) throws SQLException{
+		PreparedStatement insercion = con.prepareStatement("insert into Proveedor values("+string+",'"+string2+"','"+string3+"','"+string4+"','"+string5+"','"+string6+"','"+string7+"','"+string8+"',"+string9+",'"+string10+"','"+string11+"','"+string12+"','"+string13+"','1');");
+		String ble = "insert into Proveedor values("+string+",'"+string2+"','"+string3+"','"+string4+"','"+string5+"','"+string6+"','"+string7+"',"+string8+",'"+string9+"','"+string10+"','"+string11+"','"+string12+"','"+string13+"');";
 		insercion.execute();
 		return ble;
 	}
 
-	public String insertaempresa(String text, String text2, String text3,
+	public String insertaempresa(String text, String text3,
 			String text4) throws SQLException {
-				PreparedStatement insercion = conect.prepareStatement("insert into proveedorempresa values("+text+",'"+text2+"','"+text3+"','"+text4+"');");
-				String ejecucion = "insert into proveedorempresa values("+text+",'"+text2+"','"+text3+"','"+text4+"');";
+				PreparedStatement insercion = con.prepareStatement("insert into ProveedorEmpresa values("+text+",'"+text3+"','"+text4+"');");
+				String ejecucion = "insert into ProveedorEmpresa values("+text+",'"+text3+"','"+text4+"');";
 				insercion.execute();
 				return ejecucion;
 		// TODO Auto-generated method stub
@@ -399,63 +403,63 @@ public class Bidi {
 
 	public String insertatelefono(String text, String text2) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement insercion = conect.prepareStatement("insert into proveedortels values("+text+","+text2+");");
-		String ejecucion = "insert into proveedortels values("+text+","+text2+");";
+		PreparedStatement insercion = con.prepareStatement("insert into ProveedorTels values("+text+","+text2+");");
+		String ejecucion = "insert into ProveedorTels values("+text+","+text2+");";
 		insercion.execute();
 		return ejecucion;
 	}
 	
 	//comienzan los miles de metodos para regresar datos de proveedores para modificaciòn
 	public String regresaID(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select noproveedor from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select NoProveedor from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("noproveedor");
+		String ble = rs.getString("NoProveedor");
 		return ble;
 	}
 	
 	public String regresaPNombre(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select nombre from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Nombre from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("nombre");
+		String ble = rs.getString("Nombre");
 		return ble;
 	}
 	
 	public String regresaPApellidoP(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select apellidop from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select ApellidoP from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("apellidop");
+		String ble = rs.getString("ApellidoP");
 		return ble;
 	}
 	
 	public String regresaPApellidoM(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select apellidom from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select ApellidoM from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("apellidom");
+		String ble = rs.getString("ApellidoM");
 		return ble;
 	}
 	
 	public String regresaPCalle(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select calle from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Calle from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("calle");
+		String ble = rs.getString("Calle");
 		return ble;
 	}
 	
 	public String regresaPCiudad(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select ciudad from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Ciudad from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("ciudad");
+		String ble = rs.getString("Ciudad");
 		return ble;
 	}
 	
 	public String regresaPEstado(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select estado from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Estado from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
 		String ble = rs.getString("estado");
@@ -463,7 +467,7 @@ public class Bidi {
 	}
 	
 	public String regresaPCP(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
 		String ble = rs.getString("cp");
@@ -471,66 +475,66 @@ public class Bidi {
 	}
 	
 	public String regresaPPais(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("pais");
+		String ble = rs.getString("Pais");
 		return ble;
 	}
 	
 	public String regresaPEmail(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("email");
+		String ble = rs.getString("Email");
 		return ble;
 	}
 	
 	public String regresaPNotas(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("notas");
+		String ble = rs.getString("Notas");
 		return ble;
 	}
 	
 	public String regresaPRFC(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("rfc");
+		String ble = rs.getString("RFC");
 		return ble;
 	}
 	
 	public String regresaPPagina(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedor where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Proveedor where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("paginaweb");
+		String ble = rs.getString("PaginaWeb");
 		return ble;
 	}
 	
 	public String regresaPTelefono(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedortels where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from ProveedorTels where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("telefono");
+		String ble = rs.getString("Telefono");
 		return ble;
 	}
 	
 	public String regresaPCargo(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedorempresa where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from ProveedorEmpresa where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("cargo");
+		String ble = rs.getString("Cargo");
 		return ble;
 	}
 	
 	public String regresaPEmpresa(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from proveedorempresa where noproveedor = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from ProveedorEmpresa where NoProveedor = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("compañia");
+		String ble = rs.getString("Compañia");
 		return ble;
 	}
 
@@ -539,75 +543,71 @@ public class Bidi {
 			String text8, String text9, String text10, String text11,
 			String text12, String text13, String indice) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement actualizacion = conect.prepareStatement("update proveedor set noproveedor = "+text+" where noproveedor = "+indice+";");
+		PreparedStatement actualizacion = con.prepareStatement("update Proveedor set NoProveedor = "+text+" where NoProveedor = "+indice+";");
 		actualizacion.execute();
-		PreparedStatement actualizacion2 = conect.prepareStatement("update proveedor set nombre = '"+text2+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion2 = con.prepareStatement("update Proveedor set Nombre = '"+text2+"' where NoProveedor = "+indice+";");
 		actualizacion2.execute();
-		PreparedStatement actualizacion3 = conect.prepareStatement("update proveedor set apellidom = '"+text3+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion3 = con.prepareStatement("update Proveedor set ApellidoM = '"+text3+"' where NoProveedor = "+indice+";");
 		actualizacion3.execute();
-		PreparedStatement actualizacion4 = conect.prepareStatement("update proveedor set apellidop = '"+text4+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion4 = con.prepareStatement("update Proveedor set ApellidoP = '"+text4+"' where NoProveedor = "+indice+";");
 		actualizacion4.execute();
-		PreparedStatement actualizacion5 = conect.prepareStatement("update proveedor set calle = '"+text5+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion5 = con.prepareStatement("update Proveedor set Calle = '"+text5+"' where NoProveedor = "+indice+";");
 		actualizacion5.execute();
-		PreparedStatement actualizacion6 = conect.prepareStatement("update proveedor set ciudad = '"+text6+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion6 = con.prepareStatement("update Proveedor set Ciudad = '"+text6+"' where NoProveedor = "+indice+";");
 		actualizacion6.execute();
-		PreparedStatement actualizacion7 = conect.prepareStatement("update proveedor set estado = '"+text7+"' where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion7 = con.prepareStatement("update Proveedor set Estado = '"+text7+"' where NoProveedor = "+indice+";");		
 		actualizacion7.execute();
-		PreparedStatement actualizacion8 = conect.prepareStatement("update proveedor set cp = "+text8+" where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion8 = con.prepareStatement("update Proveedor set CP = "+text8+" where NoProveedor = "+indice+";");		
 		actualizacion8.execute();
-		PreparedStatement actualizacion9 = conect.prepareStatement("update proveedor set pais = '"+text9+"' where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion9 = con.prepareStatement("update Proveedor set Pais = '"+text9+"' where NoProveedor = "+indice+";");		
 		actualizacion9.execute();
-		PreparedStatement actualizacion10 = conect.prepareStatement("update proveedor set email = '"+text10+"' where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion10 = con.prepareStatement("update Proveedor set Email = '"+text10+"' where NoProveedor = "+indice+";");		
 		actualizacion10.execute();
-		PreparedStatement actualizacion11 = conect.prepareStatement("update proveedor set notas = '"+text11+"' where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion11 = con.prepareStatement("update Proveedor set Notas = '"+text11+"' where NoProveedor = "+indice+";");		
 		actualizacion11.execute();
-		PreparedStatement actualizacion12 = conect.prepareStatement("update proveedor set rfc = '"+text12+"' where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion12 = con.prepareStatement("update Proveedor set RFC = '"+text12+"' where NoProveedor = "+indice+";");		
 		actualizacion12.execute();
-		PreparedStatement actualizacion13 = conect.prepareStatement("update proveedor set paginaweb = '"+text13+"' where noproveedor = "+indice+";");		
+		PreparedStatement actualizacion13 = con.prepareStatement("update Proveedor set PaginaWeb = '"+text13+"' where NoProveedor = "+indice+";");		
 		actualizacion13.execute();
 	}
 
-	public void actualizaempresa(String text, String text2, String text3,
-			String text4, String indice) throws SQLException {
+	public void actualizaEmpresa(String text,String text3, String text4, String indice) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		PreparedStatement actualizacion = conect.prepareStatement("update proveedorempresa set empresapersona = '"+text2+"' where noproveedor = "+indice+";");
-		actualizacion.execute();
-
-		PreparedStatement actualizacion2 = conect.prepareStatement("update proveedorempresa set cargo = '"+text3+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion2 = con.prepareStatement("update ProveedorEmpresa set Cargo = '"+text3+"' where NoProveedor = "+indice+";");
 		actualizacion2.execute();
 		
-		PreparedStatement actualizacion3 = conect.prepareStatement("update proveedorempresa set compañia = '"+text4+"' where noproveedor = "+indice+";");
+		PreparedStatement actualizacion3 = con.prepareStatement("update ProveedorEmpresa set Compañia = '"+text4+"' where NoProveedor = "+indice+";");
 		actualizacion3.execute();
 		
-		PreparedStatement actualizacion4 = conect.prepareStatement("update proveedorempresa set noproveedor = "+text+" where noproveedor = "+indice+";");
+		PreparedStatement actualizacion4 = con.prepareStatement("update ProveedorEmpresa set NoProveedor = "+text+" where NoProveedor = "+indice+";");
 		actualizacion4.execute();
 	}
 
 	public void actualizatelefono(String text, String text2, String indice) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement actualizacion = conect.prepareStatement("update proveedortels set noproveedor = "+text+" where noproveedor = "+indice+";");
+		PreparedStatement actualizacion = con.prepareStatement("update ProveedorTels set NoProveedor = "+text+" where NoProveedor = "+indice+";");
 		actualizacion.execute();
-		PreparedStatement actualizacion2 = conect.prepareStatement("update proveedortels set telefono = "+text2+" where noproveedor = "+indice+";");
+		PreparedStatement actualizacion2 = con.prepareStatement("update ProveedorTels set Telefono = "+text2+" where NoProveedor = "+indice+";");
 		actualizacion2.execute();
 		
 	}
 	
 	public void borrarProveedor(String a) throws SQLException{
-		PreparedStatement borrado = conect.prepareStatement("delete from proveedor where noproveedor="+a+";");
+		PreparedStatement borrado = con.prepareStatement("delete from Proveedor where NoProveedor="+a+";");
 		borrado.execute();
-		PreparedStatement borrado2 = conect.prepareStatement("delete from proveedortels where noproveedor="+a+";");
+		PreparedStatement borrado2 = con.prepareStatement("delete from ProveedorTels where NoProveedor="+a+";");
 		borrado.execute();
 		
 	}
 	
 	public void borrarProveedorEmpresa(String a) throws SQLException{
 
-		PreparedStatement borrado2 = conect.prepareStatement("delete from proveedortels where noproveedor="+a+";");
+		PreparedStatement borrado2 = con.prepareStatement("delete from ProveedorTels where NoProveedor="+a+";");
 		borrado2.execute();
-		PreparedStatement borrado3 = conect.prepareStatement("delete from proveedorempresa where noproveedor="+a+";");
+		PreparedStatement borrado3 = con.prepareStatement("delete from ProveedorEmpresa where NoProveedor="+a+";");
 		borrado3.execute();
-		PreparedStatement borrado = conect.prepareStatement("delete from proveedor where noproveedor="+a+";");
+		PreparedStatement borrado = con.prepareStatement("delete from Proveedor where NoProveedor="+a+";");
 		borrado.execute();
 		
 	}
@@ -617,7 +617,7 @@ public class Bidi {
 	//Comienzan los metodos para manejo de clientes
 	
 	public DefaultTableModel regresamodelocliente() throws SQLException {
-		PreparedStatement datines = conect
+		PreparedStatement datines = con
 				.prepareStatement("select nocliente,nombre,apellidom,apellidop,calle,ciudad,estado,cp,pais,email,rfc,descuentocliente,noempleado from empleadoatiendeclientes natural join cliente order by nocliente;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
@@ -644,9 +644,9 @@ public class Bidi {
 
 	}
 	
-	public DefaultTableModel regresamodeloclienteempresa() throws SQLException {
-		PreparedStatement datines = conect
-				.prepareStatement("select * from clienteempresa order by nocliente;");
+	public DefaultTableModel regresamodelotransporte() throws SQLException {
+		PreparedStatement datines = con
+				.prepareStatement("select * from Transportista order by NoTransp;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -672,10 +672,10 @@ public class Bidi {
 
 	}
 
-	public TableModel regresamodeloclientetels() throws SQLException {
+	public TableModel regresamodelotransportels() throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement datines = conect
-				.prepareStatement("select * from clientetels order by nocliente;");
+		PreparedStatement datines = con
+				.prepareStatement("select * from TransportistaTels order by NoTransp;");
 		ResultSet datiness = datines.executeQuery();
 		ResultSetMetaData ble = datiness.getMetaData();
 		blop = new DefaultTableModel();
@@ -699,46 +699,37 @@ public class Bidi {
 
 		return blop;	}
 
-	public void insertacliente(String text, String text2, String text3,
+	public void insertatransporte(String text, String text2, String text3,
 			String text4, String text5, String text6, String text7,
 			String text8, String text9, String text10, String text11,
-			String text12) throws SQLException {
+			String text12, String string, String string2, String string3) throws SQLException {
 		// TODO Auto-generated method stub
-		PreparedStatement esteit = conect.prepareStatement("insert into cliente values(?,?,?,?,?,?,?,?,?,?,?,?);");
+		PreparedStatement esteit = con.prepareStatement("insert into Transportista values(?,?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		int numerex = Integer.parseInt(text);
-		esteit.setInt(1, numerex);
-		esteit.setString(2, text2);
+		esteit.setInt(1,numerex);
+		esteit.setString(2,text2);
 		esteit.setString(3, text3);
 		esteit.setString(4, text4);
 		esteit.setString(5, text5);
 		esteit.setString(6, text6);
-		esteit.setString(7,text7);
-		int fechi = Integer.parseInt(text8);
-		esteit.setInt(8, fechi);
-		esteit.setString(9, text9);
+		esteit.setString(7, text7);
+		esteit.setString(8, text8);
+		int codiguex = Integer.parseInt(text9);
+		esteit.setInt(9, codiguex);
 		esteit.setString(10, text10);
 		esteit.setString(11, text11);
-		int descuentext = Integer.parseInt(text12);
-		esteit.setInt(12, descuentext);
+		esteit.setString(12, text12);
+		esteit.setString(13, string);
+		esteit.setString(14, string2);
+		esteit.setString(14, string3);
 		esteit.execute();
-		
 		
 	}
 
-	public void insertaclientempresa(String text, String text2, String text3) throws SQLException {
-		// TODO Auto-generated method stub
-		PreparedStatement esteit = conect.prepareStatement("insert into clienteempresa values(?,?,?);");
-		int numerex = Integer.parseInt(text);
-		esteit.setInt(1, numerex);
-		esteit.setString(2, text2);
-		esteit.setString(3, text3);
-		esteit.execute();
-	}
-
-	public void insertaclientetels(String text, String text2) throws SQLException {
+	public void insertatransportels(String text, String text2) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		PreparedStatement esteit = conect.prepareStatement("insert into clientetels values(?,?);");
+		PreparedStatement esteit = con.prepareStatement("insert into TransportistaTels values(?,?);");
 		int numerex = Integer.parseInt(text);
 		esteit.setInt(1, numerex);
 		int telefonex = Integer.parseInt(text2);
@@ -748,156 +739,446 @@ public class Bidi {
 		
 	}
 
-	public void insertaatiendecliente(String text, String text2) throws SQLException {
-		// TODO Auto-generated method stub
-		
-		PreparedStatement esteit = conect.prepareStatement("insert into empleadoatiendeclientes values(?,?,NOW());");
-		int numerex = Integer.parseInt(text);
-		esteit.setInt(1, numerex );
-		int antiendex = Integer.parseInt(text2);
-		esteit.setInt(2, antiendex);
-		esteit.execute();
-		
-		
-	}
-	
 	public String regresaCID(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select nocliente from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select NoTransp from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("nocliente");
+		String ble = rs.getString("NoTransp");
 		return ble;
 	}
 	
 	public String regresaCNombre(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select nombre from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Nombre from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("nombre");
+		String ble = rs.getString("Nombre");
 		return ble;
 	}
 	
 	public String regresaCApellidoP(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select apellidop from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select ApellidoP from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("apellidop");
+		String ble = rs.getString("ApellidoP");
 		return ble;
 	}
 	
 	public String regresaCApellidoM(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select apellidom from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select ApellidoM from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("apellidom");
+		String ble = rs.getString("ApellidoM");
 		return ble;
 	}
 	
 	public String regresaCCalle(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select calle from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Calle from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("calle");
+		String ble = rs.getString("Calle");
 		return ble;
 	}
 	
 	public String regresaCCiudad(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select ciudad from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Ciudad from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("ciudad");
+		String ble = rs.getString("Ciudad");
 		return ble;
 	}
 	
 	public String regresaCEstado(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select estado from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select Estado from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("estado");
+		String ble = rs.getString("Estado");
 		return ble;
 	}
 	
 	public String regresaCCP(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("cp");
+		String ble = rs.getString("CP");
 		return ble;
 	}
 	
 	public String regresaCPais(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("pais");
+		String ble = rs.getString("Pais");
 		return ble;
 	}
 	
 	public String regresaCEmail(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("email");
+		String ble = rs.getString("Email");
 		return ble;
 	}
 	
 	public String regresaCNotas(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("notas");
+		String ble = rs.getString("Notas");
 		return ble;
 	}
 	
 	public String regresaCRFC(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("rfc");
+		String ble = rs.getString("RFC");
 		return ble;
 	}
 	
-	public String regresaCDescuento(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+	public String regresaCPagina(String indice) throws SQLException{
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("descuento");
+		String ble = rs.getString("PaginaWeb");
 		return ble;
 	}
 	
 	public String regresaCTelefono(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from cliente where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from TransportistaTels where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("telefono");
+		String ble = rs.getString("Telefono");
 		return ble;
 	}
 	
 	public String regresaCCargo(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from clienteempresa where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("cargo");
+		String ble = rs.getString("Cargo");
 		return ble;
 	}
 	
 	public String regresaCEmpresa(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from clienteempresa where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from Transportista where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("compañia");
+		String ble = rs.getString("Compañia");
 		return ble;
 	}
 	
 	public String regresaCTel(String indice) throws SQLException{
-		PreparedStatement insercion = conect.prepareStatement("select * from clientetels where nocliente = "+indice+";");
+		PreparedStatement insercion = con.prepareStatement("select * from TransportistaTels where NoTransp = "+indice+";");
 		ResultSet rs = insercion.executeQuery();
 		rs.next();
-		String ble = rs.getString("telefono");
+		String ble = rs.getString("Telefono");
 		return ble;
 		
 	}
 
+	public void actualizaTransportista(String text2, String text3,
+			String text4, String text5, String text6, String text7,
+			String text8, String text9, String text10, String text11,
+			String text12, String text13, String indice, String indice2) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement actualizanombre = con.prepareStatement("update Transportista set Nombre = '"+text2+"' where NoTransp ="+indice2+";");
+		actualizanombre.execute();
+		PreparedStatement actualizapellidop = con.prepareStatement("update Transportista set ApellidoP = '"+text3+"' where NoTransp ="+indice2+";");
+		actualizapellidop.execute();
+		PreparedStatement actualizapellidom = con.prepareStatement("update Transportista set ApellidoM = '"+text4+"' where NoTransp ="+indice2+";");
+		actualizapellidom.execute();
+		PreparedStatement actualizacalle = con.prepareStatement("update Transportista set Calle = '"+text5+"' where NoTransp ="+indice2+";");
+		actualizacalle.execute();
+		PreparedStatement actualizaciudad = con.prepareStatement("update Transportista set Ciudad = '"+text6+"' where NoTransp ="+indice2+";");
+		actualizaciudad.execute();
+		PreparedStatement actualizaestado = con.prepareStatement("update Transportista set Estado = '"+text7+"' where NoTransp ="+indice2+";");
+		actualizaestado.execute();
+		PreparedStatement actualizacp = con.prepareStatement("update Transportista set CP = "+text8+" where NoTransp ="+indice2+";");
+		actualizacp.execute();
+		PreparedStatement actualizapais = con.prepareStatement("update Transportista set Pais = '"+text9+"' where NoTransp ="+indice2+";");
+		actualizapais.execute();
+		PreparedStatement actualizaemail = con.prepareStatement("update Transportista set Cargo = '"+text10+"' where NoTransp ="+indice2+";");
+		actualizaemail.execute();
+		PreparedStatement actualizaprobado = con.prepareStatement("update Transportista set Compañia = '"+text11+"' where NoTransp ="+indice2+";");
+		actualizaprobado.execute();
+		PreparedStatement actualizausuario = con.prepareStatement("update Transportista set Email = '"+text12+"' where NoTransp ="+indice2+";");
+		actualizausuario.execute();
+		PreparedStatement actualizacontraseña = con.prepareStatement("update Transportista set Notas = '"+text13+"' where NoTransp ="+indice2+";");
+		actualizacontraseña.execute();
+		PreparedStatement actualizapagina = con.prepareStatement("update Transportista set PaginaWeb = '"+indice+"' where NoTransp ="+indice2+";");
+		actualizapagina.execute();
+	}
 
+	public void actualizaTransportistatelefono(String text2,
+			String indice) throws SQLException {
+		// TODO Auto-generated method stubs
+		PreparedStatement prr = con.prepareStatement("update TransportistaTels set Telefono = "+text2+" where NoTransp = "+indice+";");
+		prr.execute();
+		
+	}
+
+	public void borrarTransporte(String indice) throws SQLException {
+		// TODO Auto-generated method stub
+		PreparedStatement prr = con.prepareStatement("delete from Transportista where NoTransp = "+indice+"");
+		PreparedStatement prr1 = con.prepareStatement("delete from TransportistaTels where NoTransp = "+indice+"");
+		prr.execute();
+		prr1.execute();
+		
+	}
+	
+	public Statement getSt(){
+		return st;
+	}
+	
+	public ResultSet stNoParams(String st){
+		try{
+			cs = con.prepareCall("{call "+st+"}");
+			ResultSet rs = cs.executeQuery();
+			return rs;
+		} catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			return null;
+		}
+	}
+	
+	public int stClientParams(String st, String Nombre, String ApellidoM, String ApellidoP, String Pais, String Estado,
+								String Ciudad, String Calle, int CP, String Email, String RFC, double Descuento){
+		try{
+			cs =con.prepareCall("{call "+st+"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setString(1, Nombre);
+			cs.setString(2, ApellidoM);
+			cs.setString(3, ApellidoP);
+			cs.setString(4, Pais);
+			cs.setString(5, Estado);
+			cs.setString(6, Ciudad);
+			cs.setString(7, Calle);
+			cs.setInt(8, CP);
+			cs.setString(9, Email);
+			cs.setString(10, RFC);
+			cs.setDouble(11, Descuento);
+			return cs.executeUpdate();
+		} catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public int stUpdateClient(String st,int NoCliente, String Nombre, String ApellidoM, String ApellidoP, String Pais, 
+			String Estado,String Ciudad, String Calle, int CP, String Email, String RFC, double Descuento){
+		try{
+			cs =con.prepareCall("{call "+st+"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setInt(1, NoCliente);
+			cs.setString(2, Nombre);
+			cs.setString(3, ApellidoM);
+			cs.setString(4, ApellidoP);
+			cs.setString(5, Pais);
+			cs.setString(6, Estado);
+			cs.setString(7, Ciudad);
+			cs.setString(8, Calle);
+			cs.setInt(9, CP);
+			cs.setString(10, Email);
+			cs.setString(11, RFC);
+			cs.setDouble(12, Descuento);
+			return cs.executeUpdate();
+		} catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}		
+	}
+	
+	public int stDeleteClient(String st, int NoCliente){
+		try{
+			cs = con.prepareCall("{call "+st+"(?)}");
+			cs.setInt(1, NoCliente);
+			return cs.executeUpdate();
+		} catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public ResultSet stSearchProduct(String st, String text){
+		try{
+			cs = con.prepareCall("{call "+st+"(?)}");
+			cs.setString(1, text);
+			ResultSet rs = cs.executeQuery();
+			return rs;
+		} catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return null;
+		}
+	}
+	
+	public ResultSet stSelectProduct(String st, int idProd){
+		try{
+			cs = con.prepareCall("{call "+st+"(?)}");
+			cs.setInt(1, idProd);
+			ResultSet rs = cs.executeQuery();
+			return rs;
+		} catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return null;
+		}
+	}
+	
+	public int stInsertPedido(String st, String Estado, String TipoPago, int NoCliente, String NoGuia,
+							Double Importe, Double Total, java.sql.Date FechaPago, String Notas, java.sql.Date FechaRecepcion, 
+							java.sql.Date FechaPrevista, java.sql.Date FechaTentativa){
+		try{
+			cs = con.prepareCall("{call "+st+"( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setString(1, Estado);
+			cs.setString(2, TipoPago);
+			cs.setInt(3, NoCliente);
+			cs.setString(4, NoGuia);
+			cs.setDouble(5, Importe);
+			cs.setDouble(6, Total);
+			if(FechaPago == null){
+				cs.setDate(7, null);
+			} else {
+				cs.setDate(7, FechaPago);
+			}
+			cs.setString(8, Notas);
+			if(FechaRecepcion == null){
+				cs.setDate(9, null);
+			} else {
+				cs.setDate(9, FechaRecepcion);
+			}
+			if(FechaPrevista == null){
+				cs.setDate(10, null);
+			} else {
+				cs.setDate(10, FechaPrevista);
+			}
+			if(FechaTentativa == null){
+				cs.setDate(11, null);
+			} else {
+				cs.setDate(11, (java.sql.Date)FechaTentativa);
+			}
+			return cs.executeUpdate();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public int stUpdatePedido(String st, int NoPedido, String Estado, String TipoPago, int NoCliente, String NoGuia, 
+							Double Importe, Double Total, java.sql.Date FechaPago, String Notas, java.sql.Date FechaRecepcion, 
+							java.sql.Date FechaPrevista, java.sql.Date FechaTentativa){
+		try{
+			cs = con.prepareCall("{call "+st+"(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+			cs.setInt(1, NoPedido);
+			cs.setString(2, Estado);
+			cs.setString(3, TipoPago);
+			cs.setInt(4, NoCliente);
+			cs.setString(5, NoGuia);
+			cs.setDouble(6, Importe);
+			cs.setDouble(7, Total);
+			if(FechaPago == null){
+				cs.setDate(8, null);
+			} else {
+				cs.setDate(8, FechaPago);
+			}
+			cs.setString(9, Notas);
+			if(FechaRecepcion == null){
+				cs.setDate(10, null);
+			} else {
+				cs.setDate(10, FechaRecepcion);
+			}
+			if(FechaPrevista == null){
+				cs.setDate(11, null);
+			} else {
+				cs.setDate(11, FechaPrevista);
+			}
+			if(FechaTentativa == null){
+				cs.setDate(12, null);
+			} else { 
+				cs.setDate(12, FechaTentativa);
+			}
+			return cs.executeUpdate();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public int stDeletePedido(String st, int NoPedido){
+		try{
+			cs = con.prepareCall("{call "+st+"(?)}");
+			cs.setInt(1, NoPedido);
+			return cs.executeUpdate();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public int stInsertProPedido(String st, int NoProducto, int NoPedido, int Cantidad, double Descuento){
+		try{
+			cs = con.prepareCall("{call "+st+"(?, ?, ?, ?)}");
+			cs.setInt(1, NoProducto);
+			cs.setInt(2, NoPedido);
+			cs.setInt(3, Cantidad);
+			cs.setDouble(4, Descuento);
+			return cs.executeUpdate();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public int stDeleteAllProPedido(String st, int NoPedido){
+		try{
+			cs = con.prepareCall("{call "+st+"(?)}");
+			cs.setInt(1, NoPedido);
+			return cs.executeUpdate();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
+	
+	public ResultSet stSelectLastPedido(String st){
+		try{
+			cs = con.prepareCall("{call "+st+"()}");
+			return cs.executeQuery();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return null;
+		}
+	}
+	
+	public int stDeleteSpProdPedido(String st, int NoPedido){
+		try{
+			cs = con.prepareCall("{call "+st+"(?)}");
+			cs.setInt(1, NoPedido);
+			return cs.executeUpdate();
+		}catch(SQLException sqlEx){
+			sqlEx.getStackTrace();
+			System.out.println(sqlEx.getCause());
+			System.out.println(sqlEx.getMessage());
+			return -1;
+		}
+	}
 	
 }

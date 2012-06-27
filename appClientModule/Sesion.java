@@ -23,7 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
 
-public class Sesion extends JFrame implements KeyListener {
+public class Sesion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField usetxt;
@@ -34,26 +34,16 @@ public class Sesion extends JFrame implements KeyListener {
 	 * Launch the application.
 	 * Clase que verifica las credenciales del usuario.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Sesion frame = new Sesion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
+	 * @param password 
+	 * @param user 
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public Sesion() throws ClassNotFoundException, SQLException {
-		final Bidi bd = new Bidi("postgres","132410jh");
+	public Sesion(final String user, final String password) throws ClassNotFoundException, SQLException {
+		final Bidi bd = new Bidi(user,password);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 481, 342);
 		contentPane = new JPanel();
@@ -130,7 +120,7 @@ public class Sesion extends JFrame implements KeyListener {
 				try {
 					if(contraentrante.equals(bd.dameadmincontra(usuarioentrante)) && aproval.equals("1")){
 						JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
-						DBMSysAdministrator sistemaborazones = new DBMSysAdministrator();
+						DBMSysAdministrator sistemaborazones = new DBMSysAdministrator(user, password);
 						sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
 						sistemaborazones.validate();
 						sistemaborazones.setLocationRelativeTo(null);
@@ -156,57 +146,4 @@ public class Sesion extends JFrame implements KeyListener {
 		
 	}
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		int tecla = arg0.getID();
-		if(tecla == KeyEvent.VK_ENTER){
-			System.out.println("Si entre aqui...");
-			String usuarioentrante = usetxt.getText();
-			String contraentrante = passwordField.getText();
-			String usernombre = "";
-			try {
-				usernombre = bd.damenombreusuario(usuarioentrante);
-				System.out.println("Te llamas " + usernombre);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog((Component)arg0.getSource(), "El usuario no existe");
-			}
-			
-			try {
-				if(contraentrante.equals(bd.dameadmincontra(usuarioentrante))){
-					JOptionPane.showMessageDialog((Component)arg0.getSource(), "Bienvenido(a): " +usernombre);
-					DBMSysAdministrator sistemaborazones = new DBMSysAdministrator();
-					sistemaborazones.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-					sistemaborazones.validate();
-					sistemaborazones.setLocationRelativeTo(null);
-					sistemaborazones.setVisible(true);
-					dispose();
-				}else{
-					JOptionPane.showMessageDialog((Component)arg0.getSource(), "Lo sentimos, la contraseña que ingreso no existe, favor de verificarla, gracias");
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog((Component)arg0.getSource(), "Problema de conexión");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Algo paso");
-			}
-
-			
-		}
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 }
