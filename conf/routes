@@ -1,0 +1,20 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                       controllers.Application.index()
+GET	   /register				controllers.UsuarioController.register()
+GET		/users					controllers.UsuarioController.dameusers()
+GET		/movies					controllers.MovieController.Peliculas()
+POST	/						controllers.UsuarioController.login()
+POST	/register				controllers.UsuarioController.createaccount()
+POST	/users					controllers.UsuarioController.logearmovil()
+POST	/movies					controllers.MovieController.Pelicula()
+POST	/compras				controllers.PedidoController.compras()
+POST	/registrarpelicula		controllers.MovieController.registrarpelicula()
+POST	/registrarfuncion		controllers.MovieController.registrarfuncion()
+POST	/mispedidos				controllers.PedidoController.mispedidos()
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)

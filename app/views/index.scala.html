@@ -1,0 +1,21 @@
+@(message: String, error: String)
+
+@main(message) {
+    
+    @if(error == "presente"){
+    <div class="alert alert-error">
+    <p>Datos incorrectos...</p>  
+    </div>
+    }
+    
+<div class="hero-unit muted">
+  <h1>Ya Tickets!</h1>
+  <p>Solo en los mejores cines!</p>
+  <p>
+    <a class="btn btn-primary btn-large" href="/register">
+      Registrate
+    </a>
+  </p>
+</div>
+    
+}

@@ -1,0 +1,131 @@
+@(estado: String)
+
+@main("Panel Admin"){
+
+<script type="text/javascript">
+    function daraltapelicula(){
+      
+      var nombrepelicula =  window.document.getElementById('np').value;
+      var cat =  window.document.getElementById('cat').value;
+      var dur = window.document.getElementById('dur').value;
+      var sinop = window.document.getElementById('sinop').value;
+      var url = window.document.getElementById('url').value;
+      
+      $.post('/registrarpelicula',{nombre:nombrepelicula,categoria:cat,duracion:dur,sinopsis:sinop,imagen:url}).success(function() { $('#peliculas').append('<div class="alert alert-success"> <p>Se agrego con exito</p></div>'); }).error(function() { $('#peliculas').append('<div class="alert alert-success"> <p>Se agrego con exito</p></div>');});
+        
+    };
+    
+    function daraltafuncion(){
+      
+      var sala=  window.document.getElementById('sala').value;
+      var nombrepeli =  window.document.getElementById('nombrepeli').value;
+      var horaini = window.document.getElementById('horainicio').value;
+      var sinop = window.document.getElementById('horatermino').value;
+      var url = window.document.getElementById('tiposala').value;
+      
+      $.post('/registrarfuncion',{salafuncion:sala,nombrepelicula:nombrepeli,horainicio:horaini,horatermino:sinop,tiposala:url}).success(function() { $('#funcion').append('<div class="alert alert-success"> <p>Se agrego con exito</p></div>'); }).error(function() { $('#funcion').append('<div class="alert alert-success"> <p>Se agrego con exito</p></div>');});
+        
+    };
+    
+    function agregarpelicula(){
+      
+      $('#peliculas').css('display','block');
+      $('#funcion').css('display','none');
+      $('#compras').css('display','none');
+      
+    };
+    
+    function agregarfuncion(){
+        
+      $('#peliculas').css('display','none');
+      $('#funcion').css('display','block');
+      $('#compras').css('display','none');
+        
+    };
+    
+    function vercompras(){
+      
+      $('#peliculas').css('display','none');
+      $('#funcion').css('display','none');
+      $('#compras').css('display','block');
+      
+        
+    };
+    
+</script>
+
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")">
+<link href="https://secure.fleetio.com/assets/application-c160fbd679b221cc9a18b2ff8aaa4df0.css" media="screen" rel="stylesheet" type="text/css" />
+    
+
+ <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li><a onclick="agregarpelicula()">Agregar Pelicula</a></li>
+              <li><a onclick="agregarfuncion()">Agregar Funcion</a></li>
+              <li><a onclick="vercompras()">Ver Compras</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+        <div id="films" class="span9" style="display: none">
+            
+        </div>
+    <div id="peliculas" class="span9" style="display: block">
+            
+   
+    <input id="mbsy_short_code" name="mbsy_short_code" type="hidden" />
+    <input id="mbsy_campaign_uid" name="mbsy_campaign_uid" type="hidden" />
+    <label for="user_full_name">Nombre Pelicula:</label>
+    <input class="span4" id="np" name="nombrepelicula" size="30" type="text" />
+    <label for="user_full_name">Categoria:</label>
+    <input class="span4" id="cat" name="categoria" size="30" type="text" />
+    <label for="user_full_name">Duracion:</label>
+    <input class="span4" id="dur" name="duracion" size="30" type="text" />
+    <label for="user_email">Sinopsis:</label>
+    <input class="span4" id="sinop" name="sinopsis" size="30" value="" />
+    <label for="user_password">Url Imagen:</label>
+    <input class="span4" id="url" name="imagen" size="30" type="text" />
+    <span class='help-inline'>Required.</span>
+    <hr />
+    <div class='form-actions'>
+    <div class='row-fluid'>
+    <div class='span5'>
+    <button class="btn btn-success" onclick="daraltapelicula()">Dar de alta </button>
+            
+        </div>
+    </div>
+    </div></div>
+
+        <div id="funcion" class="span9" style="display: none">
+            
+    <input id="mbsy_short_code" name="mbsy_short_code" type="hidden" />
+    <input id="mbsy_campaign_uid" name="mbsy_campaign_uid" type="hidden" />
+    <label for="user_full_name">Sala:</label>
+    <input class="span4" id="sala" name="categoria" size="30" type="text" />
+    <label for="user_full_name">Nombre Pelicula(Debe ser una ya registrada):</label>
+    <input class="span4" id="nombrepeli" name="duracion" size="30" type="text" />
+    <label for="user_email">Hora de inicio:</label>
+    <input class="span4" id="horainicio" name="sinopsis" size="30" value="" />
+    <label for="user_password">Hora de termino:</label>
+    <input class="span4" id="horatermino" name="imagen" size="30" type="text" />
+    <span class='help-inline'>Required.</span>
+    <label for="user_password">Tipo de Sala(VIP o Normal):</label>
+    <input class="span4" id="tiposala" name="imagen" size="30" type="text" />
+    <span class='help-inline'>Required.</span>
+    <hr />
+    <div class='form-actions'>
+    <div class='row-fluid'>
+    <div class='span5'>
+    <button class="btn btn-success" onclick="daraltafuncion()">Dar de alta </button>
+            
+        </div>
+    </div>
+    </div>
+        </div>
+        <div id="compras" class="span9" style="display: none">
+           <p>holo</p> 
+        </div>
+}

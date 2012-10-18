@@ -1,0 +1,212 @@
+@(username: String, peliculas: List[Pelicula])
+
+@main(username){
+
+<script type="text/javascript">
+    
+    
+    $(document).ready(function(e){
+        
+        escuchadorpelis();
+    });
+    
+    function mostrarFunciones(){
+      
+      $('#peliculas').css('display','block');
+      $('#dulceria').css('display','none');
+      $('#carrito').css('display','none');
+      $('#funciones').css('display','none');
+      $('#funcionsolitaria').css('display','none');
+    };
+    
+    function mostrarDulceria(){
+      
+      $('#peliculas').css('display','none');
+      $('#dulceria').css('display','block');
+      $('#carrito').css('display','none');
+      $('#funciones').css('display','none');
+      $('#funcionsolitaria').css('display','none');
+    };
+    
+     function mostrarCarrito(){
+
+      
+      $('#peliculas').css('display','none');
+      $('#dulceria').css('display','none');
+      $('#carrito').css('display','block');
+      $('#funciones').css('display','none');
+      $('#funcionsolitaria').css('display','none');
+    };  
+
+    function escuchadorpelis(){
+        
+        $('.btn-warning').on('click', function (e){
+        
+        e.preventDefault();
+        var pelicula = e.target.id;
+        
+         $.post('/movies',{ nombrepelicula:pelicula},function (response){
+        
+        for(var i = 0; i < response.length; i++)
+        {
+            var idfuncion = response[i]['Funcion_id'];
+            var sala = response[i]['sala'];
+            var horainicio = response[i]['Hora_inicio'];
+            var horafin = response[i]['Hora_fin'];
+            var tipo_sala = response[i]['tipo_sala'];
+            console.log("se pasara por la sala " + sala);
+            $('#peliculas').css('display','none');
+            $('#dulceria').css('display','none');
+            $('#carrito').css('display','none');
+            $('#funciones').css('display','block');
+            $('#listafunciones').empty();
+            $('#listafunciones').append('<li class><a class="funcionnes" id="'+idfuncion+'"><i class="icon-chevron-right"></i>Reproduccion en Sala '+sala+', Hora de inicio: '+ horainicio +', Hora de Termino: '+ horafin+', Tipo de Sala: '+tipo_sala+' </a></li>');
+            escuchadorfunciones();   
+        }
+        
+        },'json');
+    });
+        
+    };
+    
+    function escuchadorfunciones(){
+        $('.funcionnes').on('click', function(e){
+            e.preventDefault();
+            
+            $('#peliculas').css('display','none');
+            $('#dulceria').css('display','none');
+            $('#carrito').css('display','none');
+            $('#funciones').css('display','none');
+            $('#funcionsolitaria').css('display','block');
+            
+            var funcion = e.target.id;
+            
+            $('#funcionselect').attr('value',funcion);
+            
+            
+        });
+      
+    };
+    
+    function pagoencaja(){
+    
+    var funcion = window.document.getElementById("funcionselect").value;
+    var username = window.document.getElementById("username").value;  
+    var boletos = window.document.getElementById("boletos").value;
+    var palomitas = window.document.getElementById("palomitas").value;
+    var refresco = window.document.getElementById("refresco").value;
+    var nachos = window.document.getElementById("nachos").value;
+    
+    if(boletos == null){
+        boletos = 0;
+    }
+    if(palomitas == null){
+        palomitas = 0;
+    }
+    if(refresco == null){
+        refresco = 0;
+    }
+    if(nachos == null){
+        nachos = 0;
+    }
+    
+    $.post("/compras",{funcionselect:funcion,user:username,cantidadboletos:boletos,cantidadpalomitas:palomitas,cantidadrefresco:refresco,cantidadnachos:nachos}).success(function() { $('#funcionsolitaria').append('<div class="alert alert-success"><p>Se ha realizado tu pedido, ya puedes pasar por el!</p></div>'); }).error(function() { $('#funcionsolitaria').append('<div class="alert alert-error"><p>No se pudo procesar tu petición, intentalo denuevo...</p> </div>'); });
+    
+    
+    };
+    
+</script>
+
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li><a onclick="mostrarFunciones()">Funciónes</a></li>
+              <li><a onclick="mostrarCarrito()">Carrito</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+
+        <div id="peliculas" class="span9" style="display: block">
+        <h1>Seleccione la pelicula que desea ver...</h1>
+        
+        @for(peli <- peliculas){
+        
+            <div class="span4">
+                <img src="@peli.imagenurl" width=120 heigh=120></img>
+                <h2>@peli.nombre</h2>
+                <h3>@peli.categoria</h3>
+                <p>@peli.sinopsis</p>
+                <p>
+                    <a class="btn btn-warning" id="@peli.nombre">Ver Funciones</a>
+                </p>
+            </div>
+        
+        }     
+        
+        </div>
+        
+        <div id="dulceria" class="span9" style="display: none">
+            
+            <p>dulces cosi</p>
+            
+        </div>
+        
+        <div id="carrito" class="span9" style="display: none">
+            <h1>Lista de Pedidos</h1>
+            <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav affix" id="listapedidos">
+            </ul>
+            </div>
+        </div>
+        
+        <div id="funciones" class="span9" style="display: none">
+            <h1>Selecciona la función en la que quieres ver tu Pelicula</h1>
+            <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav affix" id="listafunciones">
+            </ul>
+            </div>
+        </div>
+        
+        <div id="funcionsolitaria" class="span9" style="display: none">
+            <h1>¿Cuantos deseas boletos deseas comprar para esa función?</h1>    
+            
+            <input type="hidden" name="funcion" id="funcionselect">
+            <input type="hidden" name="user" value="@username" id="username">
+            <input type="text" class="input-small" name="cantidadboletos" id="boletos">
+            
+            <br/>
+            
+            <h2>¿Con que deseas complementar tu visita? </h2>
+            <div class="row">
+                <div class="span4">
+                    <h3>Palomitas</h3>
+                    <img src="http://www.clubdarwin.net/sites/clubdarwin.net/files/palomitas-de-maiz1.jpg" width=100 height=100/>
+                    <h3>Cantidad: </h3>        
+                    <input type="text" class="input-small" name="cantidadpalomitas" id="palomitas">
+                </div>
+                    <div class="span4">
+                    <h3>Refresco</h3>
+                    <img src="http://www.muscleblog.es/wp-content/uploads/2010/01/refresco.jpg" width=100 height=100/>
+                    <h3>Cantidad: </h3>        
+                    <input type="text" class="input-small" name="cantidadrefresco" id="refresco">
+                </div>
+                    <div class="span4">
+                    <h3>Nachos</h3>
+                    <img src="http://2.bp.blogspot.com/-IH20K9Xcx5Y/Th4yP9rPMUI/AAAAAAAABF8/rcwsCzASYPY/s1600/Nachos+con+guacamole.jpg" width=100 height=100/>
+                    <h3>Cantidad: </h3>        
+                    <input type="text" class="input-small"  name="cantidadnachos" id="nachos">
+                </div>
+            </div>
+            <img src="https://www.paypal.com/es_XC/i/btn/btn_xpressCheckout.gif" align="left" style="margin-right:7px;">
+                <div align="right">
+                    <button class="btn btn-success" onclick="pagoencaja()">Pagarlo en Caja</button>
+                 </div>
+            
+        </div>
+        
+        
+        
+}
